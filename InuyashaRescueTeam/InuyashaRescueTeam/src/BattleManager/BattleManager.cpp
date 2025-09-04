@@ -2,7 +2,7 @@
 
 void BattleManager::StartBattle()
 {
-    std::cout << "ÀüÅõ ½ÃÀÛ!\n";
+    std::cout << "ì „íˆ¬ ì‹œì‘!\n";
 
     while (!player->IsDead() && !enemy->IsDead()) {
         field.field_print();
@@ -10,7 +10,7 @@ void BattleManager::StartBattle()
         std::shared_ptr<Card> pCard = PlayerTurn();
         std::shared_ptr<Card> eCard = enemy->GetRandomCard();
 
-        std::cout << enemy->GetName() << "ÀÌ(°¡) [" << eCard->C_GetName() << "] Ä«µå¸¦ ¼±ÅÃÇß´Ù!\n";//¼öÁ¤ÇØ¾ßÇÔ
+        std::cout << enemy->GetName() << "ì´(ê°€) [" << eCard->C_GetName() << "] ì¹´ë“œë¥¼ ì„ íƒí–ˆë‹¤!\n";//ìˆ˜ì •í•´ì•¼í•¨
         system("cls");
         Resolve(pCard, eCard, field);
         Healstamina();
@@ -23,14 +23,14 @@ void BattleManager::Healstamina()
 {
     player->SetStamina(player->GetStamina() + player->getTurnHealStamina());
 
-    //-------------ÀÓ½Ã Å×½ºÆ®¿ë-------------
-    std::cout << player->getTurnHealStamina() << " ¸¸Å­ ½ºÅÂ¹Ì³ª È¸º¹!" << std::endl;
+    //-------------ì„ì‹œ í…ŒìŠ¤íŠ¸ìš©-------------
+    std::cout << player->getTurnHealStamina() << " ë§Œí¼ ìŠ¤íƒœë¯¸ë‚˜ íšŒë³µ!" << std::endl;
 }
 
 void BattleManager::ShowCard(std::vector<std::shared_ptr<Card>> card)
 {
-    //------------ÀÓ½Ã Å×½ºÆ®¿ë--------------
-    std::cout << "ÇÃ·¹ÀÌ¾î Ä«µå ¼±ÅÃ :" << std::endl;
+    //------------ì„ì‹œ í…ŒìŠ¤íŠ¸ìš©--------------
+    std::cout << "í”Œë ˆì´ì–´ ì¹´ë“œ ì„ íƒ :" << std::endl;
     for (int i = 0; i < card.size(); i++) {
         std::cout << i + 1 << ". " << card[i]->C_GetName() << " (cost: " << card[i]->C_GetCost() << ")" << std::endl;
         if (auto a = dynamic_cast<C_Attack*>(card[i].get())) {
@@ -48,8 +48,8 @@ void BattleManager::ShowCard(std::vector<std::shared_ptr<Card>> card)
 
 void BattleManager::ShowUI()
 {
-    //-------------ÀÓ½Ã Å×½ºÆ®¿ë---------------
-    std::cout << "==== ÀüÅõ UI ====\n";
+    //-------------ì„ì‹œ í…ŒìŠ¤íŠ¸ìš©---------------
+    std::cout << "==== ì „íˆ¬ UI ====\n";
     std::cout << player->GetName() << " HP: " << player->GetHP() << " Stamina: " << player->GetStamina()
         << " | " << enemy->GetName() << " HP: " << enemy->GetHP() << "\n";
 }
@@ -61,14 +61,14 @@ std::shared_ptr<Card> BattleManager::PlayerTurn()
 
     int choice = -1;
     while (true) {
-        std::cout << "¼±ÅÃ (¹øÈ£ ÀÔ·Â): ";
+        std::cout << "ì„ íƒ (ë²ˆí˜¸ ì…ë ¥): ";
         std::cin >> choice;
 
-        // ÀÔ·Â ¿À·ù ¹æÁö
+        // ì…ë ¥ ì˜¤ë¥˜ ë°©ì§€
         if (std::cin.fail()) {
-            std::cin.clear(); // ¿À·ù ÇÃ·¡±× Å¬¸®¾î
-            std::cin.ignore(1000, '\n'); // Àß¸øµÈ ÀÔ·Â ¹öÆÛ Á¦°Å
-            std::cout << "Àß¸øµÈ ÀÔ·ÂÀÔ´Ï´Ù. ´Ù½Ã ÀÔ·ÂÇÏ¼¼¿ä.\n";
+            std::cin.clear(); // ì˜¤ë¥˜ í”Œë˜ê·¸ í´ë¦¬ì–´
+            std::cin.ignore(1000, '\n'); // ì˜ëª»ëœ ì…ë ¥ ë²„í¼ ì œê±°
+            std::cout << "ì˜ëª»ëœ ì…ë ¥ì…ë‹ˆë‹¤. ë‹¤ì‹œ ì…ë ¥í•˜ì„¸ìš”.\n";
             continue;
         }
 
@@ -76,7 +76,7 @@ std::shared_ptr<Card> BattleManager::PlayerTurn()
             break;
         }
         else {
-            std::cout << "À¯È¿ÇÏÁö ¾ÊÀº ¹øÈ£ÀÔ´Ï´Ù. ´Ù½Ã ¼±ÅÃÇÏ¼¼¿ä.\n";
+            std::cout << "ìœ íš¨í•˜ì§€ ì•Šì€ ë²ˆí˜¸ì…ë‹ˆë‹¤. ë‹¤ì‹œ ì„ íƒí•˜ì„¸ìš”.\n";
         }
     }
 
@@ -85,41 +85,41 @@ std::shared_ptr<Card> BattleManager::PlayerTurn()
 
 void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> eCard, BattleField& field)
 {
-    std::cout << "Çàµ¿ ½ÇÇà!\n";
+    std::cout << "í–‰ë™ ì‹¤í–‰!\n";
     int pCardDEF = 0;
     int eCardDEF = 0;
-    // ÇÃ·¹ÀÌ¾î Çàµ¿
-    if (auto moveCard = dynamic_cast<C_Move*>(pCard.get())) //ÇÃ·¹ÀÌ¾î ÀÌµ¿
+    // í”Œë ˆì´ì–´ í–‰ë™
+    if (auto moveCard = dynamic_cast<C_Move*>(pCard.get())) //í”Œë ˆì´ì–´ ì´ë™
     {
         field.field_move(moveCard->M_GetX(), moveCard->M_GetY());
     }
-    //Àû ÀÌµ¿
-    else if (auto defenseCard = dynamic_cast<C_Guard*>(pCard.get())) //ÇÃ·¹ÀÌ¾î ¹æ¾î
+    //ì  ì´ë™
+    else if (auto defenseCard = dynamic_cast<C_Guard*>(pCard.get())) //í”Œë ˆì´ì–´ ë°©ì–´
     {
         pCardDEF += defenseCard->G_GetDEF();
-        std::cout << "¹æ¾î°¡ " << defenseCard->G_GetDEF() << "¸¸Å­ »ó½ÂÇß´Ù." << std::endl;
+        std::cout << "ë°©ì–´ê°€ " << defenseCard->G_GetDEF() << "ë§Œí¼ ìƒìŠ¹í–ˆë‹¤." << std::endl;
     }
-    //Àû ¹æ¾î
-    else if (auto attackCard = dynamic_cast<C_Attack*>(pCard.get())) //ÇÃ·¹ÀÌ¾î °ø°İ
+    //ì  ë°©ì–´
+    else if (auto attackCard = dynamic_cast<C_Attack*>(pCard.get())) //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
         if (player->GetStamina() < attackCard->C_GetCost()) {
-            std::cout << "½ºÅÂ¹Ì³ª°¡ ºÎÁ·ÇÏ´Ù." << std::endl;
+            std::cout << "ìŠ¤íƒœë¯¸ë‚˜ê°€ ë¶€ì¡±í•˜ë‹¤." << std::endl;
         }
         else {
             player->SetStamina(player->GetStamina() - attackCard->C_GetCost());
             if (HitCheck(1, attackCard)) {
                 int hitdamage = attackCard->A_GetATK() + player->GetAttack() - enemy->GetDEF() - eCardDEF;
                 enemy->TakeDamage(hitdamage);
-                std::cout << "ÇÃ·¹ÀÌ¾î°¡ Àû¿¡°Ô " << hitdamage << "ÀÇ ÇÇÇØ¸¦ ÀÔÇû´Ù." << std::endl;
+                std::cout << "í”Œë ˆì´ì–´ê°€ ì ì—ê²Œ " << hitdamage << "ì˜ í”¼í•´ë¥¼ ì…í˜”ë‹¤." << std::endl;
             }
             else {
-                std::cout << "°ø°İ¿¡ ½ÇÆĞÇß´Ù." << std::endl;
+                std::cout << "ê³µê²©ì— ì‹¤íŒ¨í–ˆë‹¤." << std::endl;
             }
         }
     }
 
 
-    // Àû °ø°İ
+    // ì  ê³µê²©
 
 }
 
@@ -147,9 +147,9 @@ bool BattleManager::HitCheck(int Entity, C_Attack* card)
 void BattleManager::EndBattle()
 {
     if (player->IsDead())
-        std::cout << "ÇÃ·¹ÀÌ¾î ÆĞ¹è...\n";
+        std::cout << "í”Œë ˆì´ì–´ íŒ¨ë°°...\n";
     else {
-        std::cout << "Àû Ã³Ä¡ ¼º°ø!\n";
+        std::cout << "ì  ì²˜ì¹˜ ì„±ê³µ!\n";
         player->setExp(player->getExp() + enemy->getExp());
         player->setMoney(player->getMoney() + enemy->getmoney());
         enemy.reset();
