@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Card">
+      <UniqueIdentifier>{0500a6a8-0d57-4d44-86d1-03fd9f93fcf3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entity">
+      <UniqueIdentifier>{f53a4bf4-ce27-43b2-b3e5-6f4732fc3500}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Battlefield">
+      <UniqueIdentifier>{ebca868d-82ab-4a11-bbd4-7ecb858eaa0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\BattleManager">
+      <UniqueIdentifier>{9988dc53-faca-438b-b32c-6285b700455b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameManager">
+      <UniqueIdentifier>{e49be326-3e98-4fb8-aad3-2283d02d663e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Card">
+      <UniqueIdentifier>{f07d0b74-53d9-4500-80c2-464cd7d21dba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entity">
+      <UniqueIdentifier>{90e126eb-33a5-4c17-9f27-4056ebf38ece}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Battlefield">
+      <UniqueIdentifier>{2196c2d8-b6ec-4bad-a0fe-f166838c9cdb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\BattleManager">
+      <UniqueIdentifier>{6a6049a6-ab9a-4ece-bfc4-9cafae21f770}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GameManager">
+      <UniqueIdentifier>{76d13df4-819b-413c-82f0-8d124737fb6f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Card\Card.cpp">
+      <Filter>Source Files\Card</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Card\C_Move.cpp">
+      <Filter>Source Files\Card</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Card\C_Guard.cpp">
+      <Filter>Source Files\Card</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Card\C_Attack.cpp">
+      <Filter>Source Files\Card</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Entity\Entity.cpp">
+      <Filter>Source Files\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Entity\Player.cpp">
+      <Filter>Source Files\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Entity\Enemy.cpp">
+      <Filter>Source Files\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="src\battelfield\battlefield.cpp">
+      <Filter>Source Files\Battlefield</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BattleManager\BattleManager.cpp">
+      <Filter>Source Files\BattleManager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameManager\GameManager.cpp">
+      <Filter>Source Files\GameManager</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\Card\C_Attack.h">
+      <Filter>Header Files\Card</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Card\C_Guard.h">
+      <Filter>Header Files\Card</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Card\C_Move.h">
+      <Filter>Header Files\Card</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Card\Card.h">
+      <Filter>Header Files\Card</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Entity\Enemy.h">
+      <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Entity\Entity.h">
+      <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Entity\Player.h">
+      <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="include\battlefield\battlefield.h">
+      <Filter>Header Files\Battlefield</Filter>
+    </ClInclude>
+    <ClInclude Include="include\BattleManager\BattleManager.h">
+      <Filter>Header Files\BattleManager</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GameManager\GameManager.h">
+      <Filter>Header Files\GameManager</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Cards.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Entities.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
