@@ -3,7 +3,7 @@
 BattleField::BattleField()
 {
 	PlayerPositionX = 0;
-	PlayerPositionY = 1;
+	PlayerPositionY = 2;
 	EnemyPositionX = 3;
 	EnemyPositionY = 1;
 	for (int i = 0; i < 3; i++) {
