@@ -43,9 +43,6 @@
     <Filter Include="Header Files\GameManager">
       <UniqueIdentifier>{76d13df4-819b-413c-82f0-8d124737fb6f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\NewFilter1">
-      <UniqueIdentifier>{07b57de9-73c7-4db9-ad51-3713ee699f9b}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Card\Card.cpp">
@@ -79,6 +76,9 @@
       <Filter>Source Files\GameManager</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

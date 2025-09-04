@@ -23,6 +23,6 @@ private:
     void ShowUI();
     std::shared_ptr<Card> PlayerTurn();
     void Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> eCard, BattleField& field);
-    bool HitCheck(int Entity, C_Attack* card);//Entity 1: player 2: enemy 3:player&enemy(¹Ì±¸Çö)
+    bool HitCheck(int Entity, C_Attack* card);//Entity 1: player 2: enemy 3:player&enemy(ë¯¸êµ¬í˜„)
     void EndBattle();
 };

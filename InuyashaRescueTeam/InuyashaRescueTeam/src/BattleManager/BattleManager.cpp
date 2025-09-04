@@ -97,7 +97,7 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
         std::cout << "방어가 " << defenseCard->G_GetDEF() << "만큼 상승했다." << std::endl;
     }
     //적 방어
-    else if (auto attackCard = dynamic_cast<C_Attack*>(pCard.get())) //플레이어 공격
+    else if (auto attackCard = dynamic_cast<C_Attack*>(pCard.get())) //�÷��̾� ����
     {
         if (player->GetStamina() < attackCard->C_GetCost()) {
             std::cout << "스태미나가 부족하다." << std::endl;
@@ -148,7 +148,6 @@ void BattleManager::EndBattle()
     else {
         std::cout << "적 처치 성공!\n";
         player->AddEXP(enemy->getExp());
-        player->SetMoney(player->GetMoney() + enemy->getmoney());
         enemy.reset();
     }
 

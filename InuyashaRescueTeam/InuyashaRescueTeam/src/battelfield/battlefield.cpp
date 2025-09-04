@@ -21,7 +21,7 @@ void BattleField::field_move(int dirX, int dirY)
 	int NextY = PlayerPositionY + dirY;
 
 	if (battlegrid[NextY][NextX] != 0 || NextY > 2 || NextY < 0 || NextX>3 || NextX < 0) {
-		std::cout << "ÀÌµ¿ÇÒ ¼ö ¾ø½À´Ï´Ù." << std::endl;
+		std::cout << "ì´ë™í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤." << std::endl;
 		return;
 	}
 	else {
@@ -29,7 +29,7 @@ void BattleField::field_move(int dirX, int dirY)
 		PlayerPositionX = NextX;
 		PlayerPositionY = NextY;
 		battlegrid[PlayerPositionY][PlayerPositionX] = 1;
-		std::cout << "ÀÌµ¿ ¼º°ø" << std::endl;
+		std::cout << "ì´ë™ ì„±ê³µ" << std::endl;
 	}
 
 }
