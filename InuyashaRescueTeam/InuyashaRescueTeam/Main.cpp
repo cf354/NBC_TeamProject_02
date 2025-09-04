@@ -7,6 +7,7 @@
 #include "BattleManager\BattleManager.h"
 #include "GameManager\GameManager.h"
 #include <windows.h>
+//#include "Merchant\Merchant.h" 상점 테스트용
 
 
 
@@ -17,5 +18,10 @@ int main() {
     std::cout << "--------------------안녕------------------------" << std::endl;
     GameManager game;
     game.Run();
+
+    //// 상점 테스트 부분
+    //Merchant* test = new Merchant();
+    //test->OpenShop();
+
     return 0;
 }
