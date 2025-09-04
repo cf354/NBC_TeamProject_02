@@ -140,6 +140,7 @@
     <ClCompile Include="src\Entity\Entity.cpp" />
     <ClCompile Include="src\Entity\Player.cpp" />
     <ClCompile Include="src\GameManager\GameManager.cpp" />
+    <ClCompile Include="src\Merchant\Merchant.cpp" />
     <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -155,6 +156,7 @@
     <ClInclude Include="include\Entity\Entity.h" />
     <ClInclude Include="include\Entity\Player.h" />
     <ClInclude Include="include\GameManager\GameManager.h" />
+    <ClInclude Include="include\Merchant\Merchant.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

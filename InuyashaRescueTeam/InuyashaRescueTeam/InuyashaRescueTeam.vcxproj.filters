@@ -43,6 +43,12 @@
     <Filter Include="Header Files\GameManager">
       <UniqueIdentifier>{76d13df4-819b-413c-82f0-8d124737fb6f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Merchant">
+      <UniqueIdentifier>{784ee55d-28b0-4ada-b946-d1733f2ff309}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Merchant">
+      <UniqueIdentifier>{080ae3b5-c85a-44c6-864d-1804535c5cea}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Card\Card.cpp">
@@ -81,6 +87,9 @@
     <ClCompile Include="test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Merchant\Merchant.cpp">
+      <Filter>Source Files\Merchant</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Card\C_Attack.h">
@@ -118,6 +127,9 @@
     </ClInclude>
     <ClInclude Include="include\Entities.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Merchant\Merchant.h">
+      <Filter>Header Files\Merchant</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
