@@ -21,7 +21,9 @@ void BattleManager::StartBattle()
 
 void BattleManager::Healstamina()
 {
+
     player->AddStamina(15);
+
 }
 
 void BattleManager::ShowCard(std::vector<std::shared_ptr<Card>> card)
@@ -147,7 +149,9 @@ void BattleManager::EndBattle()
         std::cout << "플레이어 패배...\n";
     else {
         std::cout << "적 처치 성공!\n";
+
         player->AddEXP(enemy->getExp());
+
         enemy.reset();
     }
 
