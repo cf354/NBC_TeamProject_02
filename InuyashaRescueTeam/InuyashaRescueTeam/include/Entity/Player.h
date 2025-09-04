@@ -1,33 +1,66 @@
-#pragma once
-#include "Entity.h"
+#pragma once // 헤더 파일 중복 포함 방지
+#include "Entity\Entity.h" // 부모 클래스인 Entity 헤더 포함
 #include <vector>
-#include <iostream>
-#include "Card\Card.h"
+#include <memory> // std::shared_ptr 사용을 위해 추가
+#include <conio.h> // 컨트롤러 입력을 위한 헤더
+#include <windows.h> // Windows API 사용
 
-class Player : public Entity {
-private:
-    int money;
-    int exp;
-    std::vector<std::shared_ptr<Card>> deck;
-    int TurnHealStamina = 15;
+// 클래스 전방 선언 (Card 클래스 구현 후 헤더 추가)
+class Card;
 
-public:
-    Player(std::string n, int lv, int h, int s, int a, int d)
-        : Entity(n, lv, h, s, a, d), money(0), exp(0) {
-    }
+// 유틸리티 함수
+void setCursorPosition(int x, int y);
+void hideCursor();
+int getCurrentCursorLine();
+void clearLine(int lineNumber);
 
-    int getTurnHealStamina() { return TurnHealStamina; }
-    int getMoney() { return money; }
-    int getExp() { return exp; }
-
-    void setTurnHealStamina(int n) { TurnHealStamina = n; }
-    void setMoney(int n) { money = n; }
-    void setExp(int n);
-    void LevelUp();
-    
-
-    void AddCard(const std::shared_ptr<Card> c) { deck.push_back(c); }
-    std::vector<std::shared_ptr<Card>> GetCards() { return deck; }
-
+// 방향 열거형
+enum class Direction 
+{
+    UP,
+    DOWN,
+    LEFT,
+    RIGHT
 };
 
+class Player : public Entity 
+{
+private:
+    int Money;
+    int EXP;
+    int maxEXP;
+    // 스마트 포인터 shared_ptr 사용
+    std::vector<std::shared_ptr <Card>> deck;
+    int posX;
+    int posY;
+
+    // 레벨 업 (객체 안에서만 통제)
+    void LevelUP();
+
+public:
+    // 생성자 
+    Player(const std::string& name, int level, int hp, int stamina, int atk, int def);
+
+    // 정보 반환 (Getter)
+    int GetMoney() const;
+    int GetEXP() const;
+    int GetMaxEXP() const;
+    int GetPosX() const;
+    int GetPosY() const;
+    std::vector<std::shared_ptr<Card>> GetDeck();
+
+    // 정보 설정 (Setter)
+    void SetMoney(int money);
+    void SetEXP(int exp);
+    void SetPosition(int x, int y);
+
+    // 멤버 함수 
+    void Move(Direction dir);
+    void PrintPosition() const;
+    void PrintStatus() const;
+    void AddCard(std::shared_ptr<Card> newCard); // 카드 추가
+    void AddEXP(int amount);
+    void AddStamina(int amount);
+    void ShowCards() const;     // 카드 출력
+    
+};

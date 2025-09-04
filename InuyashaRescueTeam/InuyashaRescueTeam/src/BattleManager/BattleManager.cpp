@@ -21,10 +21,9 @@ void BattleManager::StartBattle()
 
 void BattleManager::Healstamina()
 {
-    player->SetStamina(player->GetStamina() + player->getTurnHealStamina());
 
-    //-------------임시 테스트용-------------
-    std::cout << player->getTurnHealStamina() << " 만큼 스태미나 회복!" << std::endl;
+    player->AddStamina(15);
+
 }
 
 void BattleManager::ShowCard(std::vector<std::shared_ptr<Card>> card)
@@ -56,7 +55,7 @@ void BattleManager::ShowUI()
 
 std::shared_ptr<Card> BattleManager::PlayerTurn()
 {
-    std::vector<std::shared_ptr<Card>> card = player->GetCards();
+    std::vector<std::shared_ptr<Card>> card = player->GetDeck();
     ShowCard(card);
 
     int choice = -1;
@@ -108,7 +107,7 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
         else {
             player->SetStamina(player->GetStamina() - attackCard->C_GetCost());
             if (HitCheck(1, attackCard)) {
-                int hitdamage = attackCard->A_GetATK() + player->GetAttack() - enemy->GetDEF() - eCardDEF;
+                int hitdamage = attackCard->A_GetATK() + player->GetATK() - enemy->GetDEF() - eCardDEF;
                 enemy->TakeDamage(hitdamage);
                 std::cout << "플레이어가 적에게 " << hitdamage << "의 피해를 입혔다." << std::endl;
             }
@@ -150,8 +149,9 @@ void BattleManager::EndBattle()
         std::cout << "플레이어 패배...\n";
     else {
         std::cout << "적 처치 성공!\n";
-        player->setExp(player->getExp() + enemy->getExp());
-        player->setMoney(player->getMoney() + enemy->getmoney());
+
+        player->AddEXP(enemy->getExp());
+
         enemy.reset();
     }
 

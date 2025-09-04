@@ -22,7 +22,9 @@ public:
 
 	~Enemy() {};
 
+
 	//----------------임시----------------
+
 	std::shared_ptr<Card> GetRandomCard() {
 		int idx = rand() % deck.size();
 		return deck[idx];
