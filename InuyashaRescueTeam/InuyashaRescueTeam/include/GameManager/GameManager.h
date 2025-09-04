@@ -12,10 +12,10 @@ private:
 
 public:
     GameManager() {
-        player = std::make_shared<Player>("ÀÌ´©¾ß»ş", 1, 100, 100, 10, 5);
-        enemy = std::make_shared<Enemy>("¼Â¼î¸¶·ç", 1, 50, 30, 8, 3, 10, 20);
+        player = std::make_shared<Player>("ì´ëˆ„ì•¼ìƒ¤", 1, 100, 100, 10, 5);
+        enemy = std::make_shared<Enemy>("ì…‹ì‡¼ë§ˆë£¨", 1, 50, 30, 8, 3, 10, 20);
 
-        // ±âº» Ä«µå ¸î Àå Ãß°¡
+        // ê¸°ë³¸ ì¹´ë“œ ëª‡ ì¥ ì¶”ê°€
         player->AddCard(std::make_shared<C_Move>("MoveRight", 0, 0, 1, 1, 0));// C_Move(std::string n,int C, int G, int d, int dirx, int diry) :distance(d), x(dirx), y(diry) { Name = n; Cost = C; Gold = G; };
         player->AddCard(std::make_shared<C_Move>("MoveLeft", 0, 0, 1, -1, 0));
         player->AddCard(std::make_shared<C_Move>("MoveUp", 0, 0, 1, 0, -1));
