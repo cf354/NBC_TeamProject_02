@@ -1,43 +1,35 @@
-#pragma once
+#pragma once // 헤더 파일 중복 포함 방지
+#include <iostream>
 #include <string>
 
 class Entity {
 protected:
-	std::string name;
-	int level;
-	int hp;
-	int stamina;
-	int atk;
-	int def;
-	int MAXstamina;
-	int MAXhp;
+    std::string Name;
+    int Level;
+    int HP;
+    int Stamina;
+    int ATK;
+    int DEF;
 
 public:
-	Entity(std::string n, int lv, int h, int s, int a, int d)
-		: name(n), level(lv), hp(h), stamina(s), atk(a), def(d), MAXhp(h), MAXstamina(s) {
-	}
+    // 생성자 및 소멸자
+    Entity(const std::string& name, int level, int hp, int stamina, int atk, int def);
+    virtual ~Entity();
 
-	
+    // 피격 시 데미지 계산
+    void TakeDamage(int damage);
 
-	int GetHP() const { return hp; }
-	int GetStamina() const { return stamina; }
-	int GetAttack() const { return atk; }
-	int GetDEF()const { return def; }
-	std::string GetName() const { return name; }
-	void SetStamina(int n);
-	void SetHP(int n);
-	void SetDEF(int n) { def = n; }
-	void SetATK(int n) { atk = n; }
-	void SetMAXstamina(int n) { MAXstamina = n; }
-	void SetMAXhp(int n) { MAXhp = n; }
+    // 정보 반환 (Getter)
+    int GetLv() const;
+    int GetHP() const;
+    int GetStamina() const;
+    int GetATK() const;
+    int GetDEF() const;
+    std::string GetName() const;
 
-
-	void TakeDamage(int dmg);
-
-	bool IsDead() const { return hp <= 0; }
-
-	virtual ~Entity() {}
+    // 정보 설정 (Setter) 
+    void SetHP(int hp);
+    void SetStamina(int stamina);
+    
+    bool IsDead();
 };
-
-
-

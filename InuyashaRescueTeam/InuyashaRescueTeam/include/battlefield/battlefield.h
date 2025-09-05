@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 
-class BattleField {//ÇÊµå Àû ÇÃ·¹ÀÌ¾î °ãÄ¡´Â °Å ±¸Çö
+class BattleField {//í•„ë“œ ì  í”Œë ˆì´ì–´ ê²¹ì¹˜ëŠ” ê±° êµ¬í˜„
 private:
     int battlegrid[3][4];
 public:
