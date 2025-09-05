@@ -28,7 +28,7 @@ void BattleManager::StartBattle()
 
 void BattleManager::Healstamina()
 {
-    player->AddStamina(15);
+	player->AddStamina(15);
 }
 
 void BattleManager::ShowCard(std::vector<std::shared_ptr<Card>> card)
@@ -119,7 +119,7 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
 		std::cout << "방어가 " << defenseCard->G_GetDEF() << "만큼 상승했다." << std::endl;
 	}
 	//적 방어
-	else if (auto attackCard = dynamic_cast<C_Attack*>(pCard.get())) //÷̾ 
+	else if (auto attackCard = dynamic_cast<C_Attack*>(pCard.get())) //÷̾ 
 	{
 		if (player->GetStamina() < attackCard->C_GetCost()) {
 			std::cout << "스태미나가 부족하다." << std::endl;
@@ -140,8 +140,14 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
 
 	// 적 행동
 	if (auto moveCard = dynamic_cast<C_Move*>(eCard.get())) {
-		field.field_move(moveCard->M_GetX(), moveCard->M_GetY(), 2);
-		std::cout << "적이 이동했습니다." << std::endl;
+		if (enemy->GetStamina() < moveCard->C_GetCost()) {
+			std::cout << "적의 스태미나가 부족합니다." << std::endl;
+		}
+		else {
+			enemy->SetStamina(enemy->GetStamina() - moveCard->C_GetCost());
+			field.field_move(moveCard->M_GetX(), moveCard->M_GetY(), 2);
+			std::cout << "적이 이동했습니다." << std::endl;
+		}
 	}
 	else if (auto defenseCard = dynamic_cast<C_Guard*>(eCard.get())) {
 		eCardDEF += defenseCard->G_GetDEF();
@@ -198,4 +204,3 @@ void BattleManager::EndBattle()
 		enemy.reset();
 	}
 }
-
