@@ -30,13 +30,18 @@ public:
     ~Enemy() {};
 
 
+
 	//----------------임시----------------
 
-	// 기존 GetRandomCard() 함수를 가중치를 고려하도록 수정
-	//std::shared_ptr<Card> GetRandomCard() {
-	//	int idx = rand() % deck.size();
-	//	return deck[idx];
-	//}
+=======
+
+	std::shared_ptr<Card> GetRandomCard() {
+		int idx = rand() % deck.size();
+		return deck[idx];
+	}
+	
+};
+
 	std::shared_ptr<Card> GetRandomCard();
 
 };

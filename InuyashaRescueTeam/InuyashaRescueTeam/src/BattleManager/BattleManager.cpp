@@ -28,9 +28,7 @@ void BattleManager::StartBattle()
 
 void BattleManager::Healstamina()
 {
-
-	player->AddStamina(15);
-
+    player->AddStamina(15);
 }
 
 void BattleManager::ShowCard(std::vector<std::shared_ptr<Card>> card)
@@ -74,6 +72,7 @@ void BattleManager::ShowUI()
 
 std::shared_ptr<Card> BattleManager::PlayerTurn()
 {
+
 	std::vector<std::shared_ptr<Card>> card = player->GetDeck();
 	ShowCard(card);
 
@@ -99,10 +98,12 @@ std::shared_ptr<Card> BattleManager::PlayerTurn()
 	}
 
 	return card[choice - 1];
+
 }
 
 void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> eCard, BattleField& field)
 {
+
 	std::cout << "행동 실행!\n";
 	int pCardDEF = 0;
 	int eCardDEF = 0;
@@ -163,6 +164,7 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
 			}
 		}
 	}
+
 }
 
 bool BattleManager::HitCheck(int Entity, C_Attack* card)
@@ -187,6 +189,7 @@ bool BattleManager::HitCheck(int Entity, C_Attack* card)
 
 void BattleManager::EndBattle()
 {
+
 	if (player->IsDead())
 		std::cout << "플레이어 패배...\n";
 	else {
@@ -194,5 +197,5 @@ void BattleManager::EndBattle()
 		player->AddEXP(enemy->getExp());
 		enemy.reset();
 	}
-
 }
+
