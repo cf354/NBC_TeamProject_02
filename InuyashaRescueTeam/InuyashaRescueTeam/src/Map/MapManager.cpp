@@ -7,6 +7,7 @@
 #include <deque>
 #include "Entity/Player.h"
 #include "GameManager/GameManager.h"
+#include "Common/ConsolePrinter.h"
 
 void MapManager::PlaceNode()
 {
@@ -347,7 +348,7 @@ void MapManager::MakeMapActors()
 			}
 
 			string str = "";
-			for (int k = 0; k < rowCont; k++)
+			for (int k = rowCont - 1; k >= 0; k--)
 			{
 				for (int l = 0; l < colCont; l++)
 				{
@@ -356,20 +357,19 @@ void MapManager::MakeMapActors()
 					str += mapData[i - k][j + l];
 				}
 			}
-			MapObj obj;
-			obj.pos = Vector2D(j - colCont - 1, i);
-			obj.sizeCollider = Vector2D(colCont, max(1, rowCont - 1));
-			obj.sizeRender = Vector2D(colCont, rowCont);
-			obj.strRender = str;
-			mapObjs.push_back(obj);
+			MapObj* obj = new MapObj();
+			obj->type = ObjType::WorldStatic;
+			obj->pos = Vector2D(j, i);
+			obj->sizeCollider = Vector2D(colCont, max(1, rowCont - 1));
+			obj->sizeRender = Vector2D(colCont, rowCont);
+			obj->strRender = str;
+			objects.push_back(obj);
 		}
 	}
 }
 
 void MapManager::Release()
 {
-	// 동적 할당 해제 및 clear
-	// 나중에 추가
 	for (int i = 0; i < vecNode.size(); i++)
 	{
 		delete vecNode[i];
@@ -391,7 +391,11 @@ void MapManager::Release()
 	}
 	vecEdge.clear();
 
-	mapObjs.clear();
+	for (int i = 0; i < objects.size(); i++)
+	{
+		delete objects[i];
+	}
+	objects.clear();
 }
 
 void MapManager::EnterNextStage()
@@ -411,6 +415,7 @@ void MapManager::EnterNextStage()
 	{
 		MakeStairs();
 	}
+	MakePlayerObj();
 }
 
 // 방 크기 여유롭게 잡아야 할 듯
@@ -429,11 +434,65 @@ void MapManager::MakeStairs()
 	rb -= Vector2D(2, 2);
 	Vector2D pos = Vector2D(RANDOM_MANAGER->Range(lt.x, rb.x), RANDOM_MANAGER->Range(lt.y, rb.y));
 
-	MapObj objStairs;
-	objStairs.pos = pos;
-	objStairs.sizeCollider = Vector2D(3, 3);
-	objStairs.sizeRender = Vector2D(3, 3);
-	objStairs.strRender = "  # #####";
+	MapObj* objStairs = new MapObj();
+	objStairs->type = ObjType::Stairs;
+	objStairs->pos = pos;
+	objStairs->sizeCollider = Vector2D(3, 3);
+	objStairs->sizeRender = Vector2D(3, 3);
+	objStairs->strRender = "  # #####";
+	objects.push_back(objStairs);
+}
+
+void MapManager::MakePlayerObj()
+{
+	auto player = GAME_MANAGER->GetPlayer().lock();
+	if (player != nullptr)
+	{
+		objPlayer = new MapObj();
+		objPlayer->type = ObjType::Player;
+		objPlayer->pos = Vector2D(player->GetPosX(), player->GetPosY());
+		objPlayer->sizeCollider = Vector2D(1, 1);
+		objPlayer->sizeRender = Vector2D(1, 1);
+		objPlayer->strRender = "@";
+		objects.push_back(objPlayer);
+	}
+}
+
+void MapManager::Draw()
+{
+	sort(objects.begin(), objects.end(), [](const auto& obj1, const auto& obj2)
+		{
+			return obj1->pos.y < obj2->pos.y;
+		});
+
+	auto player = GAME_MANAGER->GetPlayer().lock();
+	if (player != nullptr)
+	{
+		Vector2D playerPos = Vector2D(player->GetPosX(), player->GetPosY());
+		Vector2D lt = Vector2D(max(0, playerPos.x - DATA_WIDTH / 2), max(0, playerPos.y - DATA_HEIGHT / 2));
+		Vector2D rb = lt + Vector2D(DATA_WIDTH - 1, DATA_HEIGHT - 1);
+		int idx, x, y;
+		Vector2D objLT, objSize;
+		for (int i = 0; i < objects.size(); i++)
+		{
+			if (objects[i]->type == ObjType::Player)
+				cout << endl;
+			objSize = objects[i]->sizeRender;
+			objLT = Vector2D(objects[i]->pos.x, objects[i]->pos.y - (objSize.y - 1));
+			for (int j = 0; j < objSize.y; j++)
+			{
+				for (int k = 0; k < objSize.x; k++)
+				{
+					y = objLT.y + j;
+					x = objLT.x + k;
+					if (y < lt.y || y > rb.y || x < lt.x || x > rb.x)
+						continue;
+					idx = j * objSize.x + k;
+					CONSOLE_PRINTER->SetData(y - lt.y, x - lt.x, objects[i]->strRender[idx]);
+				}
+			}
+		}
+	}
 }
 
 Triangle* MapManager::CreateTriangle(Node* a, Node* b, Node* c)

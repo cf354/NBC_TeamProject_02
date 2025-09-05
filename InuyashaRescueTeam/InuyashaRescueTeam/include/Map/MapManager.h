@@ -168,7 +168,7 @@ struct AStarNode
 	AStarNode* parentNode;
 };
 
-class MapManager : Singleton<MapManager>
+class MapManager : public Singleton<MapManager>
 {
 public:
 	/// <summary>
@@ -204,6 +204,9 @@ public:
 
 	void EnterNextStage();
 	void MakeStairs();
+	void MakePlayerObj();
+
+	void Draw();
 
 	Triangle* CreateTriangle(Node* a, Node* b, Node* c);
 	Triangle* CreateSuperTriangle(const vector<Vector2D>& points);
@@ -215,7 +218,6 @@ public:
 	void AStarPathFind(Edge* edge, int gridSizeX, int gridSizeY);
 
 private:
-
 	const Vector2D UNIT_GRID_SIZE = Vector2D(19, 11);
 	const Vector2D ROOM_SIZE_MIN = Vector2D(8, 5);
 	const Vector2D ROOM_SIZE_MAX = Vector2D(15, 7);
@@ -242,8 +244,10 @@ private:
 	vector<vector<char>> mapData;
 	int mapWidth, mapHeight;
 
-	vector<MapObj> mapObjs;
-	MapObj objStairs;
+	// 맵만 만들려고 했는데, 그려내는 문제 때문에 씬매니저 같은 역할도 해야 할 듯
+	// 분리해서 만들기엔 게임 규모가 너무 작음
+	vector<MapObj*> objects;
+	MapObj* objPlayer;
 };
 
 #define MAP_MANAGER (MapManager::GetInstance())

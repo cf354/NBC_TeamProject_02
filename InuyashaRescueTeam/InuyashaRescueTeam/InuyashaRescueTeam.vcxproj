@@ -129,6 +129,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Common\ConsolePrinter.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="src\Common\RandomManager.cpp" />
     <ClCompile Include="src\Map\MapManager.cpp" />
@@ -146,6 +147,7 @@
     <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Common\ConsolePrinter.h" />
     <ClInclude Include="include\battlefield\battlefield.h" />
     <ClInclude Include="include\BattleManager\BattleManager.h" />
     <ClInclude Include="include\Cards.h" />

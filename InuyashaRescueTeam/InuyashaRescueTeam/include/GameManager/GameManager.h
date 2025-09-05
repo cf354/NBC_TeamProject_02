@@ -12,7 +12,8 @@ private:
     std::shared_ptr<Enemy> enemy;
 
 public:
-    GameManager();
+    void Init();
+    void Update();
     void Run();
 
     std::weak_ptr<Player> GetPlayer();

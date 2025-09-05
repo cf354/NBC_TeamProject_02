@@ -1,7 +1,11 @@
 #include "GameManager\GameManager.h"
+#include "Map/MapManager.h"
+#include "Common/ConsolePrinter.h"
 
-GameManager::GameManager()
+void GameManager::Init()
 {
+    CONSOLE_PRINTER->Init();
+
     player = std::make_shared<Player>("이누야샤", 1, 100, 100, 10, 5);
     enemy = std::make_shared<Enemy>("셋쇼마루", 1, 50, 30, 8, 3, 10, 20);
 
@@ -26,6 +30,14 @@ GameManager::GameManager()
     enemy->AddCard(std::make_shared<C_Move>("MoveDown", 0, 0, 1, 0, -1));
 }
 
+void GameManager::Update()
+{
+    CONSOLE_PRINTER->Update();
+    MAP_MANAGER->Draw();
+
+    CONSOLE_PRINTER->Render();
+}
+
 void GameManager::Run()
 {
     BattleManager battle(player, enemy);
@@ -34,5 +46,5 @@ void GameManager::Run()
 
 std::weak_ptr<Player> GameManager::GetPlayer()
 {
-    return std::weak_ptr<Player>();
+    return player;
 }
