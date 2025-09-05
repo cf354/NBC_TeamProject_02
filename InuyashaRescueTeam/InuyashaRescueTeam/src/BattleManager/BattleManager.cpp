@@ -5,10 +5,11 @@
 #include "Entity/Player.h"
 #include "Entity/Enemy.h"
 
+
 void BattleManager::StartBattle()
 {
 	std::cout << "전투 시작!\n";
-
+	//BattleMusic();
 	while (!player->IsDead() && !enemy->IsDead()) {
 		field.field_print();
 		ShowUI();
@@ -17,13 +18,23 @@ void BattleManager::StartBattle()
 		// 적 턴 시작 시 플레이어와 적의 위치를 GetRandomCard 함수에 전달
 		std::shared_ptr<Card> eCard = enemy->GetRandomCard(field.PlayerPositionX, field.PlayerPositionY, field.EnemyPositionX, field.EnemyPositionY);
 
-		std::cout << enemy->GetName() << "이(가) [" << eCard->C_GetName() << "] 카드를 선택했다!\n";
+		std::cout << enemy->GetName()<<   "이(가) [" << eCard->C_GetName() << "] 카드를 선택했다!\n";
 		system("cls");
 		Resolve(pCard, eCard, field);
 		Healstamina();
 		enemy->RecoverStamina(10);
 	}
 	EndBattle();
+}
+
+void BattleManager::BattleMusic() {
+	
+	if (!bgm.openFromFile("test1.wav"))return;
+
+	bgm.setLoop(true);
+	bgm.play();
+
+	
 }
 
 void BattleManager::Healstamina()
