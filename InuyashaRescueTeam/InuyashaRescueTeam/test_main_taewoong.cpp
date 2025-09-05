@@ -7,11 +7,13 @@
 //#include "BattleManager\BattleManager.h"
 //#include "GameManager\GameManager.h"
 //#include <windows.h>
-//#include "InputManager\InputManager.h" // InputManager 헤더 추가
+//#include "InputManager/InputManager.h" // InputManager 헤더 추가
 //#include <memory>
 //
 //int main()
 //{
+//    SetConsoleOutputCP(CP_UTF8);
+//
 //    Player player("Hero", 1, 100, 50, 10, 5);
 //    hideCursor();
 //
@@ -24,11 +26,16 @@
 //    // 현재 게임 상태를 관리하는 변수
 //    GameState currentState = GameState::FIELD;
 //    bool isGameRunning = true;
-//
+//    std::cout << "***** 테스트 중 *****" << std::endl;
 //    while (isGameRunning)
 //    {
 //        // 상황에 따른 화면 출력 분기
-//        setCursorPosition(0, 0); // 커서 위치 맞추기
+//
+//        // 테스트용
+//        setCursorPosition(0, 1); // 커서 위치 맞추기
+//        player.PrintStatus();
+//        setCursorPosition(0, 16); // 커서 위치 맞추기
+//
 //        switch (currentState)
 //        {
 //        case GameState::FIELD:
@@ -63,13 +70,13 @@
 //            case KeyAction::MOVE_DOWN:  player.Move(Direction::DOWN); break;
 //            case KeyAction::MOVE_LEFT:  player.Move(Direction::LEFT); break;
 //            case KeyAction::MOVE_RIGHT: player.Move(Direction::RIGHT); break;
-//            // 상점 입장 상호작용
+//                // 상점 입장 상호작용
 //            case KeyAction::ENTER_MERCHANT:
 //                currentState = GameState::MERCHANT; // 상태 변경
 //                // ... 상점 기능 구현 ...
 //                // 카드 구매, 판매 등등
 //                break;
-//            // 전투 입장 상호작용
+//                // 전투 입장 상호작용
 //            case KeyAction::ENTER_BATTLE:
 //                currentState = GameState::BATTLE;   // 상태 변경
 //                // ... 전투 기능 구현 ...
