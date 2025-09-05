@@ -129,6 +129,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="src\battelfield\battlefield.cpp" />
     <ClCompile Include="src\BattleManager\BattleManager.cpp" />
@@ -141,7 +142,7 @@
     <ClCompile Include="src\Entity\Player.cpp" />
     <ClCompile Include="src\GameManager\GameManager.cpp" />
     <ClCompile Include="src\Merchant\Merchant.cpp" />
-    <ClCompile Include="test.cpp" />
+    <ClCompile Include="test_main_taewoong.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\battlefield\battlefield.h" />
@@ -157,6 +158,7 @@
     <ClInclude Include="include\Entity\Player.h" />
     <ClInclude Include="include\GameManager\GameManager.h" />
     <ClInclude Include="include\Merchant\Merchant.h" />
+    <ClInclude Include="InputManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

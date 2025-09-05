@@ -22,7 +22,7 @@ void BattleManager::StartBattle()
 void BattleManager::Healstamina()
 {
 
-    player->AddStamina(15);
+    // player->AddStamina(15);
 
 }
 
