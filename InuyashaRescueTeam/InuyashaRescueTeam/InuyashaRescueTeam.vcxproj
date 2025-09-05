@@ -130,6 +130,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="src\Common\RandomManager.cpp" />
+    <ClCompile Include="src\Map\MapManager.cpp" />
     <ClCompile Include="src\battelfield\battlefield.cpp" />
     <ClCompile Include="src\BattleManager\BattleManager.cpp" />
     <ClCompile Include="src\Card\Card.cpp" />
@@ -157,6 +159,10 @@
     <ClInclude Include="include\Entity\Player.h" />
     <ClInclude Include="include\GameManager\GameManager.h" />
     <ClInclude Include="include\Merchant\Merchant.h" />
+    <ClInclude Include="include\Map\MapManager.h" />
+    <ClInclude Include="include\Map\MapTypes.h" />
+    <ClInclude Include="include\Common\RandomManager.h" />
+    <ClInclude Include="include\Common\Singleton.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

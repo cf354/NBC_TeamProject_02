@@ -90,6 +90,12 @@
     <ClCompile Include="src\Merchant\Merchant.cpp">
       <Filter>Source Files\Merchant</Filter>
     </ClCompile>
+    <ClCompile Include="src\Map\MapManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Common\RandomManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Card\C_Attack.h">
@@ -130,6 +136,18 @@
     </ClInclude>
     <ClInclude Include="include\Merchant\Merchant.h">
       <Filter>Header Files\Merchant</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Map\MapManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Map\MapTypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Common\RandomManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Common\Singleton.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
