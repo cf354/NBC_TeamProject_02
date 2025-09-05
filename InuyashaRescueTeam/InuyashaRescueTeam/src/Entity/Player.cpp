@@ -3,6 +3,8 @@
 #include <iostream>
 #include <typeinfo> // dynamic_cast 사용을 위해 추가
 
+// #define MAX_STAMINA 100 // 스테미너 최대치 제어
+
 // 커서 위치를 (x, y)로 이동시키는 함수
 void setCursorPosition(int x, int y) 
 {
@@ -74,6 +76,12 @@ std::vector<std::shared_ptr<Card>> Player::GetDeck()
 // 플레이어 좌표 이동 
 void Player::Move(Direction dir) 
 {
+    // 움직이기 직전 갱신
+    int Prev_posX = posX;
+    int Prev_posY = posY;
+
+
+    // 다음 이동을 위한 현재 위치 지정
     int nextX = posX;
     int nextY = posY;
 
@@ -157,27 +165,33 @@ void Player::LevelUP()
 }
 
 // 스테미너 추가 (회복 또는 감소)
-void Player::AddStamina(int amount)
-{
-    // 현재 스테미너에 amount 값을 더함 (amount가 음수면 감소)
-    this->Stamina += amount;
-
-    // 스테미너가 0 미만으로 내려가지 않도록 처리
-    if (this->Stamina < 0)
-    {
-        this->Stamina = 0;
-    }
-
-    clearLine(getCurrentCursorLine());
-    if (amount >= 0)
-    {
-        std::cout << "***** 스테미너를 " << amount << "만큼 회복했습니다. (현재: " << this->Stamina << ") *****" << std::endl;
-    }
-    else
-    {
-        std::cout << "***** 스테미너를 " << -amount << "만큼 소모했습니다. (현재: " << this->Stamina << ") *****" << std::endl;
-    }
-}
+//void Player::AddStamina(int amount)
+//{
+//    // 현재 스테미너에 amount 값을 더함 (amount가 음수면 감소)
+//    this->Stamina += amount;
+//
+//    // 스테미너가 0 미만으로 내려가지 않도록 처리
+//    if (this->Stamina < 0)
+//    {
+//        this->Stamina = 0;
+//    }
+//
+//     // 최대 스테미너 제한
+//     if (this->Stamina > MAX_STAMINA)
+//     {
+//         this->Stamina = MAX_STAMINA;
+//     }
+//
+//    clearLine(getCurrentCursorLine());
+//    if (amount >= 0)
+//    {
+//        std::cout << "***** 스테미너를 " << amount << "만큼 회복했습니다. (현재: " << this->Stamina << ") *****" << std::endl;
+//    }
+//    else
+//    {
+//        std::cout << "***** 스테미너를 " << -amount << "만큼 소모했습니다. (현재: " << this->Stamina << ") *****" << std::endl;
+//    }
+//}
 
 // 카드 추가 
 void Player::AddCard(std::shared_ptr<Card> newCard)

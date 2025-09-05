@@ -7,7 +7,7 @@
 #include "BattleManager\BattleManager.h"
 #include "GameManager\GameManager.h"
 #include <windows.h>
-//#include "Merchant\Merchant.h" 상점 테스트용
+#include "Merchant\Merchant.h"
 #include "Map/MapManager.h"
 
 
