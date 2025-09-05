@@ -10,6 +10,7 @@ class GameManager : public Singleton<GameManager>
 private:
     std::shared_ptr<Player> player;
     std::shared_ptr<Enemy> enemy;
+    std::vector<std::shared_ptr <Card>> AllCardsList;
 
 public:
     void Init();
