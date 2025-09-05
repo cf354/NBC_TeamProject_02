@@ -49,6 +49,12 @@
     <Filter Include="Source Files\Merchant">
       <UniqueIdentifier>{080ae3b5-c85a-44c6-864d-1804535c5cea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\InputManager">
+      <UniqueIdentifier>{c556eee8-011b-4c2d-b41c-55c94b142f25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\InputManager">
+      <UniqueIdentifier>{90880816-4b0a-469a-8f67-fb689e2538d0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Card\Card.cpp">
@@ -84,12 +90,14 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="test.cpp">
+    <ClCompile Include="test_main_taewoong.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Merchant\Merchant.cpp">
       <Filter>Source Files\Merchant</Filter>
     </ClCompile>
+    <ClCompile Include="src\InputManager\InputManager.cpp">
+      <Filter>Source Files\InputManager</Filter>
     <ClCompile Include="src\Map\MapManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -140,6 +148,8 @@
     <ClInclude Include="include\Merchant\Merchant.h">
       <Filter>Header Files\Merchant</Filter>
     </ClInclude>
+    <ClInclude Include="include\InputManager\InputManager.h">
+      <Filter>Header Files\InputManager</Filter>
     <ClInclude Include="include\Map\MapManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
