@@ -18,6 +18,7 @@ public:
     void Run();
 
     std::weak_ptr<Player> GetPlayer();
+    std::vector<std::shared_ptr <Card>>* GetAllCardsList();
 };
 
 #define GAME_MANAGER (GameManager::GetInstance())
