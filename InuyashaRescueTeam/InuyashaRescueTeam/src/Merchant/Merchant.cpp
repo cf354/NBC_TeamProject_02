@@ -39,8 +39,7 @@ void Merchant::OpenShop()
 
 void Merchant::MakeList()
 {
-	GameManager game;
-	std::vector<std::shared_ptr <Card>>* CardList = game.GetAllCardsList();
+	std::vector<std::shared_ptr <Card>>* CardList = GAME_MANAGER->GetAllCardsList();
 	for (int i = 0; i < 13; ++i) // 일단 전부 다 넣음. 나중에 몇개넣을지는 변수로 지정하는 것으로 변경 예정
 	{
 		ShopList.emplace_back((*CardList)[i], false);
