@@ -6,12 +6,22 @@
 #include "battlefield\battlefield.h"
 #include "BattleManager\BattleManager.h"
 #include "GameManager\GameManager.h"
+#include <windows.h>
+//#include "Merchant\Merchant.h" 상점 테스트용
 
 
 
 int main() {
     srand((unsigned int)time(nullptr)); // 랜덤 시드 적카드 뽑기때문에 임시로..
+    SetConsoleOutputCP(CP_UTF8);
+    // 또는 wide 출력: _setmode(_fileno(stdout), _O_U16TEXT);
+    std::cout << "--------------------안녕------------------------" << std::endl;
     GameManager game;
     game.Run();
+
+    //// 상점 테스트 부분
+    //Merchant* test = new Merchant();
+    //test->OpenShop();
+
     return 0;
 }
