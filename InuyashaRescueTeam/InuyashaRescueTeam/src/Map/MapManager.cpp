@@ -312,6 +312,7 @@ void MapManager::GenerateMapData()
 
 void MapManager::MakeMapActors()
 {
+	vecType = vector<vector<ObjType>>(mapHeight, vector<ObjType>(mapWidth, ObjType::None));
 	vector<int> visited(mapWidth * mapHeight, 0);
 	for (int i = mapHeight - 1; i >= 0; i--)
 	{
@@ -357,11 +358,18 @@ void MapManager::MakeMapActors()
 					str += mapData[i - k][j + l];
 				}
 			}
+
+			int r = max(1, rowCont - 1);
+			for (int k = 0; k < r; k++)
+			{
+				for (int l = 0; l < colCont; l++)
+				{
+					vecType[i - k][j + l] = ObjType::WorldStatic;
+				}
+			}
 			MapObj* obj = new MapObj();
-			obj->type = ObjType::WorldStatic;
 			obj->pos = Vector2D(j, i);
-			obj->sizeCollider = Vector2D(colCont, max(1, rowCont - 1));
-			obj->sizeRender = Vector2D(colCont, rowCont);
+			obj->size = Vector2D(colCont, rowCont);
 			obj->strRender = str;
 			objects.push_back(obj);
 		}
@@ -434,11 +442,16 @@ void MapManager::MakeStairs()
 	rb -= Vector2D(2, 2);
 	Vector2D pos = Vector2D(RANDOM_MANAGER->Range(lt.x, rb.x), RANDOM_MANAGER->Range(lt.y, rb.y));
 
+	for (int k = 0; k < 3; k++)
+	{
+		for (int l = 0; l < 3; l++)
+		{
+			vecType[pos.y - k][pos.x + l] = ObjType::Stairs;
+		}
+	}
 	MapObj* objStairs = new MapObj();
-	objStairs->type = ObjType::Stairs;
 	objStairs->pos = pos;
-	objStairs->sizeCollider = Vector2D(3, 3);
-	objStairs->sizeRender = Vector2D(3, 3);
+	objStairs->size = Vector2D(3, 3);
 	objStairs->strRender = "  # #####";
 	objects.push_back(objStairs);
 }
@@ -449,12 +462,34 @@ void MapManager::MakePlayerObj()
 	if (player != nullptr)
 	{
 		objPlayer = new MapObj();
-		objPlayer->type = ObjType::Player;
 		objPlayer->pos = Vector2D(player->GetPosX(), player->GetPosY());
-		objPlayer->sizeCollider = Vector2D(1, 1);
-		objPlayer->sizeRender = Vector2D(1, 1);
+		objPlayer->size = Vector2D(1, 1);
 		objPlayer->strRender = "@";
 		objects.push_back(objPlayer);
+	}
+}
+
+void MapManager::UpdatePlayer()
+{
+	auto player = GAME_MANAGER->GetPlayer().lock();
+	if (player != nullptr)
+	{
+		Vector2D newPos = Vector2D(player->GetPosX(), player->GetPosY());
+		switch (vecType[newPos.y][newPos.x])
+		{
+			case ObjType::None:
+				objPlayer->pos = newPos;
+				break;
+			case ObjType::WorldStatic:
+				// 다시 lastPos로
+				break;
+			case ObjType::Stairs:
+				EnterNextStage();
+				break;
+			default:
+				// 다시 lastPos로
+				break;
+		}
 	}
 }
 
@@ -475,9 +510,7 @@ void MapManager::Draw()
 		Vector2D objLT, objSize;
 		for (int i = 0; i < objects.size(); i++)
 		{
-			if (objects[i]->type == ObjType::Player)
-				cout << endl;
-			objSize = objects[i]->sizeRender;
+			objSize = objects[i]->size;
 			objLT = Vector2D(objects[i]->pos.x, objects[i]->pos.y - (objSize.y - 1));
 			for (int j = 0; j < objSize.y; j++)
 			{

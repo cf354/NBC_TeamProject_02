@@ -168,6 +168,16 @@ struct AStarNode
 	AStarNode* parentNode;
 };
 
+
+// 간단한 게임이므로 오브젝트 타입으로 구분해서 충돌 처리
+// 충돌도 그냥 ObjType으로 구분해서, Player인 경우만 나머지랑 충돌처리 하게 함
+enum class ObjType
+{
+	None = -1,
+	WorldStatic,
+	Stairs
+};
+
 class MapManager : public Singleton<MapManager>
 {
 public:
@@ -205,7 +215,7 @@ public:
 	void EnterNextStage();
 	void MakeStairs();
 	void MakePlayerObj();
-
+	void UpdatePlayer();
 	void Draw();
 
 	Triangle* CreateTriangle(Node* a, Node* b, Node* c);
@@ -246,8 +256,10 @@ private:
 
 	// 맵만 만들려고 했는데, 그려내는 문제 때문에 씬매니저 같은 역할도 해야 할 듯
 	// 분리해서 만들기엔 게임 규모가 너무 작음
+	// 콜라이더 빼버림
 	vector<MapObj*> objects;
 	MapObj* objPlayer;
+	vector<vector<ObjType>> vecType;
 };
 
 #define MAP_MANAGER (MapManager::GetInstance())
