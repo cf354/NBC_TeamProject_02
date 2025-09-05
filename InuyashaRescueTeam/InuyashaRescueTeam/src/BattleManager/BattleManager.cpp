@@ -9,7 +9,7 @@
 void BattleManager::StartBattle()
 {
 	std::cout << "전투 시작!\n";
-	//BattleMusic();
+	BattleMusic();
 	while (!player->IsDead() && !enemy->IsDead()) {
 		field.field_print();
 		ShowUI();
@@ -29,9 +29,10 @@ void BattleManager::StartBattle()
 
 void BattleManager::BattleMusic() {
 	
-	if (!bgm.openFromFile("test1.wav"))return;
+	if (!bgm.openFromFile("Grip.wav"))return;
 
 	bgm.setLoop(true);
+	bgm.setVolume(30.f);
 	bgm.play();
 
 	
