@@ -1,4 +1,4 @@
-#include "battlefield\battlefield.h"
+#include "battlefield/battlefield.h"
 
 BattleField::BattleField()
 {
@@ -15,23 +15,25 @@ BattleField::BattleField()
 	battlegrid[EnemyPositionY][EnemyPositionX] = 2;
 }
 
-void BattleField::field_move(int dirX, int dirY)
+void BattleField::field_move(int dirX, int dirY, int entityType)
 {
-	int NextX = PlayerPositionX + dirX;
-	int NextY = PlayerPositionY + dirY;
+	int* currentX = (entityType == 1) ? &PlayerPositionX : &EnemyPositionX;
+	int* currentY = (entityType == 1) ? &PlayerPositionY : &EnemyPositionY;
 
-	if (battlegrid[NextY][NextX] != 0 || NextY > 2 || NextY < 0 || NextX>3 || NextX < 0) {
+	int NextX = *currentX + dirX;
+	int NextY = *currentY + dirY;
+
+	if (battlegrid[NextY][NextX] != 0 || NextY > 2 || NextY < 0 || NextX > 3 || NextX < 0) {
 		std::cout << "이동할 수 없습니다." << std::endl;
 		return;
 	}
 	else {
-		battlegrid[PlayerPositionY][PlayerPositionX] = 0;
-		PlayerPositionX = NextX;
-		PlayerPositionY = NextY;
-		battlegrid[PlayerPositionY][PlayerPositionX] = 1;
+		battlegrid[*currentY][*currentX] = 0;
+		*currentX = NextX;
+		*currentY = NextY;
+		battlegrid[*currentY][*currentX] = entityType;
 		std::cout << "이동 성공" << std::endl;
 	}
-
 }
 
 void BattleField::field_print()
@@ -43,4 +45,3 @@ void BattleField::field_print()
 		std::cout << std::endl;
 	}
 }
-
