@@ -175,7 +175,9 @@ enum class ObjType
 {
 	None = -1,
 	WorldStatic,
-	Stairs
+	Stairs,
+	Merchant,
+	Boss
 };
 
 class MapManager : public Singleton<MapManager>

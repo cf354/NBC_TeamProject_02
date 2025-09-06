@@ -218,7 +218,6 @@ void MapManager::CreateMap()
 	return CreateMap(RANDOM_MANAGER->GetSeed());
 }
 
-// 맵 툴이나 랜덤 맵 생성을 안 하고 빠르게 맵 수작업하기 위해서, string 하나로 맵 만들 수 있도록 임시로 사용
 void MapManager::CreateMap(unsigned int seed)
 {
 	this->seed = seed;
@@ -228,14 +227,6 @@ void MapManager::CreateMap(unsigned int seed)
 	Release();
 	// 새 grid 데이터 생성
 	GenerateGrid();
-
-	// 플레이어 위치 조정 여기서 할 지 고민중, 맵 매니저의 역할이 어디까지인지에 따라 다를 듯
-	int playerRoom = RANDOM_MANAGER->Range(0, vecNode.size());
-	Vector2D roomPos = vecNode[playerRoom]->pos;
-	if (auto player = GAME_MANAGER->GetPlayer().lock())
-	{
-		player->SetPosition(roomPos.x * sizeMultipleX, roomPos.y * sizeMultipleY);
-	}
 
 	// grid 데이터로 맵 데이터 및 오브젝트 생성
 	GenerateMapData();
@@ -422,12 +413,17 @@ void MapManager::EnterNextStage()
 	{
 		CreateMap(seed);
 		MakeStairs();
+		MakePlayerObj();
+		int playerRoom = RANDOM_MANAGER->Range(0, vecNode.size());
+		Vector2D roomPos = vecNode[playerRoom]->pos;
+		objPlayer->pos = Vector2D(roomPos.x * sizeMultipleX, roomPos.y * sizeMultipleY);
 	}
 	else
 	{
 		CreateBossRoom();
+		MakePlayerObj();
+		objPlayer->pos = Vector2D(DATA_WIDTH / 8 * 3, DATA_HEIGHT / 2);
 	}
-	MakePlayerObj();
 }
 
 // 방 크기 여유롭게 잡아야 할 듯
@@ -462,15 +458,10 @@ void MapManager::MakeStairs()
 
 void MapManager::MakePlayerObj()
 {
-	auto player = GAME_MANAGER->GetPlayer().lock();
-	if (player != nullptr)
-	{
-		objPlayer = new MapObj();
-		objPlayer->pos = Vector2D(player->GetPosX(), player->GetPosY());
-		objPlayer->size = Vector2D(1, 1);
-		objPlayer->strRender = "@";
-		objects.push_back(objPlayer);
-	}
+	objPlayer = new MapObj();
+	objPlayer->size = Vector2D(1, 1);
+	objPlayer->strRender = "@";
+	objects.push_back(objPlayer);
 }
 
 void MapManager::CreateBossRoom()
@@ -496,41 +487,32 @@ void MapManager::CreateBossRoom()
 	}
 
 	MakeMapActors();
-	auto player = GAME_MANAGER->GetPlayer().lock();
-	if (player != nullptr)
-	{
-		player->SetPosition(mapWidth / 8 * 3, mapHeight / 2);
-	}
 }
 
 void MapManager::UpdatePlayer()
 {
-	Vector2D move = 
-		Vector2D((GetAsyncKeyState(VK_LEFT) & 0x8000 ? -1 : GetAsyncKeyState(VK_RIGHT) & 0x8000 ? 1 : 0),			
-				 (GetAsyncKeyState(VK_UP) & 0x8000 ? -1 : GetAsyncKeyState(VK_DOWN) & 0x8000 ? 1 : 0));
-	auto player = GAME_MANAGER->GetPlayer().lock();
-	Vector2D lastPos = Vector2D(player->GetPosX(), player->GetPosY());
-	player->SetPosition(player->GetPosX() + move.x, player->GetPosY() + move.y);
-	Sleep(10);
-	if (player != nullptr)
+	Vector2D move = Vector2D((GetAsyncKeyState(VK_LEFT) & 0x8000 ? -1 : GetAsyncKeyState(VK_RIGHT) & 0x8000 ? 1 : 0),
+							 (GetAsyncKeyState(VK_UP) & 0x8000 ? -1 : GetAsyncKeyState(VK_DOWN) & 0x8000 ? 1 : 0));
+	Vector2D lastPos = objPlayer->pos;
+	Vector2D newPos = objPlayer->pos + move;
+	switch (vecType[newPos.y][newPos.x])
 	{
-		Vector2D newPos = Vector2D(player->GetPosX(), player->GetPosY());
-		switch (vecType[newPos.y][newPos.x])
-		{
-			case ObjType::None:
-				objPlayer->pos = newPos;
-				break;
-			case ObjType::WorldStatic:
-				player->SetPosition(lastPos.x, lastPos.y);
-				break;
-			case ObjType::Stairs:
-				EnterNextStage();
-				break;
-			default:
-				player->SetPosition(lastPos.x, lastPos.y);
-				break;
-		}
+		case ObjType::None:
+			objPlayer->pos = newPos;
+			break;
+		case ObjType::Stairs:
+			EnterNextStage();
+			break;
+		case ObjType::Merchant:
+			// GameManager Merchant 호출
+			break;
+		case ObjType::Boss:
+			// GameManager 보스 전투 호출
+			break;
+		default:
+			break;
 	}
+	Sleep(10);	// deltatime 신경 안쓰고, 걍 빠른 움직임 늦추기 위해 Sleep 사용
 }
 
 void MapManager::Draw()
@@ -540,29 +522,25 @@ void MapManager::Draw()
 			return obj1->pos.y < obj2->pos.y;
 		});
 
-	auto player = GAME_MANAGER->GetPlayer().lock();
-	if (player != nullptr)
+	Vector2D playerPos = objPlayer->pos;
+	Vector2D lt = Vector2D(max(0, playerPos.x - DATA_WIDTH / 2), max(0, playerPos.y - DATA_HEIGHT / 2));
+	Vector2D rb = lt + Vector2D(DATA_WIDTH - 1, DATA_HEIGHT - 1);
+	int idx, x, y;
+	Vector2D objLT, objSize;
+	for (int i = 0; i < objects.size(); i++)
 	{
-		Vector2D playerPos = Vector2D(player->GetPosX(), player->GetPosY());
-		Vector2D lt = Vector2D(max(0, playerPos.x - DATA_WIDTH / 2), max(0, playerPos.y - DATA_HEIGHT / 2));
-		Vector2D rb = lt + Vector2D(DATA_WIDTH - 1, DATA_HEIGHT - 1);
-		int idx, x, y;
-		Vector2D objLT, objSize;
-		for (int i = 0; i < objects.size(); i++)
+		objSize = objects[i]->size;
+		objLT = Vector2D(objects[i]->pos.x, objects[i]->pos.y - (objSize.y - 1));
+		for (int j = 0; j < objSize.y; j++)
 		{
-			objSize = objects[i]->size;
-			objLT = Vector2D(objects[i]->pos.x, objects[i]->pos.y - (objSize.y - 1));
-			for (int j = 0; j < objSize.y; j++)
+			for (int k = 0; k < objSize.x; k++)
 			{
-				for (int k = 0; k < objSize.x; k++)
-				{
-					y = objLT.y + j;
-					x = objLT.x + k;
-					if (y < lt.y || y > rb.y || x < lt.x || x > rb.x)
-						continue;
-					idx = j * objSize.x + k;
-					CONSOLE_PRINTER->SetData(y - lt.y, x - lt.x, objects[i]->strRender[idx]);
-				}
+				y = objLT.y + j;
+				x = objLT.x + k;
+				if (y < lt.y || y > rb.y || x < lt.x || x > rb.x)
+					continue;
+				idx = j * objSize.x + k;
+				CONSOLE_PRINTER->SetData(y - lt.y, x - lt.x, objects[i]->strRender[idx]);
 			}
 		}
 	}
