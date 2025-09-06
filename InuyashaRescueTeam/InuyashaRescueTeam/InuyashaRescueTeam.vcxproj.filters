@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Source Files">
@@ -43,11 +43,20 @@
     <Filter Include="Header Files\GameManager">
       <UniqueIdentifier>{76d13df4-819b-413c-82f0-8d124737fb6f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Merchant">
+      <UniqueIdentifier>{784ee55d-28b0-4ada-b946-d1733f2ff309}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Merchant">
+      <UniqueIdentifier>{080ae3b5-c85a-44c6-864d-1804535c5cea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\InputManager">
+      <UniqueIdentifier>{c556eee8-011b-4c2d-b41c-55c94b142f25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\InputManager">
+      <UniqueIdentifier>{90880816-4b0a-469a-8f67-fb689e2538d0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Card\Card.cpp">
       <Filter>Source Files\Card</Filter>
     </ClCompile>
@@ -77,6 +86,27 @@
     </ClCompile>
     <ClCompile Include="src\GameManager\GameManager.cpp">
       <Filter>Source Files\GameManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test_main_taewoong.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Merchant\Merchant.cpp">
+      <Filter>Source Files\Merchant</Filter>
+    </ClCompile>
+    <ClCompile Include="src\InputManager\InputManager.cpp">
+      <Filter>Source Files\InputManager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Map\MapManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Common\RandomManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Common\ConsolePrinter.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -114,6 +144,27 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Entities.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Merchant\Merchant.h">
+      <Filter>Header Files\Merchant</Filter>
+    </ClInclude>
+    <ClInclude Include="include\InputManager\InputManager.h">
+      <Filter>Header Files\InputManager</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Map\MapManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Map\MapTypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Common\RandomManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Common\Singleton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Common\ConsolePrinter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
