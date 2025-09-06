@@ -146,7 +146,6 @@ void CardUI::DrawClear()
 void CardUI::DrawMoveCard(C_Move& Card, int x, int y)
 {
     PrintCardName(Card.C_GetName(), x, y);
-    //GoToXY(x, y);
 
     GoToXY(x, y + 3);
     std::cout << "DM : " << "0";
