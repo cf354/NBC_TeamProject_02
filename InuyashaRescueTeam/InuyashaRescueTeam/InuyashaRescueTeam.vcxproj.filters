@@ -55,6 +55,12 @@
     <Filter Include="Source Files\InputManager">
       <UniqueIdentifier>{90880816-4b0a-469a-8f67-fb689e2538d0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\SoundManager">
+      <UniqueIdentifier>{4d70f5ab-d025-4d0f-b686-95cefedd0e40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\SoundManager">
+      <UniqueIdentifier>{52369381-47e2-4c61-9bba-15d1ddae567b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Card\Card.cpp">
@@ -107,6 +113,9 @@
     </ClCompile>
     <ClCompile Include="src\Common\ConsolePrinter.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SoundManager\SoundManager.cpp">
+      <Filter>Source Files\SoundManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -166,6 +175,9 @@
     </ClInclude>
     <ClInclude Include="include\Common\ConsolePrinter.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SoundManager\SoundManager.h">
+      <Filter>Header Files\SoundManager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

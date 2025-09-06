@@ -5,22 +5,22 @@
 #include "battlefield\battlefield.h"
 #include <SFML\Audio.hpp>
 #include <SFML\System.hpp>
+#include "GameManager\GameManager.h"
 
 class BattleManager {
-private:
+private: 
     std::shared_ptr<Player> player;
-    std::shared_ptr<Enemy> enemy;
-    sf::Music bgm;
+    std::shared_ptr<Enemy> enemy; 
+    
 
 public:
     BattleManager(std::shared_ptr<Player> p, std::shared_ptr<Enemy> e)
         : player(p), enemy(e) {}
     BattleField field;
     void StartBattle();
-
+    
 private:
     void Healstamina();
-    void BattleMusic();
     void ShowCard(std::vector<std::shared_ptr<Card>> card);
     void ShowUI();
     std::shared_ptr<Card> PlayerTurn();
