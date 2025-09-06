@@ -55,6 +55,12 @@
     <Filter Include="Source Files\InputManager">
       <UniqueIdentifier>{90880816-4b0a-469a-8f67-fb689e2538d0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\BattleUI">
+      <UniqueIdentifier>{049e36ca-9513-4827-819c-43e0a779b8c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\BattleUI">
+      <UniqueIdentifier>{f5b1941c-81c9-4d64-bf49-02c9f5103198}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Card\Card.cpp">
@@ -107,6 +113,18 @@
     </ClCompile>
     <ClCompile Include="src\Common\ConsolePrinter.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BattleUI\Progressbar.cpp">
+      <Filter>Source Files\BattleUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BattleUI\CardUI.cpp">
+      <Filter>Source Files\BattleUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BattleUI\BattleGrid.cpp">
+      <Filter>Source Files\BattleUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BattleUI\UIWidget.cpp">
+      <Filter>Source Files\BattleUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -166,6 +184,24 @@
     </ClInclude>
     <ClInclude Include="include\Common\ConsolePrinter.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\BattleUI\BattleGrid.h">
+      <Filter>Header Files\BattleUI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\BattleUI\CardUI.h">
+      <Filter>Header Files\BattleUI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\BattleUI\Progressbar.h">
+      <Filter>Header Files\BattleUI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\BattleUI\Text.h">
+      <Filter>Header Files\BattleUI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\BattleUI\UIWidget.h">
+      <Filter>Header Files\BattleUI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\BattleUI\BattleUIGroup.h">
+      <Filter>Header Files\BattleUI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

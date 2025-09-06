@@ -4,6 +4,7 @@
 #include "Card/C_Guard.h"
 #include "Entity/Player.h"
 #include "Entity/Enemy.h"
+#include "BattleUI/CardUI.h"
 
 
 void BattleManager::StartBattle()
@@ -83,34 +84,39 @@ void BattleManager::ShowUI()
 	std::cout << "\n";
 }
 
+
+
 std::shared_ptr<Card> BattleManager::PlayerTurn()
 {
-
 	std::vector<std::shared_ptr<Card>> card = player->GetDeck();
-	ShowCard(card);
 
-	int choice = -1;
-	while (true) {
-		std::cout << "선택 (번호 입력): ";
-		std::cin >> choice;
+    CardUI asd(200, 16, 0, 0);
+    asd.Draw();
+    asd.PrintCards(card);
+	//ShowCard(card);
 
-		// 입력 오류 방지
-		if (std::cin.fail()) {
-			std::cin.clear(); // 오류 플래그 클리어
-			std::cin.ignore(1000, '\n'); // 잘못된 입력 버퍼 제거
-			std::cout << "잘못된 입력입니다. 다시 입력하세요.\n";
-			continue;
-		}
+	//int choice = -1;
+	//while (true) {
+	//	//std::cout << "선택 (번호 입력): ";
+	//	std::cin >> choice;
 
-		if (choice >= 1 && choice <= (int)card.size()) {
-			break;
-		}
-		else {
-			std::cout << "유효하지 않은 번호입니다. 다시 선택하세요.\n";
-		}
-	}
+	//	// 입력 오류 방지
+	//	if (std::cin.fail()) {
+	//		//std::cin.clear(); // 오류 플래그 클리어
+	//		std::cin.ignore(1000, '\n'); // 잘못된 입력 버퍼 제거
+	//		//std::cout << "잘못된 입력입니다. 다시 입력하세요.\n";
+	//		continue;
+	//	}
 
-	return card[choice - 1];
+	//	if (choice >= 1 && choice <= (int)card.size()) {
+	//		break;
+	//	}
+	//	else {
+	//		//std::cout << "유효하지 않은 번호입니다. 다시 선택하세요.\n";
+	//	}
+	//}
+
+	return asd.ChoseCard(card);
 
 }
 

@@ -5,6 +5,7 @@
 #include "battlefield\battlefield.h"
 #include <SFML\Audio.hpp>
 #include <SFML\System.hpp>
+#include "BattleUI/BattleUIGroup.h"
 
 class BattleManager {
 private:

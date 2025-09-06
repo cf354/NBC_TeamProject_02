@@ -140,6 +140,10 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\BattleUI\BattleGrid.cpp" />
+    <ClCompile Include="src\BattleUI\CardUI.cpp" />
+    <ClCompile Include="src\BattleUI\Progressbar.cpp" />
+    <ClCompile Include="src\BattleUI\UIWidget.cpp" />
     <ClCompile Include="src\InputManager\InputManager.cpp" />
     <ClCompile Include="src\Common\ConsolePrinter.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -159,6 +163,11 @@
     <ClCompile Include="test_main_taewoong.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\BattleUI\BattleGrid.h" />
+    <ClInclude Include="include\BattleUI\CardUI.h" />
+    <ClInclude Include="include\BattleUI\Progressbar.h" />
+    <ClInclude Include="include\BattleUI\Text.h" />
+    <ClInclude Include="include\BattleUI\UIWidget.h" />
     <ClInclude Include="include\Common\ConsolePrinter.h" />
     <ClInclude Include="include\battlefield\battlefield.h" />
     <ClInclude Include="include\BattleManager\BattleManager.h" />
@@ -178,6 +187,7 @@
     <ClInclude Include="include\Map\MapTypes.h" />
     <ClInclude Include="include\Common\RandomManager.h" />
     <ClInclude Include="include\Common\Singleton.h" />
+    <ClInclude Include="include\BattleUI\BattleUIGroup.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
