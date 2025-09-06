@@ -95,7 +95,7 @@ void ConsolePrinter::DataClear()
 	}
 }
 
-void ConsolePrinter::SetData(int y, int x, char c)
+void ConsolePrinter::SetData(int y, int x, wchar_t c)
 {
 	if (y < 0 || y >= DATA_HEIGHT || x < 0 || x >= DATA_WIDTH)
 		return;

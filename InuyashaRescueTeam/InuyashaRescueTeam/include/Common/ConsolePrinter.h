@@ -22,7 +22,7 @@ public:
 	void Render();
 
 	void DataClear();
-	void SetData(int y, int x, char c);
+	void SetData(int y, int x, wchar_t c);
 
 private:
 	HANDLE hConsole[2];									// 깜빡임 없애기 위해 버퍼 2개 사용

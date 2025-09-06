@@ -106,6 +106,6 @@ namespace Map
 		// 좌하단 원점
 		Vector2D pos;
 		Vector2D size;
-		string strRender;
+		wstring strRender;
 	};
 }

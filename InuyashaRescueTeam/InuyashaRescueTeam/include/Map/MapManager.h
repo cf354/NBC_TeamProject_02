@@ -216,7 +216,9 @@ public:
 
 	void EnterNextStage();
 	void MakeStairs();
+	void MakeMerchant();
 	void MakePlayerObj();
+	void PlaceMapObjRandomRoom(MapObj* obj, ObjType type, bool randomPos);		// MapObj 랜덤한 방에 가장자리에서 2씩 떨어진 자리에 생성 (여유 공간 충분해야 함)
 	void CreateBossRoom();
 	void UpdatePlayer();
 	void Draw();
@@ -254,7 +256,7 @@ private:
 	vector<Edge*> vecEdge;
 	vector<vector<CostAStar>> grid;
 
-	vector<vector<char>> mapData;
+	vector<vector<wchar_t>> mapData;
 	int mapWidth, mapHeight;
 
 	// 맵만 만들려고 했는데, 그려내는 문제 때문에 씬매니저 같은 역할도 해야 할 듯
@@ -263,6 +265,7 @@ private:
 	vector<MapObj*> objects;
 	MapObj* objPlayer;
 	vector<vector<ObjType>> vecType;
+	vector<int> vecUsingNode;		// 플레이어, 계단, 상인 다 다른 방에 배치하기 위해, 이미 배치가 된 방 저장
 };
 
 #define MAP_MANAGER (MapManager::GetInstance())

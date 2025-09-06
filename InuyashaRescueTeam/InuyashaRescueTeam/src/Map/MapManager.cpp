@@ -239,7 +239,7 @@ void MapManager::GenerateMapData()
 	int gridWidth = grid[0].size();
 	mapHeight = gridHeight * sizeMultipleY;
 	mapWidth = gridWidth * sizeMultipleX;
-	mapData = vector<vector<char>>(mapHeight, vector<char>(mapWidth, ' '));
+	mapData = vector<vector<wchar_t>>(mapHeight, vector<wchar_t>(mapWidth, ' '));
 	auto setData = [this](int i, int j, char c)
 		{
 			if (mapData[i][j] != '|')
@@ -339,7 +339,7 @@ void MapManager::MakeMapActors()
 				colCont++;
 			}
 
-			string str = "";
+			wstring str = L"";
 			for (int k = rowCont - 1; k >= 0; k--)
 			{
 				for (int l = 0; l < colCont; l++)
@@ -359,7 +359,7 @@ void MapManager::MakeMapActors()
 				}
 			}
 			MapObj* obj = new MapObj();
-			obj->pos = Vector2D(j, i);
+			obj->pos = Vector2D(j + (colCont - 1) / 2, i);
 			obj->size = Vector2D(colCont, rowCont);
 			obj->strRender = str;
 			objects.push_back(obj);
@@ -395,6 +395,8 @@ void MapManager::Release()
 		delete objects[i];
 	}
 	objects.clear();
+
+	vecUsingNode.clear();
 }
 
 void MapManager::EnterNextStage()
@@ -412,11 +414,13 @@ void MapManager::EnterNextStage()
 	if (++currStage < totalStage)
 	{
 		CreateMap(seed);
-		MakeStairs();
 		MakePlayerObj();
-		int playerRoom = RANDOM_MANAGER->Range(0, vecNode.size());
+		MakeStairs();
+		MakeMerchant();
+		PlaceMapObjRandomRoom(objPlayer, ObjType::None, false);
+		/*int playerRoom = RANDOM_MANAGER->Range(0, vecNode.size());
 		Vector2D roomPos = vecNode[playerRoom]->pos;
-		objPlayer->pos = Vector2D(roomPos.x * sizeMultipleX, roomPos.y * sizeMultipleY);
+		objPlayer->pos = Vector2D(roomPos.x * sizeMultipleX, roomPos.y * sizeMultipleY);*/
 	}
 	else
 	{
@@ -426,42 +430,70 @@ void MapManager::EnterNextStage()
 	}
 }
 
-// 방 크기 여유롭게 잡아야 할 듯
-// 계단 사이즈 3x3, 가장자리 여유 2씩 해서, (방 사이즈 * sizeMultiple) = 7x7 이상이 보기 좋을 듯
 void MapManager::MakeStairs()
 {
 	//   #
 	//  ##
 	// ###
-	Node* randomRoomNode = vecNode[RANDOM_MANAGER->Range(0, vecNode.size())];
-	// 계단 좌상단 시작점 위치 구하기 (lt ~ rb 사이 랜덤)
-	Vector2D lt = Vector2D((randomRoomNode->pos.x - randomRoomNode->size.x / 2) * sizeMultipleX, (randomRoomNode->pos.y - randomRoomNode->size.y / 2) * sizeMultipleY + 3);
-	Vector2D rb = lt + Vector2D(randomRoomNode->size.x * sizeMultipleX, randomRoomNode->size.y * sizeMultipleY) - Vector2D(3, 3);
-	// lt, rb 에서 2칸씩 더 안쪽에 생성
-	lt += Vector2D(2, 2);
-	rb -= Vector2D(2, 2);
-	Vector2D pos = Vector2D(RANDOM_MANAGER->Range(lt.x, rb.x), RANDOM_MANAGER->Range(lt.y, rb.y));
-
-	for (int k = 0; k < 3; k++)
-	{
-		for (int l = 0; l < 3; l++)
-		{
-			vecType[pos.y - k][pos.x + l] = ObjType::Stairs;
-		}
-	}
 	MapObj* objStairs = new MapObj();
-	objStairs->pos = pos;
 	objStairs->size = Vector2D(3, 3);
-	objStairs->strRender = "  # #####";
+	objStairs->strRender = L"  # #####";
 	objects.push_back(objStairs);
+	PlaceMapObjRandomRoom(objStairs, ObjType::Stairs, true);	
+}
+
+void MapManager::MakeMerchant()
+{
+	MapObj* objMerchant = new MapObj();
+	objMerchant->size = Vector2D(11, 4);
+	objMerchant->strRender = L"┌─────────┐│ I T E M ││S T O R E│└─────────┘";
+	objects.push_back(objMerchant);
+	PlaceMapObjRandomRoom(objMerchant, ObjType::Merchant, true);
 }
 
 void MapManager::MakePlayerObj()
 {
 	objPlayer = new MapObj();
 	objPlayer->size = Vector2D(1, 1);
-	objPlayer->strRender = "@";
+	objPlayer->strRender = L"@";
 	objects.push_back(objPlayer);
+}
+
+// 랜덤 방의 가장자리에서 2씩 안쪽에 있는 영역에 오브젝트 위치
+void MapManager::PlaceMapObjRandomRoom(MapObj* obj, ObjType type, bool randomPos)
+{
+	int randomRoomIdx;
+	do
+	{
+		randomRoomIdx = RANDOM_MANAGER->Range(0, vecNode.size());
+	} while (find(vecUsingNode.begin(), vecUsingNode.end(), randomRoomIdx) != vecUsingNode.end());
+	vecUsingNode.push_back(randomRoomIdx);
+	Node* randomRoomNode = vecNode[randomRoomIdx];
+	Vector2D pos;
+	if (randomPos)
+	{
+		// 오브젝트(pivot: 중하단) 시작점 위치 구하기 (lt ~ rb 사이 랜덤)
+		Vector2D lt = Vector2D((randomRoomNode->pos.x - randomRoomNode->size.x / 2) * sizeMultipleX + (obj->size.x - 1) / 2, (randomRoomNode->pos.y - randomRoomNode->size.y / 2) * sizeMultipleY + obj->size.y - 1);
+		Vector2D rb = lt + Vector2D((randomRoomNode->size.x - 1) * sizeMultipleX - (obj->size.x - 1) / 2, (randomRoomNode->size.y - 1) * sizeMultipleY);
+		// lt, rb 에서 2칸씩 더 안쪽에 생성
+		lt += Vector2D(2, 2);
+		rb -= Vector2D(2, 2);
+		pos = Vector2D(RANDOM_MANAGER->Range(lt.x, rb.x + 1), RANDOM_MANAGER->Range(lt.y, rb.y + 1));
+	}
+	else
+	{
+		pos = Vector2D(randomRoomNode->pos.x * sizeMultipleX, randomRoomNode->pos.y * sizeMultipleY);
+	}
+
+	int left = pos.x - (obj->size.x - 1) / 2;
+	for (int k = 0; k < obj->size.y; k++)
+	{
+		for (int l = 0; l < obj->size.x; l++)
+		{
+			vecType[pos.y - k][left + l] = type;
+		}
+	}
+	obj->pos = pos;
 }
 
 void MapManager::CreateBossRoom()
@@ -469,9 +501,9 @@ void MapManager::CreateBossRoom()
 	Release();
 	mapHeight = DATA_HEIGHT;
 	mapWidth = DATA_WIDTH;
-	mapData = vector<vector<char>>(mapHeight, vector<char>(mapWidth, ' '));
+	mapData = vector<vector<wchar_t>>(mapHeight, vector<wchar_t>(mapWidth, ' '));
 	Vector2D lt = Vector2D(mapWidth / 4, mapHeight / 4);
-	Vector2D rb = lt + Vector2D(mapWidth / 2, mapHeight / 2);
+	Vector2D rb = lt + Vector2D(mapWidth / 2 - 1, mapHeight / 2 - 1);
 	for (int i = lt.x; i <= rb.x; i++)
 	{
 		mapData[lt.y - 1][i] = '=';
@@ -491,26 +523,31 @@ void MapManager::CreateBossRoom()
 
 void MapManager::UpdatePlayer()
 {
-	Vector2D move = Vector2D((GetAsyncKeyState(VK_LEFT) & 0x8000 ? -1 : GetAsyncKeyState(VK_RIGHT) & 0x8000 ? 1 : 0),
-							 (GetAsyncKeyState(VK_UP) & 0x8000 ? -1 : GetAsyncKeyState(VK_DOWN) & 0x8000 ? 1 : 0));
-	Vector2D lastPos = objPlayer->pos;
-	Vector2D newPos = objPlayer->pos + move;
-	switch (vecType[newPos.y][newPos.x])
+	// 벽에 막혔을 때, 대각 이동 입력 시 벽을 타고 움직이게 하기 위해 x, y 이동 분리
+	Vector2D move[2];
+	move[0] = Vector2D((GetAsyncKeyState(VK_LEFT) & 0x8000 ? -1 : GetAsyncKeyState(VK_RIGHT) & 0x8000 ? 1 : 0), 0);
+	move[1] = Vector2D(0, (GetAsyncKeyState(VK_UP) & 0x8000 ? -1 : GetAsyncKeyState(VK_DOWN) & 0x8000 ? 1 : 0));
+	for (int i = 0; i < 2; i++)
 	{
-		case ObjType::None:
-			objPlayer->pos = newPos;
-			break;
-		case ObjType::Stairs:
-			EnterNextStage();
-			break;
-		case ObjType::Merchant:
-			// GameManager Merchant 호출
-			break;
-		case ObjType::Boss:
-			// GameManager 보스 전투 호출
-			break;
-		default:
-			break;
+		Vector2D lastPos = objPlayer->pos;
+		Vector2D newPos = objPlayer->pos + move[i];
+		switch (vecType[newPos.y][newPos.x])
+		{
+			case ObjType::None:
+				objPlayer->pos = newPos;
+				break;
+			case ObjType::Stairs:
+				EnterNextStage();
+				break;
+			case ObjType::Merchant:
+				// GameManager Merchant 호출
+				break;
+			case ObjType::Boss:
+				// GameManager 보스 전투 호출
+				break;
+			default:
+				break;
+		}
 	}
 	Sleep(10);	// deltatime 신경 안쓰고, 걍 빠른 움직임 늦추기 위해 Sleep 사용
 }
@@ -530,7 +567,7 @@ void MapManager::Draw()
 	for (int i = 0; i < objects.size(); i++)
 	{
 		objSize = objects[i]->size;
-		objLT = Vector2D(objects[i]->pos.x, objects[i]->pos.y - (objSize.y - 1));
+		objLT = Vector2D(objects[i]->pos.x - (objSize.x - 1) / 2, objects[i]->pos.y - (objSize.y - 1));
 		for (int j = 0; j < objSize.y; j++)
 		{
 			for (int k = 0; k < objSize.x; k++)
