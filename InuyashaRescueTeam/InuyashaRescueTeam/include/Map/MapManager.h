@@ -215,6 +215,7 @@ public:
 	void EnterNextStage();
 	void MakeStairs();
 	void MakePlayerObj();
+	void CreateBossRoom();
 	void UpdatePlayer();
 	void Draw();
 

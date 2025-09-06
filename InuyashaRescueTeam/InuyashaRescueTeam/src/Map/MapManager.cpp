@@ -418,10 +418,14 @@ void MapManager::EnterNextStage()
 	}
 	this->seed = RANDOM_MANAGER->GetSeed();
 	vecSeed.push_back(this->seed);
-	CreateMap(seed);
 	if (++currStage < totalStage)
 	{
+		CreateMap(seed);
 		MakeStairs();
+	}
+	else
+	{
+		CreateBossRoom();
 	}
 	MakePlayerObj();
 }
@@ -469,9 +473,45 @@ void MapManager::MakePlayerObj()
 	}
 }
 
+void MapManager::CreateBossRoom()
+{
+	Release();
+	mapHeight = DATA_HEIGHT;
+	mapWidth = DATA_WIDTH;
+	mapData = vector<vector<char>>(mapHeight, vector<char>(mapWidth, ' '));
+	Vector2D lt = Vector2D(mapWidth / 4, mapHeight / 4);
+	Vector2D rb = lt + Vector2D(mapWidth / 2, mapHeight / 2);
+	for (int i = lt.x; i <= rb.x; i++)
+	{
+		mapData[lt.y - 1][i] = '=';
+		mapData[lt.y][i] = '=';
+		mapData[rb.y - 1][i] = '=';
+		mapData[rb.y][i] = '=';
+	}
+
+	for (int i = lt.y - 1; i <= rb.y; i++)
+	{
+		mapData[i][lt.x] = '|';
+		mapData[i][rb.x] = '|';
+	}
+
+	MakeMapActors();
+	auto player = GAME_MANAGER->GetPlayer().lock();
+	if (player != nullptr)
+	{
+		player->SetPosition(mapWidth / 8 * 3, mapHeight / 2);
+	}
+}
+
 void MapManager::UpdatePlayer()
 {
+	Vector2D move = 
+		Vector2D((GetAsyncKeyState(VK_LEFT) & 0x8000 ? -1 : GetAsyncKeyState(VK_RIGHT) & 0x8000 ? 1 : 0),			
+				 (GetAsyncKeyState(VK_UP) & 0x8000 ? -1 : GetAsyncKeyState(VK_DOWN) & 0x8000 ? 1 : 0));
 	auto player = GAME_MANAGER->GetPlayer().lock();
+	Vector2D lastPos = Vector2D(player->GetPosX(), player->GetPosY());
+	player->SetPosition(player->GetPosX() + move.x, player->GetPosY() + move.y);
+	Sleep(10);
 	if (player != nullptr)
 	{
 		Vector2D newPos = Vector2D(player->GetPosX(), player->GetPosY());
@@ -481,13 +521,13 @@ void MapManager::UpdatePlayer()
 				objPlayer->pos = newPos;
 				break;
 			case ObjType::WorldStatic:
-				// 다시 lastPos로
+				player->SetPosition(lastPos.x, lastPos.y);
 				break;
 			case ObjType::Stairs:
 				EnterNextStage();
 				break;
 			default:
-				// 다시 lastPos로
+				player->SetPosition(lastPos.x, lastPos.y);
 				break;
 		}
 	}
