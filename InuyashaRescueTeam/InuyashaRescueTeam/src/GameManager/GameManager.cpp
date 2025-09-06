@@ -23,6 +23,7 @@ void GameManager::Init()
     AllCardsList.emplace_back(std::make_shared<C_Attack>("WindScar", 50, 0, 50, WindScar)); // 7
     AllCardsList.emplace_back(std::make_shared<C_Guard>("Guard", 0, 0, 15)); // 8 //C_Guard(std::string n, int C, int G, int D) :DEF(D) {Name = n; Cost = C; Gold = G;}
 
+
     AllCardsList.emplace_back(std::make_shared<C_Move>("DoubleMoveRight", 0, 0, 1, 2, 0)); // 9
     AllCardsList.emplace_back(std::make_shared<C_Move>("DoubleMoveLeft", 0, 0, 1, -2, 0)); // 10
     AllCardsList.emplace_back(std::make_shared<C_Move>("DoubleMoveUp", 0, 0, 1, 0, -1)); // 11
@@ -59,6 +60,7 @@ void GameManager::Init()
     enemy->AddCardWeight("E_MoveDown", 1);
     enemy->AddCardWeight("E_WideStrike", 2);
     enemy->AddCardWeight("E_LineAttack", 2);
+
 }
 
 void GameManager::Update()
