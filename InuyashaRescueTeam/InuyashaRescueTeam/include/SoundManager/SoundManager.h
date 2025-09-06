@@ -16,6 +16,8 @@ enum class SEType {
 	WindScar,
 	BladesOfBlood,
 	IronReaver,
+	blop,
+	buy
 };
 
 class SoundManager

@@ -70,7 +70,9 @@ void GameManager::Init()
     
     sound.LoadSE(SEType::WindScar, "sound\\WindScar.wav");
     sound.LoadSE(SEType::BladesOfBlood, "sound\\BladesOfBlood.wav");
-    sound.LoadSE(SEType::IronReaver, "sound\\IronReaver.wav");//효과음추가
+    sound.LoadSE(SEType::IronReaver, "sound\\IronReaver.wav");
+    sound.LoadSE(SEType::blop, "sound\\blop.wav");
+    sound.LoadSE(SEType::buy, "sound\\buy.wav");//효과음추가
     
     sound.SetBgmVolume(10.f);//소리설정
     sound.SetSEVolume(10.f);
