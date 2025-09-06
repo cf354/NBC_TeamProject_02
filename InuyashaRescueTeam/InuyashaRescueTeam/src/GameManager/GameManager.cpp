@@ -63,6 +63,22 @@ void GameManager::Init()
     enemy->AddCardWeight("E_MoveDown", 1);
     enemy->AddCardWeight("E_WideStrike", 2);
     enemy->AddCardWeight("E_LineAttack", 2);
+    
+    //사운드
+    
+    sound.LoadBgm(BGMType::BattleField, "sound\\BattleTheme.wav");
+    sound.LoadBgm(BGMType::StartScene, "sound\\Grip.wav");
+    sound.LoadBgm(BGMType::BossTheme, "sound\\BossTheme.wav");
+    sound.LoadBgm(BGMType::NoneBattleField, "sound\\AffectionsTouchingAcrossTime.wav");//bgm추가
+    
+    sound.LoadSE(SEType::WindScar, "sound\\WindScar.wav");
+    sound.LoadSE(SEType::BladesOfBlood, "sound\\BladesOfBlood.wav");
+    sound.LoadSE(SEType::IronReaver, "sound\\IronReaver.wav");
+    sound.LoadSE(SEType::blop, "sound\\blop.wav");
+    sound.LoadSE(SEType::buy, "sound\\buy.wav");//효과음추가
+    
+    sound.SetBgmVolume(10.f);//소리설정
+    sound.SetSEVolume(10.f);
 
     enemy->AddCard(std::make_shared<C_Move>("MoveDown", 0, 0, 1, 0, -1));
 #pragma endregion
@@ -82,6 +98,11 @@ void GameManager::Run()
 {
     BattleManager battle(player, enemy);
     battle.StartBattle();
+}
+
+SoundManager &GameManager::GetSoundManager()
+{
+    return sound;
 }
 
 std::weak_ptr<Player> GameManager::GetPlayer()
