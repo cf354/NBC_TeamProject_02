@@ -24,10 +24,12 @@ int main() {
 
     while (true)
     {
-        game_manager->update();
+        GAME_MANAGER->Update();
     }*/
+
     GAME_MANAGER->Run();
-    
+
+
     //// 상점 테스트 부분
     //Merchant* test = new Merchant();
     //test->OpenShop();

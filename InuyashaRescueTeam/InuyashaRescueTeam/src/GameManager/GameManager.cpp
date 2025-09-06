@@ -23,6 +23,7 @@ void GameManager::Init()
     AllCardsList.emplace_back(std::make_shared<C_Attack>("WindScar", 50, 0, 50, WindScar)); // 7
     AllCardsList.emplace_back(std::make_shared<C_Guard>("Guard", 0, 0, 15)); // 8 //C_Guard(std::string n, int C, int G, int D) :DEF(D) {Name = n; Cost = C; Gold = G;}
 
+
     AllCardsList.emplace_back(std::make_shared<C_Move>("DoubleMoveRight", 0, 0, 1, 2, 0)); // 9
     AllCardsList.emplace_back(std::make_shared<C_Move>("DoubleMoveLeft", 0, 0, 1, -2, 0)); // 10
     AllCardsList.emplace_back(std::make_shared<C_Move>("DoubleMoveUp", 0, 0, 1, 0, -1)); // 11
@@ -40,7 +41,26 @@ void GameManager::Init()
     player->AddCard(AllCardsList[7]); // WindScar
     player->AddCard(AllCardsList[8]); // Guard
 
-    enemy->AddCard(AllCardsList[3]); // MoveDown
+    // **적(Enemy) 카드 덱 구성 및 가중치 부여**
+    enemy->AddCard(std::make_shared<C_Move>("E_MoveRight", 0, 0, 1, 1, 0));
+    enemy->AddCard(std::make_shared<C_Move>("E_MoveLeft", 0, 0, 1, -1, 0));
+    enemy->AddCard(std::make_shared<C_Move>("E_MoveUp", 0, 0, 1, 0, -1));
+    enemy->AddCard(std::make_shared<C_Move>("E_MoveDown", 0, 0, 1, 0, 1));
+
+    bool E_WideStrike[3][3] = { {true, true, true}, {true, true, true}, {true, true, true} };
+    enemy->AddCard(std::make_shared<C_Attack>("E_WideStrike", 15, 0, 10, E_WideStrike));
+
+    bool E_LineAttack[3][3] = { {false, false, false}, {true, true, true}, {false, false, false} };
+    enemy->AddCard(std::make_shared<C_Attack>("E_LineAttack", 10, 0, 15, E_LineAttack));
+
+    // 이동 카드의 가중치를 1, 공격 카드의 가중치를 2로 설정 (공격을 더 선호)
+    enemy->AddCardWeight("E_MoveRight", 1);
+    enemy->AddCardWeight("E_MoveLeft", 1);
+    enemy->AddCardWeight("E_MoveUp", 1);
+    enemy->AddCardWeight("E_MoveDown", 1);
+    enemy->AddCardWeight("E_WideStrike", 2);
+    enemy->AddCardWeight("E_LineAttack", 2);
+
 }
 
 void GameManager::Update()
