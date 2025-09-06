@@ -20,7 +20,12 @@ enum class Direction
     UP,
     DOWN,
     LEFT,
-    RIGHT
+    RIGHT,
+    // 대각선
+    UP_LEFT,    // 북서 
+    UP_RIGHT,   // 북동 
+    DOWN_LEFT,  // 남서 
+    DOWN_RIGHT  // 남동 
 };
 
 class Player : public Entity 
