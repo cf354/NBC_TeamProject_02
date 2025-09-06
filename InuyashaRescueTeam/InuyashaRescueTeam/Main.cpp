@@ -7,7 +7,7 @@
 #include "BattleManager\BattleManager.h"
 #include "GameManager\GameManager.h"
 #include <windows.h>
-//#include "Merchant\Merchant.h" 상점 테스트용
+#include "Merchant\Merchant.h"
 #include "Map/MapManager.h"
 
 
@@ -21,10 +21,14 @@ int main() {
     // 게임매니저 사용할 때, GAME_MANAGER-> 로 접근
     GAME_MANAGER->Init();
 
-    while (true)
-    {
-        GAME_MANAGER->Update();
-    }
+    //while (true)
+    //{
+    //    GAME_MANAGER->Update();
+    //}
+
+    GAME_MANAGER->Run();
+
+
     //// 상점 테스트 부분
     //Merchant* test = new Merchant();
     //test->OpenShop();

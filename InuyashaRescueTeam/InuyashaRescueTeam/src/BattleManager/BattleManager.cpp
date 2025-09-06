@@ -5,10 +5,11 @@
 #include "Entity/Player.h"
 #include "Entity/Enemy.h"
 
+
 void BattleManager::StartBattle()
 {
 	std::cout << "전투 시작!\n";
-
+	BattleMusic();
 	while (!player->IsDead() && !enemy->IsDead()) {
 		field.field_print();
 		ShowUI();
@@ -17,7 +18,7 @@ void BattleManager::StartBattle()
 		// 적 턴 시작 시 플레이어와 적의 위치를 GetRandomCard 함수에 전달
 		std::shared_ptr<Card> eCard = enemy->GetRandomCard(field.PlayerPositionX, field.PlayerPositionY, field.EnemyPositionX, field.EnemyPositionY);
 
-		std::cout << enemy->GetName() << "이(가) [" << eCard->C_GetName() << "] 카드를 선택했다!\n";
+		std::cout << enemy->GetName()<<   "이(가) [" << eCard->C_GetName() << "] 카드를 선택했다!\n";
 		system("cls");
 		Resolve(pCard, eCard, field);
 		Healstamina();
@@ -26,9 +27,21 @@ void BattleManager::StartBattle()
 	EndBattle();
 }
 
+void BattleManager::BattleMusic() {
+	
+	if (!bgm.openFromFile("Grip.wav"))return;
+
+	bgm.setLoop(true);
+	bgm.setVolume(30.f);
+	bgm.play();
+
+	
+}
+
 void BattleManager::Healstamina()
 {
-    player->AddStamina(15);
+    // 스테미너 관리 Entity로 이관한다 하셔서 오류 방지를 위해 주석 처리 해놨습니다. 
+    // player->AddStamina(15)
 }
 
 void BattleManager::ShowCard(std::vector<std::shared_ptr<Card>> card)

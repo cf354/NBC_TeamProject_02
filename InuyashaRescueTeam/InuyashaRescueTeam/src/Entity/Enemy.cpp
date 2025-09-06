@@ -2,6 +2,11 @@
 #include "Card/C_Attack.h"
 #include <random>
 
+std::string Enemy::GetName()
+{
+    return Name;
+}
+
 std::shared_ptr<Card> Enemy::GetRandomCard(int playerX, int playerY, int enemyX, int enemyY)
 {
     // 플레이어와 적 사이의 거리를 계산

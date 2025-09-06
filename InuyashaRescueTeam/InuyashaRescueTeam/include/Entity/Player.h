@@ -20,7 +20,12 @@ enum class Direction
     UP,
     DOWN,
     LEFT,
-    RIGHT
+    RIGHT,
+    // 대각선
+    UP_LEFT,    // 북서 
+    UP_RIGHT,   // 북동 
+    DOWN_LEFT,  // 남서 
+    DOWN_RIGHT  // 남동 
 };
 
 class Player : public Entity 
@@ -31,8 +36,12 @@ private:
     int maxEXP;
     // 스마트 포인터 shared_ptr 사용
     std::vector<std::shared_ptr <Card>> deck;
+    // 현재 위치
     int posX;
     int posY;
+    // 유효한 이전 위치
+    int Prev_posX;
+    int Prev_posY;
 
     // 레벨 업 (객체 안에서만 통제)
     void LevelUP();
@@ -60,7 +69,7 @@ public:
     void PrintStatus() const;
     void AddCard(std::shared_ptr<Card> newCard); // 카드 추가
     void AddEXP(int amount);
-    void AddStamina(int amount);
+    // void AddStamina(int amount); // 스테미너 제한 이관 -> Entity 클래스
     void ShowCards() const;     // 카드 출력
     
 };
