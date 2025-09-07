@@ -52,7 +52,7 @@ void BattleManager::StartBattle()
 		std::shared_ptr<Card> eCard = enemy->GetRandomCard(field.PlayerPositionX, field.PlayerPositionY, field.EnemyPositionX, field.EnemyPositionY);
         _Log.PrintLog(enemy->GetName() + "이(가) [" + eCard->C_GetName() +"] 카드를 선택했다!" );
 		//std::cout << enemy->GetName()<<   "이(가) [" << eCard->C_GetName() << "] 카드를 선택했다!\n";
-
+        //
         _Grid.Reset_Character_Position();
 
         _Grid.Draw();
