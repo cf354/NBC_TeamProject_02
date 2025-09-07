@@ -24,7 +24,7 @@ void BattleField::field_move(int dirX, int dirY, int entityType)
 	int NextY = *currentY + dirY;
 
 	if (battlegrid[NextY][NextX] != 0 || NextY > 2 || NextY < 0 || NextX > 3 || NextX < 0) {
-		std::cout << "이동할 수 없습니다." << std::endl;
+		//std::cout << "이동할 수 없습니다." << std::endl;
 		return;
 	}
 	else {
@@ -32,7 +32,7 @@ void BattleField::field_move(int dirX, int dirY, int entityType)
 		*currentX = NextX;
 		*currentY = NextY;
 		battlegrid[*currentY][*currentX] = entityType;
-		std::cout << "이동 성공" << std::endl;
+		//std::cout << "이동 성공" << std::endl;
 	}
 }
 

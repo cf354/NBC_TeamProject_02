@@ -2,7 +2,8 @@
 
 void BattleGrid::Draw()
 {
-
+    DrawGrid();
+    DrawCharacter();
 }
 
 void BattleGrid::SetGrid() {
@@ -76,7 +77,7 @@ void BattleGrid::DrawBlock(int x, int y)
 	std::cout << _GridBottom;
 }
 
-void BattleGrid::PaintBlocks(int x, int y, bool(&range)[3][3], Color background)
+void BattleGrid::PaintBlocks(int x, int y, bool (*range)[3], Color background)
 {
 	tbColor(WHITE, background);
 	for (int i = 0; i < 3; i++) {
@@ -90,6 +91,7 @@ void BattleGrid::PaintBlocks(int x, int y, bool(&range)[3][3], Color background)
 	tbColor();
 
 	DrawCharacter();
+    std::cin.get();
 }
 
 void BattleGrid::SetCharacter(int x, int y, std::string string, Color font, Color background)
@@ -100,7 +102,6 @@ void BattleGrid::SetCharacter(int x, int y, std::string string, Color font, Colo
 	_IsSetedCharcter = true;
 
 	_Character_Postion_Color[y][x] = font + background * 16;
-	//SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), _Character_Postion_Color[y][x]);
 	_Character_Position[y][x].push_back(string);
 }
 
@@ -116,15 +117,12 @@ void BattleGrid::DrawCharacter()
 			{
 				GoToXY(_spawnX + x * _GridWidth + _GridWidth/2, _spawnY + y * _GridHeight + _GridHeight/2);
 				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), _Character_Postion_Color[y][x]);
-				//std::cout << _Character_Position[y][x];
 				for (std::string s : _Character_Position[y][x])
 				{
-					std::cout << s;
+					std::cout << s;                    
 				}
 				tbColor();
 			}
 		}
 	}
-
-	//_IsSetedCharcter = false ;
 }

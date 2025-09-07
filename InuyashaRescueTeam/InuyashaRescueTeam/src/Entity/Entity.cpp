@@ -15,7 +15,7 @@ void Entity::TakeDamage(int damage)
 
     if (HP < 0) { HP = 0; }
 
-    std::cout << Name << "이(가) " << damage << "의 데미지를 입었습니다. 현재 HP: " << HP << std::endl;
+    //std::cout << Name << "이(가) " << damage << "의 데미지를 입었습니다. 현재 HP: " << HP << std::endl;
 }
 
 // 정보 반환 

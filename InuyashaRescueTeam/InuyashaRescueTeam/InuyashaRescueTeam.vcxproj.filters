@@ -126,6 +126,9 @@
     <ClCompile Include="src\BattleUI\UIWidget.cpp">
       <Filter>Source Files\BattleUI</Filter>
     </ClCompile>
+    <ClCompile Include="src\BattleUI\BattleLog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Card\C_Attack.h">
@@ -202,6 +205,9 @@
     </ClInclude>
     <ClInclude Include="include\BattleUI\BattleUIGroup.h">
       <Filter>Header Files\BattleUI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\BattleUI\BattleLog.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

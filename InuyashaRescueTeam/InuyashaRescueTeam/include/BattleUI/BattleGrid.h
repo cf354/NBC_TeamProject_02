@@ -43,11 +43,8 @@ private:
 
 public:
 	virtual void Draw() override;	
-	void DrawGrid();
-	void DrawBlock(int x, int y);
-	void PaintBlocks(int x,int y, bool (& range)[3][3], Color background);
+	void PaintBlocks(int x,int y, bool (*range)[3], Color background);
 	void SetCharacter(int x, int y, std::string string, Color font, Color background);
-	void DrawCharacter();
 	void Reset_Character_Position() {
 		for (size_t i = 0; i < 3; i++)
 		{
@@ -66,5 +63,8 @@ private:
 	void SetGrid();
 	bool checkInputX(int x);
 	bool checkInputY(int y);
+    void DrawGrid();
+    void DrawCharacter();
+    void DrawBlock(int x, int y);
 };
 
