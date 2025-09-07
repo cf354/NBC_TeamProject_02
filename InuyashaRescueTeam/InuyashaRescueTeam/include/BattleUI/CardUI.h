@@ -33,11 +33,8 @@ public:
 	void virtual Draw() override;
 	void SetGrid();
     void PrintCards(std::vector<std::shared_ptr<Card>> Cards);
-	//void PrintCards(std::vector<Card*> Cards, int startIndex); // 화면에 출력되는 카드의 최대갯수를 이상을 출력하기 위해 만들었던 함수 입니다.
 	void DrawClear();
     std::shared_ptr<Card> ChoseCard(std::vector<std::shared_ptr<Card>> Cards);
-	//void DrawGuardCard();
-	//void DrawHealCard(Card& Card, int x, int y);
 private:
     int GetConsoleCharWidth(wchar_t wc);
     void PrintCardName(const std::string& name, int x, int y);

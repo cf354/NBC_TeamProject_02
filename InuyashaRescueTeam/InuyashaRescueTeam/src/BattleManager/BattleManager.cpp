@@ -1,4 +1,4 @@
-#include "BattleManager/BattleManager.h"
+﻿#include "BattleManager/BattleManager.h"
 #include "Card/C_Move.h"
 #include "Card/C_Attack.h"
 #include "Card/C_Guard.h"
@@ -41,8 +41,7 @@ void BattleManager::StartBattle()
 	SOUND_MANAGER->PlayBgm(BGMType::BattleField);
 	
 	while (!player->IsDead() && !enemy->IsDead()) {
-		//field.field_print();        
-     
+		//field.field_print();
 
         std::cin.get();
 
@@ -52,7 +51,7 @@ void BattleManager::StartBattle()
 		std::shared_ptr<Card> eCard = enemy->GetRandomCard(field.PlayerPositionX, field.PlayerPositionY, field.EnemyPositionX, field.EnemyPositionY);
         _Log.PrintLog(enemy->GetName() + "이(가) [" + eCard->C_GetName() +"] 카드를 선택했다!" );
 		//std::cout << enemy->GetName()<<   "이(가) [" << eCard->C_GetName() << "] 카드를 선택했다!\n";
-
+        //
         _Grid.Reset_Character_Position();
 
         _Grid.Draw();
@@ -86,25 +85,6 @@ void BattleManager::Healstamina()
 {
     // 스테미너 관리 Entity로 이관한다 하셔서 오류 방지를 위해 주석 처리 해놨습니다. 
     // player->AddStamina(15)
-}
-
-void BattleManager::ShowCard(std::vector<std::shared_ptr<Card>> card)//하빈
-{
-	//------------임시 테스트용--------------
-	std::cout << "플레이어 카드 선택 :" << std::endl;
-	for (int i = 0; i < card.size(); i++) {
-		std::cout << i + 1 << ". " << card[i]->C_GetName() << " (cost: " << card[i]->C_GetCost() << ")" << std::endl;
-		if (auto a = dynamic_cast<C_Attack*>(card[i].get())) {
-			std::cout << "Power: " << a->A_GetATK() << std::endl;
-			bool(*tmp)[3] = a->A_GetRange();
-			for (int i = 0; i < 3; i++) {
-				for (int j = 0; j < 3; j++) {
-					std::cout << (tmp[i][j] ? "O" : "X");
-				}
-				std::cout << std::endl;
-			}
-		}
-	}
 }
 
 void BattleManager::ShowUI()//하빈

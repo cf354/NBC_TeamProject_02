@@ -20,6 +20,7 @@ public:
 		_Color_Font = font;
 		_opposite = opposite;
 	}
+
 protected:
 
 private:
@@ -35,6 +36,9 @@ private:
 
 public:
 	virtual void Draw() override;
+    void SetMaxValue(int value) {
+        _MaxValue = value > _MaxValue ? value : _MaxValue;
+    }
 	void SetValue(int value) {
 		_Value = _MaxValue > value ? value: _MaxValue;
 		_Is_ValueSet = true;

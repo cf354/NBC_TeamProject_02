@@ -34,7 +34,6 @@ private:
 	bool _IsSetedCharcter = false;
 	std::vector<std::string> _Character_Position[3][4] = {};
 	int _Character_Postion_Color[3][4] = {};
-	//SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), _Character_Postion_Color[y][x]);
 
 	std::string _GridTop = "";
 	std::string _GridMiddle = "";
@@ -55,10 +54,7 @@ public:
 		}
 		_IsSetedCharcter = false;
 	}
-	//void AddCharacter(int x, int y, std::string character);
-	//void DrawSkill(int x, int y, bool(&range)[3][3], Color Color);
-	//void DrawCharacter(int x, int y, std::string character);
-	//어디에 무엇을 그려줄지
+
 private:  
 	void SetGrid();
 	bool checkInputX(int x);

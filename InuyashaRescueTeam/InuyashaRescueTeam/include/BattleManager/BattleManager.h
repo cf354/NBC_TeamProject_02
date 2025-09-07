@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <iostream>
 #include "Cards.h"
 #include "Entities.h"
@@ -29,9 +29,8 @@ private:
     BattleLog _Log;
 
 public:
-    BattleManager(std::shared_ptr<Player> p, std::shared_ptr<Enemy> e)
-        : player(p), enemy(e)
-        , _Player_HPBar(97, 0, 0, 100, Color::YELLOW, Color::RED, true)
+    BattleManager()
+        : _Player_HPBar(97, 0, 0, 100, Color::YELLOW, Color::RED, true)
         , _HPTEXT(_Player_HPBar.GetRight() + 1, _Player_HPBar.GetBottom() - 1, 4, "▥HP▥", YELLOW, BLACK)
         , _Enemy_HPBar(97, _HPTEXT.GetRight(), _HPTEXT.GetBottom() - 1, 100, Color::YELLOW, Color::RED, false)
         , _Player_ENBar(97, _Player_HPBar.GetLeft(), _Player_HPBar.GetBottom(), 100, Color::YELLOW, Color::BROWN, true)
@@ -52,7 +51,6 @@ public:
     
 private:
     void Healstamina();
-    void ShowCard(std::vector<std::shared_ptr<Card>> card);
     void ShowUI();
     std::shared_ptr<Card> PlayerTurn();
     void Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> eCard, BattleField& field);
