@@ -135,6 +135,9 @@
       <AdditionalLibraryDirectories>$(ProjectDir)lib;$(ProjectDir)sfml</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-audio.lib;sfml-system.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy /Y /D "$(ProjectDir)sfml\*.dll" "$(OutDir)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\InputManager\InputManager.cpp" />

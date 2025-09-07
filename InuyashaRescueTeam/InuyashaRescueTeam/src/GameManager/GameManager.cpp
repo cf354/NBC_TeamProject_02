@@ -2,11 +2,15 @@
 #include "Map/MapManager.h"
 #include "Common/ConsolePrinter.h"
 #include "SoundManager/SoundManager.h"
+#include "Common/RandomManager.h"
+
 
 void GameManager::Init()
 {
+    RANDOM_MANAGER->Init();
     CONSOLE_PRINTER->Init();
 
+#pragma region ExampleBattleInit
     player = std::make_shared<Player>("이누야샤", 1, 100, 100, 10, 5);
     enemy = std::make_shared<Enemy>("셋쇼마루", 1, 50, 30, 8, 3, 10, 20);
 
@@ -68,13 +72,17 @@ void GameManager::Init()
     BATTLE_MANAGER->Init(player, enemy);
     
 
+    enemy->AddCard(std::make_shared<C_Move>("MoveDown", 0, 0, 1, 0, -1));
+#pragma endregion
+
+    MAP_MANAGER->EnterNextStage();
 }
 
 void GameManager::Update()
 {
     CONSOLE_PRINTER->Update();
+    MAP_MANAGER->UpdatePlayer();
     MAP_MANAGER->Draw();
-
     CONSOLE_PRINTER->Render();
 }
 

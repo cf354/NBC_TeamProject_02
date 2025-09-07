@@ -101,23 +101,11 @@ namespace Map
 		}
 	};
 
-	// 간단한 게임이므로 오브젝트 타입으로 구분해서 충돌 처리
-	// 충돌도 그냥 ObjType으로 구분해서, Player인 경우만 나머지랑 충돌처리 하게 함
-	enum class ObjType
-	{
-		None = -1,
-		WorldStatic,
-		Stairs,
-		Player
-	};
-
 	struct MapObj
 	{
 		// 좌하단 원점
 		Vector2D pos;
-		ObjType type = ObjType::None;
-		Vector2D sizeCollider;
-		Vector2D sizeRender;
-		string strRender;
+		Vector2D size;
+		wstring strRender;
 	};
 }

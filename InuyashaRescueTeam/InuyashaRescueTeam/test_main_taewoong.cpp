@@ -70,6 +70,11 @@
 //            case KeyAction::MOVE_DOWN:  player.Move(Direction::DOWN); break;
 //            case KeyAction::MOVE_LEFT:  player.Move(Direction::LEFT); break;
 //            case KeyAction::MOVE_RIGHT: player.Move(Direction::RIGHT); break;
+//                // 대각선 이동 추가 
+//            case KeyAction::MOVE_UP_LEFT:    player.Move(Direction::UP_LEFT); break;
+//            case KeyAction::MOVE_UP_RIGHT:   player.Move(Direction::UP_RIGHT); break;
+//            case KeyAction::MOVE_DOWN_LEFT:  player.Move(Direction::DOWN_LEFT); break;
+//            case KeyAction::MOVE_DOWN_RIGHT: player.Move(Direction::DOWN_RIGHT); break;
 //                // 상점 입장 상호작용
 //            case KeyAction::ENTER_MERCHANT:
 //                currentState = GameState::MERCHANT; // 상태 변경
@@ -103,6 +108,9 @@
 //                currentState = GameState::FIELD; // 필드 상태로 변경
 //            }
 //        }
+//
+//        // CPU 사용량을 줄이기 위해 짧은 딜레이를 줍니다.
+//        Sleep(100); // 100밀리초(0.1초) 대기
 //    }
 //    std::cout << "게임을 종료합니다." << std::endl;
 //    return 0;
