@@ -7,12 +7,17 @@
 
 
 
+void BattleManager::Init(std::shared_ptr<Player>p, std::shared_ptr<Enemy>e)
+{
+	player = p;
+	enemy = e;
+}
+
 void BattleManager::StartBattle()
 {
 	std::cout << "전투 시작!\n";
-	auto& bgm = GAME_MANAGER->GetSoundManager();
+	SOUND_MANAGER->PlayBgm(BGMType::BattleField);
 	
-	bgm.PlayBgm(BGMType::BattleField);
 	while (!player->IsDead() && !enemy->IsDead()) {
 		field.field_print();
 		ShowUI();
@@ -135,8 +140,8 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
 		}
 		else {
 			std::vector<std::shared_ptr <Card>> *AllCardsList = GAME_MANAGER->GetAllCardsList();
-			auto& bgm = GAME_MANAGER->GetSoundManager();
-			bgm.PlaySE(bgm.GetCardSEType(attackCard->C_GetName()));
+			
+			SOUND_MANAGER->PlaySE(SOUND_MANAGER->GetCardSEType(attackCard->C_GetName()));
 			
 			player->SetStamina(player->GetStamina() - attackCard->C_GetCost());
 			if (HitCheck(1, attackCard)) {
