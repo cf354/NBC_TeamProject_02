@@ -5,19 +5,19 @@
 #include <map>
 #include "Card/Card.h"
 
-// Boss Å¬·¡½º: Enemy¸¦ »ó¼Ó¹Ş¾Æ º¸½º Àü¿ë Ä«µå µ¦°ú ÆĞÅÏÀ» Á¦°ø
+// Boss í´ë˜ìŠ¤: Enemyë¥¼ ìƒì†ë°›ì•„ ë³´ìŠ¤ ì „ìš© ì¹´ë“œ ë±ê³¼ íŒ¨í„´ì„ ì œê³µ
 class Boss : public Enemy {
 private:
-    int phase = 1;   // º¸½º ÀüÅõ ÆäÀÌÁî (Ã¼·Â Á¶°Ç µî¿¡ µû¶ó º¯°æ)
+    int phase = 1;   // ë³´ìŠ¤ ì „íˆ¬ í˜ì´ì¦ˆ (ì²´ë ¥ ì¡°ê±´ ë“±ì— ë”°ë¼ ë³€ê²½)
 
 public:
     Boss(std::string n, int lv, int h, int s, int a, int d, int dm, int de)
         : Enemy(n, lv, h, s, a, d, dm, de) {}
 
-    // º¸½º Àü¿ë Ä«µå µ¦ ÃÊ±âÈ­
+    // ë³´ìŠ¤ ì „ìš© ì¹´ë“œ ë± ì´ˆê¸°í™”
     void InitDeck();
 
-    // °¡ÁßÄ¡ ±â¹İ Ä«µå ¼±ÅÃ (ÆäÀÌÁî ÀüÈ¯ ·ÎÁ÷ Æ÷ÇÔ)
+    // ê°€ì¤‘ì¹˜ ê¸°ë°˜ ì¹´ë“œ ì„ íƒ (í˜ì´ì¦ˆ ì „í™˜ ë¡œì§ í¬í•¨)
     std::shared_ptr<Card> GetRandomCard(int playerX, int playerY, int enemyX, int enemyY) override;
 
     ~Boss() {}

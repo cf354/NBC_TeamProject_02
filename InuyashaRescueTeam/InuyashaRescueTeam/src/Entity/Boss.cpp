@@ -4,38 +4,38 @@
 #include "Card/C_Guard.h"
 #include "Common/ConsolePrinter.h"
 
-// º¸½º µ¦ ÃÊ±âÈ­
+// ë³´ìŠ¤ ë± ì´ˆê¸°í™”
 void Boss::InitDeck() {
-    // ÀÌµ¿ Ä«µå
+    // ì´ë™ ì¹´ë“œ
     AddCard(std::make_shared<C_Move>("B_MoveRight", 0, 0, 1, 1, 0));
     AddCard(std::make_shared<C_Move>("B_MoveLeft", 0, 0, 1, -1, 0));
 
-    // ±âº» °ø°İ Ä«µå
+    // ê¸°ë³¸ ê³µê²© ì¹´ë“œ
     bool WideSlash[3][3] = { {true,true,true}, {false,true,false}, {false,true,false} };
     AddCard(std::make_shared<C_Attack>("B_WideSlash", 20, 0, 40, WideSlash));
 
     bool CrossSlash[3][3] = { {true,false,true}, {false,true,false}, {true,false,true} };
     AddCard(std::make_shared<C_Attack>("B_CrossSlash", 25, 0, 50, CrossSlash));
 
-    // °¡ÁßÄ¡ ¼³Á¤
+    // ê°€ì¤‘ì¹˜ ì„¤ì •
     AddCardWeight("B_MoveRight", 1);
     AddCardWeight("B_MoveLeft", 1);
     AddCardWeight("B_WideSlash", 3);
     AddCardWeight("B_CrossSlash", 4);
 }
 
-// º¸½º Àü¿ë ·£´ı Ä«µå ¼±ÅÃ
+// ë³´ìŠ¤ ì „ìš© ëœë¤ ì¹´ë“œ ì„ íƒ
 std::shared_ptr<Card> Boss::GetRandomCard(int playerX, int playerY, int enemyX, int enemyY) {
-    // Ã¼·ÂÀÌ 50% ÀÌÇÏÀÏ ¶§ ÆäÀÌÁî ÀüÈ¯
-    if (GetHP() < GetHP() / 2 && phase == 1) {   // Ã¼·Â °¡Á®¿À´Â°Å ¾ÆÁ÷ ±¸Çö ¸øÇÔ
+    // ì²´ë ¥ì´ 50% ì´í•˜ì¼ ë•Œ í˜ì´ì¦ˆ ì „í™˜
+    if (GetHP() < GetHP() / 2 && phase == 1) {   // ì²´ë ¥ ê°€ì ¸ì˜¤ëŠ”ê±° ì•„ì§ êµ¬í˜„ ëª»í•¨
         phase = 2;
 
-        // »õ·Î¿î °­·ÂÇÑ Ä«µå Ãß°¡
+        // ìƒˆë¡œìš´ ê°•ë ¥í•œ ì¹´ë“œ ì¶”ê°€
         bool RageAttack[3][3] = { {true,true,true}, {true,true,true}, {true,true,true} };
         AddCard(std::make_shared<C_Attack>("B_RageAttack", 40, 0, 80, RageAttack));
         AddCardWeight("B_RageAttack", 6);
     }
 
-    // ±âº» EnemyÀÇ °¡ÁßÄ¡ ±â¹İ ·£´ı ¼±ÅÃÀ» ±×´ë·Î È°¿ë
+    // ê¸°ë³¸ Enemyì˜ ê°€ì¤‘ì¹˜ ê¸°ë°˜ ëœë¤ ì„ íƒì„ ê·¸ëŒ€ë¡œ í™œìš©
     return Enemy::GetRandomCard(playerX, playerY, enemyX, enemyY);
 }

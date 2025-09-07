@@ -2,9 +2,6 @@
 #include <iostream>
 #include <string>
 
-#define MAX_HP 100
-#define MAX_STAMINA 100
-
 class Entity {
 protected:
     std::string Name;
@@ -13,9 +10,6 @@ protected:
     int Stamina;
     int ATK;
     int DEF;
-
-    int MaxHP;      
-    int MaxStamina; 
 
 public:
     // 생성자 및 소멸자
@@ -31,15 +25,11 @@ public:
     int GetStamina() const;
     int GetATK() const;
     int GetDEF() const;
-
-    int GetMaxHP() const;
-    int GetMaxStamina() const; 
-
     std::string GetName() const;
 
-    // 정보 설정 (Setter) 
+    // 정보 설정 (Setter) 
     void SetHP(int hp);
     void SetStamina(int stamina);
-
+    
     bool IsDead();
 };

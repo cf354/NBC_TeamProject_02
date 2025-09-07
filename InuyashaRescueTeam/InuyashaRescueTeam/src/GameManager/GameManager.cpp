@@ -1,48 +1,19 @@
 #include "GameManager\GameManager.h"
-<<<<<<< Updated upstream
-=======
 #include "Map/MapManager.h"
 #include "Common/ConsolePrinter.h"
 #include "SoundManager/SoundManager.h"
 #include "Common/RandomManager.h"
-#include <conio.h>
+
 
 void GameManager::Init()
 {
     RANDOM_MANAGER->Init();
     CONSOLE_PRINTER->Init();
 
-#pragma region EnemySelection
-
-    std::cout << "적이 나타났다! (임시 적 선택 UI)\n";
-    std::cout << "1. 셋쇼마루 (Enemy)\n";
-    std::cout << "2. 나락 (Boss)\n";
-    std::cout << "선택: ";
-
-    char choice;
-    while (true) {
-        choice = _getch();
-        if (choice == '1') {
-            enemy = std::make_shared<Enemy>("셋쇼마루", 1, 50, 30, 8, 3, 10, 20);
-            std::cout << "\n셋쇼마루를 선택했습니다.\n";
-            break;
-        }
-        else if (choice == '2') {
-            enemy = std::make_shared<Enemy>("나락", 2, 100, 60, 16, 6, 20, 40);
-            std::cout << "\n나락을 선택했습니다.\n";
-            break;
-        }
-        else {
-            // 잘못된 입력 시, 다시 입력을 받습니다.
-            std::cout << "\n잘못된 입력입니다. 1 또는 2를 눌러주세요: \n";
-        }
-    }
-    system("cls");
-
-#pragma endregion EnemySelection
-
 #pragma region ExampleBattleInit
     player = std::make_shared<Player>("이누야샤", 1, 100, 100, 10, 5);
+
+    enemy = std::make_shared<Enemy>("셋쇼마루", 1, 50, 30, 8, 3, 10, 20);
 
     AllCardsList.emplace_back(std::make_shared<C_Move>("MoveRight", 0, 0, 1, 1, 0)); // 0 // C_Move(std::string n,int C, int G, int d, int dirx, int diry) :distance(d), x(dirx), y(diry) { Name = n; Cost = C; Gold = G; };
     AllCardsList.emplace_back(std::make_shared<C_Move>("MoveLeft", 0, 0, 1, -1, 0)); // 1
@@ -55,6 +26,7 @@ void GameManager::Init()
     bool IronReaver[3][3] = { {true,false,true},{false,true,false},{true,false,true} };
     AllCardsList.emplace_back(std::make_shared<C_Attack>("IronReaver", 35, 0, 25, IronReaver)); // 6
     bool WindScar[3][3] = { {false,false,false},{false,true,false},{true,true,true} };
+
     AllCardsList.emplace_back(std::make_shared<C_Attack>("WindScar", 50, 0, 50, WindScar)); // 7
     AllCardsList.emplace_back(std::make_shared<C_Guard>("Guard", 0, 0, 15)); // 8 //C_Guard(std::string n, int C, int G, int D) :DEF(D) {Name = n; Cost = C; Gold = G;}
 
@@ -130,4 +102,3 @@ std::vector<std::shared_ptr <Card>>* GameManager::GetAllCardsList()
 {
     return &AllCardsList;
 }
->>>>>>> Stashed changes

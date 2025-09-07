@@ -5,10 +5,19 @@
 #include "Entity/Player.h"
 #include "Entity/Enemy.h"
 
+
+
+void BattleManager::Init(std::shared_ptr<Player>p, std::shared_ptr<Enemy>e)
+{
+	player = p;
+	enemy = e;
+}
+
 void BattleManager::StartBattle()
 {
 	std::cout << "전투 시작!\n";
-
+	SOUND_MANAGER->PlayBgm(BGMType::BattleField);
+	
 	while (!player->IsDead() && !enemy->IsDead()) {
 		field.field_print();
 		ShowUI();
@@ -17,39 +26,25 @@ void BattleManager::StartBattle()
 		// 적 턴 시작 시 플레이어와 적의 위치를 GetRandomCard 함수에 전달
 		std::shared_ptr<Card> eCard = enemy->GetRandomCard(field.PlayerPositionX, field.PlayerPositionY, field.EnemyPositionX, field.EnemyPositionY);
 
-		std::cout << enemy->GetName() << "이(가) [" << eCard->C_GetName() << "] 카드를 선택했다!\n";
+		std::cout << enemy->GetName()<<   "이(가) [" << eCard->C_GetName() << "] 카드를 선택했다!\n";
 		system("cls");
 		Resolve(pCard, eCard, field);
-<<<<<<< Updated upstream
-=======
-
-        _Player_HPBar.SetValue(player.get()->GetHP());
-        _Player_ENBar.SetValue(player.get()->GetStamina());
-
-        _Enemy_HPBar.SetValue(enemy.get()->GetHP());
-        _Enemy_ENBar.SetValue(enemy.get()->GetStamina());
-
-        _Player_HPBar.Draw();
-        _Player_ENBar.Draw();
-
-        _Enemy_HPBar.Draw();
-        _Enemy_ENBar.Draw();
-        ShowUI();
-        _Grid.Draw();
-
->>>>>>> Stashed changes
 		Healstamina();
 		enemy->RecoverStamina(10);
 	}
 	EndBattle();
 }
 
+
+
+
 void BattleManager::Healstamina()
 {
-	player->AddStamina(15);
+    // 스테미너 관리 Entity로 이관한다 하셔서 오류 방지를 위해 주석 처리 해놨습니다. 
+    // player->AddStamina(15)
 }
 
-void BattleManager::ShowCard(std::vector<std::shared_ptr<Card>> card)
+void BattleManager::ShowCard(std::vector<std::shared_ptr<Card>> card)//하빈
 {
 	//------------임시 테스트용--------------
 	std::cout << "플레이어 카드 선택 :" << std::endl;
@@ -68,7 +63,7 @@ void BattleManager::ShowCard(std::vector<std::shared_ptr<Card>> card)
 	}
 }
 
-void BattleManager::ShowUI()
+void BattleManager::ShowUI()//하빈
 {
 	// 플레이어와 적 사이의 거리를 계산
 	int distanceX = std::abs(field.PlayerPositionX - field.EnemyPositionX);
@@ -77,16 +72,22 @@ void BattleManager::ShowUI()
 	// 3x3 범위 안에 있는지 확인
 	bool isInAttackRange = (distanceX <= 1 && distanceY <= 1);
 
+	//-------------임시 테스트용---------------
+	std::cout << "==== 전투 UI ====\n";
+	std::cout << player->GetName() << " HP: " << player->GetHP() << " Stamina: " << player->GetStamina()
+		<< " | " << enemy->GetName() << " HP: " << enemy->GetHP() << " Stamina: " << enemy->GetStamina();
+
 	if (isInAttackRange) {
 		std::cout << " ★"; // 공격 가중치 범위 안에 있을 때 ★ 표시
 	}
+	std::cout << "\n";
 }
 
 std::shared_ptr<Card> BattleManager::PlayerTurn()
 {
 
 	std::vector<std::shared_ptr<Card>> card = player->GetDeck();
-	ShowCard(card);
+	ShowCard(card);//하빈님
 
 	int choice = -1;
 	while (true) {
@@ -124,6 +125,7 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
 	{
 		field.field_move(moveCard->M_GetX(), moveCard->M_GetY(), 1);
 	}
+	//체력 OR 스태미나 힐
 	//적 이동
 	else if (auto defenseCard = dynamic_cast<C_Guard*>(pCard.get())) //플레이어 방어
 	{
@@ -131,35 +133,31 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
 		std::cout << "방어가 " << defenseCard->G_GetDEF() << "만큼 상승했다." << std::endl;
 	}
 	//적 방어
-	else if (auto attackCard = dynamic_cast<C_Attack*>(pCard.get())) //÷̾ 
+	else if (auto attackCard = dynamic_cast<C_Attack*>(pCard.get())) //÷̾ 
 	{
 		if (player->GetStamina() < attackCard->C_GetCost()) {
 			std::cout << "스태미나가 부족하다." << std::endl;
 		}
 		else {
+			std::vector<std::shared_ptr <Card>> *AllCardsList = GAME_MANAGER->GetAllCardsList();
+			
+			SOUND_MANAGER->PlaySE(SOUND_MANAGER->GetCardSEType(attackCard->C_GetName()));
+			
 			player->SetStamina(player->GetStamina() - attackCard->C_GetCost());
 			if (HitCheck(1, attackCard)) {
 				int hitdamage = attackCard->A_GetATK() + player->GetATK() - enemy->GetDEF() - eCardDEF;
 				if (hitdamage < 0) hitdamage = 0;
 				enemy->TakeDamage(hitdamage);
-				std::cout << "플레이어가 적에게 " << hitdamage << "의 피해를 입혔다." << std::endl;
 			}
 			else {
 				std::cout << "공격에 실패했다." << std::endl;
 			}
 		}
-	}
+	}//플레이어 공격
 
 	// 적 행동
 	if (auto moveCard = dynamic_cast<C_Move*>(eCard.get())) {
-		if (enemy->GetStamina() < moveCard->C_GetCost()) {
-			std::cout << "적의 스태미나가 부족합니다." << std::endl;
-		}
-		else {
-			enemy->SetStamina(enemy->GetStamina() - moveCard->C_GetCost());
-			field.field_move(moveCard->M_GetX(), moveCard->M_GetY(), 2);
-			std::cout << "적이 이동했습니다." << std::endl;
-		}
+		field.field_move(moveCard->M_GetX(), moveCard->M_GetY(), 2);
 	}
 	else if (auto defenseCard = dynamic_cast<C_Guard*>(eCard.get())) {
 		eCardDEF += defenseCard->G_GetDEF();
@@ -175,7 +173,6 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
 				int hitdamage = attackCard->A_GetATK() + enemy->GetATK() - player->GetDEF() - pCardDEF;
 				if (hitdamage < 0) hitdamage = 0;
 				player->TakeDamage(hitdamage);
-				std::cout << "적이 플레이어에게 " << hitdamage << "의 피해를 입혔다." << std::endl;
 			}
 			else {
 				std::cout << "적의 공격이 실패했다." << std::endl;
@@ -216,3 +213,4 @@ void BattleManager::EndBattle()
 		enemy.reset();
 	}
 }
+
