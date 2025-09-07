@@ -7,6 +7,13 @@
 #include "BattleUI/CardUI.h"
 
 
+
+void BattleManager::Init(std::shared_ptr<Player>p, std::shared_ptr<Enemy>e)
+{
+	player = p;
+	enemy = e;
+}
+
 void BattleManager::StartBattle()
 {
 	std::cout << "전투 시작!\n";
@@ -30,7 +37,9 @@ void BattleManager::StartBattle()
     _Enemy_HPBar.Draw();
     _Enemy_ENBar.Draw();
 
-	BattleMusic();
+
+	SOUND_MANAGER->PlayBgm(BGMType::BattleField);
+	
 	while (!player->IsDead() && !enemy->IsDead()) {
 		//field.field_print();        
      
@@ -70,16 +79,8 @@ void BattleManager::StartBattle()
 	EndBattle();
 }
 
-void BattleManager::BattleMusic() {
-	
-	if (!bgm.openFromFile("Grip.wav"))return;
 
-	bgm.setLoop(true);
-	bgm.setVolume(30.f);
-	bgm.play();
 
-	
-}
 
 void BattleManager::Healstamina()
 {
@@ -87,7 +88,7 @@ void BattleManager::Healstamina()
     // player->AddStamina(15)
 }
 
-void BattleManager::ShowCard(std::vector<std::shared_ptr<Card>> card)
+void BattleManager::ShowCard(std::vector<std::shared_ptr<Card>> card)//하빈
 {
 	//------------임시 테스트용--------------
 	std::cout << "플레이어 카드 선택 :" << std::endl;
@@ -106,7 +107,7 @@ void BattleManager::ShowCard(std::vector<std::shared_ptr<Card>> card)
 	}
 }
 
-void BattleManager::ShowUI()
+void BattleManager::ShowUI()//하빈
 {
 	// 플레이어와 적 사이의 거리를 계산
 	int distanceX = std::abs(field.PlayerPositionX - field.EnemyPositionX);
@@ -131,7 +132,6 @@ void BattleManager::ShowUI()
 std::shared_ptr<Card> BattleManager::PlayerTurn()
 {
 	std::vector<std::shared_ptr<Card>> card = player->GetDeck();
-
     _CardUI.Draw();
     _CardUI.PrintCards(card);
 	return _CardUI.ChoseCard(card);
@@ -151,6 +151,7 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
 		field.field_move(moveCard->M_GetX(), moveCard->M_GetY(), 1);
         _Grid.SetCharacter(field.PlayerPositionX, field.PlayerPositionY, "@", Color::RED, Color::BLACK);
 	}
+	//체력 OR 스태미나 힐
 	//적 이동
 	else if (auto defenseCard = dynamic_cast<C_Guard*>(pCard.get())) //플레이어 방어
 	{
@@ -167,6 +168,10 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
 			//std::cout << "스태미나가 부족하다." << std::endl;
 		}
 		else {
+			std::vector<std::shared_ptr <Card>> *AllCardsList = GAME_MANAGER->GetAllCardsList();
+			
+			SOUND_MANAGER->PlaySE(SOUND_MANAGER->GetCardSEType(attackCard->C_GetName()));
+			
 			player->SetStamina(player->GetStamina() - attackCard->C_GetCost());
             _Grid.SetCharacter(field.PlayerPositionX, field.PlayerPositionY, "@", Color::RED, Color::BLACK);
             _Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, "#", Color::BLUE, Color::BLACK);
@@ -185,7 +190,6 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
 				//std::cout << "공격에 실패했다." << std::endl;
 			}
 		}
-
 	}
 
 	// 적 행동
@@ -197,6 +201,7 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
         //_Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, "#", Color::BLUE, Color::BLACK);
 		//std::cout << "적이 이동했습니다." << std::endl;
         _Log.PrintLog("적이 이동했습니다.");
+
 	}
 	else if (auto defenseCard = dynamic_cast<C_Guard*>(eCard.get())) {
 		eCardDEF += defenseCard->G_GetDEF();
@@ -226,6 +231,8 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
 				player->TakeDamage(hitdamage);
                 _Log.PrintLog("적이 플레이어에게 " + std::to_string(hitdamage) + "의 피해를 입혔다.");
 				//std::cout << "적이 플레이어에게 " << hitdamage << "의 피해를 입혔다." << std::endl;
+
+
 			}
 			else {
 				//std::cout << "적의 공격이 실패했다." << std::endl;

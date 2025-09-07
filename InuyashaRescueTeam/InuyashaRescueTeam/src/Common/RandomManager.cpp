@@ -1,5 +1,10 @@
 #include "Common/RandomManager.h"
 
+void RandomManager::Init()
+{
+	SetCompletelyRandom();
+}
+
 void RandomManager::SetSeed(unsigned int seed)
 {
 	this->seed = seed;

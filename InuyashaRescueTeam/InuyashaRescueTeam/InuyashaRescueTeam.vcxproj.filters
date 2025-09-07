@@ -60,6 +60,11 @@
     </Filter>
     <Filter Include="Source Files\BattleUI">
       <UniqueIdentifier>{f5b1941c-81c9-4d64-bf49-02c9f5103198}</UniqueIdentifier>
+    <Filter Include="Source Files\SoundManager">
+      <UniqueIdentifier>{4d70f5ab-d025-4d0f-b686-95cefedd0e40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\SoundManager">
+      <UniqueIdentifier>{52369381-47e2-4c61-9bba-15d1ddae567b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -128,6 +133,8 @@
     </ClCompile>
     <ClCompile Include="src\BattleUI\BattleLog.cpp">
       <Filter>Source Files</Filter>
+    <ClCompile Include="src\SoundManager\SoundManager.cpp">
+      <Filter>Source Files\SoundManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -208,6 +215,8 @@
     </ClInclude>
     <ClInclude Include="include\BattleUI\BattleLog.h">
       <Filter>Header Files</Filter>
+    <ClInclude Include="include\SoundManager\SoundManager.h">
+      <Filter>Header Files\SoundManager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

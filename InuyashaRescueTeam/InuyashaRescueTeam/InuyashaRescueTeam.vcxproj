@@ -161,6 +161,7 @@
     <ClCompile Include="src\Entity\Player.cpp" />
     <ClCompile Include="src\GameManager\GameManager.cpp" />
     <ClCompile Include="src\Merchant\Merchant.cpp" />
+    <ClCompile Include="src\SoundManager\SoundManager.cpp" />
     <ClCompile Include="test_main_taewoong.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -190,6 +191,7 @@
     <ClInclude Include="include\Common\RandomManager.h" />
     <ClInclude Include="include\Common\Singleton.h" />
     <ClInclude Include="include\BattleUI\BattleUIGroup.h" />
+    <ClInclude Include="include\SoundManager\SoundManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

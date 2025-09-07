@@ -91,6 +91,11 @@ void Player::Move(Direction dir)
     case Direction::DOWN:  nextY++; break;  
     case Direction::LEFT:  nextX--; break;
     case Direction::RIGHT: nextX++; break;
+        // 대각선 이동 
+    case Direction::UP_LEFT:    nextY--; nextX--; break;
+    case Direction::UP_RIGHT:   nextY--; nextX++; break;
+    case Direction::DOWN_LEFT:  nextY++; nextX--; break;
+    case Direction::DOWN_RIGHT: nextY++; nextX++; break;
     }
 
     // 좌표 유효성 검사
