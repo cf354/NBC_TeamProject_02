@@ -1,6 +1,7 @@
 #include "GameManager\GameManager.h"
 #include "Map/MapManager.h"
 #include "Common/ConsolePrinter.h"
+#include "SoundManager/SoundManager.h"
 
 void GameManager::Init()
 {
@@ -42,6 +43,7 @@ void GameManager::Init()
     player->AddCard(AllCardsList[8]); // Guard
 
     // **적(Enemy) 카드 덱 구성 및 가중치 부여**
+    
     enemy->AddCard(std::make_shared<C_Move>("E_MoveRight", 0, 0, 1, 1, 0));
     enemy->AddCard(std::make_shared<C_Move>("E_MoveLeft", 0, 0, 1, -1, 0));
     enemy->AddCard(std::make_shared<C_Move>("E_MoveUp", 0, 0, 1, 0, -1));
@@ -62,21 +64,9 @@ void GameManager::Init()
     enemy->AddCardWeight("E_LineAttack", 2);
     
     //사운드
+    SOUND_MANAGER->Init();
+    BATTLE_MANAGER->Init(player, enemy);
     
-    sound.LoadBgm(BGMType::BattleField, "sound\\BattleTheme.wav");
-    sound.LoadBgm(BGMType::StartScene, "sound\\Grip.wav");
-    sound.LoadBgm(BGMType::BossTheme, "sound\\BossBattleTheme.wav");
-    sound.LoadBgm(BGMType::NoneBattleField, "sound\\AffectionsTouchingAcrossTime.wav");//bgm추가
-    sound.LoadBgm(BGMType::BossMapTheme, "sound\\BossTheme.wav");
-    
-    sound.LoadSE(SEType::WindScar, "sound\\WindScar.wav");
-    sound.LoadSE(SEType::BladesOfBlood, "sound\\BladesOfBlood.wav");
-    sound.LoadSE(SEType::IronReaver, "sound\\IronReaver.wav");
-    sound.LoadSE(SEType::blop, "sound\\blop.wav");
-    sound.LoadSE(SEType::buy, "sound\\buy.wav");//효과음추가
-    
-    sound.SetBgmVolume(10.f);//소리설정
-    sound.SetSEVolume(10.f);
 
 }
 
@@ -90,13 +80,7 @@ void GameManager::Update()
 
 void GameManager::Run()
 {
-    BattleManager battle(player, enemy);
-    battle.StartBattle();
-}
-
-SoundManager &GameManager::GetSoundManager()
-{
-    return sound;
+    BATTLE_MANAGER->StartBattle();
 }
 
 std::weak_ptr<Player> GameManager::GetPlayer()
