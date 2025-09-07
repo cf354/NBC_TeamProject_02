@@ -9,7 +9,8 @@ enum class BGMType {
 	BattleField,
 	BossTheme,
 	NoneBattleField,
-	StartScene
+	StartScene,
+	BossMapTheme
 	
 };
 enum class SEType {

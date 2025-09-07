@@ -65,8 +65,9 @@ void GameManager::Init()
     
     sound.LoadBgm(BGMType::BattleField, "sound\\BattleTheme.wav");
     sound.LoadBgm(BGMType::StartScene, "sound\\Grip.wav");
-    sound.LoadBgm(BGMType::BossTheme, "sound\\BossTheme.wav");
+    sound.LoadBgm(BGMType::BossTheme, "sound\\BossBattleTheme.wav");
     sound.LoadBgm(BGMType::NoneBattleField, "sound\\AffectionsTouchingAcrossTime.wav");//bgm추가
+    sound.LoadBgm(BGMType::BossMapTheme, "sound\\BossTheme.wav");
     
     sound.LoadSE(SEType::WindScar, "sound\\WindScar.wav");
     sound.LoadSE(SEType::BladesOfBlood, "sound\\BladesOfBlood.wav");
