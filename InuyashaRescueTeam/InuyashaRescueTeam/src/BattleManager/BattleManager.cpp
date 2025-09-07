@@ -35,7 +35,9 @@ void BattleManager::StartBattle()
     _Player_ENBar.Draw();
 
     _Enemy_HPBar.Draw();
+    ShowUI();
     _Enemy_ENBar.Draw();
+
 
 
 	SOUND_MANAGER->PlayBgm(BGMType::BattleField);
@@ -68,6 +70,7 @@ void BattleManager::StartBattle()
         _Player_ENBar.Draw();
 
         _Enemy_HPBar.Draw();
+        //ShowUI(); // 가중치 배율 들어가면 Enemy HP 오른쪽에 ★배치 / 한번 표시되면 이후로 안사라지는 버그 있음.
         _Enemy_ENBar.Draw();
 
         _Grid.Draw();
@@ -97,9 +100,9 @@ void BattleManager::ShowUI()//하빈
 	bool isInAttackRange = (distanceX <= 1 && distanceY <= 1);
 
 	//-------------임시 테스트용---------------
-	std::cout << "==== 전투 UI ====\n";
-	std::cout << player->GetName() << " HP: " << player->GetHP() << " Stamina: " << player->GetStamina()
-		<< " | " << enemy->GetName() << " HP: " << enemy->GetHP() << " Stamina: " << enemy->GetStamina();
+	//std::cout << "==== 전투 UI ====\n";
+	//std::cout << player->GetName() << " HP: " << player->GetHP() << " Stamina: " << player->GetStamina()
+	//	<< " | " << enemy->GetName() << " HP: " << enemy->GetHP() << " Stamina: " << enemy->GetStamina();
 
 	if (isInAttackRange) {
 		std::cout << " ★"; // 공격 가중치 범위 안에 있을 때 ★ 표시
