@@ -129,6 +129,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+<<<<<<< Updated upstream
+=======
+    <ClCompile Include="Boss.cpp" />
+    <ClCompile Include="src\BattleUI\BattleGrid.cpp" />
+    <ClCompile Include="src\BattleUI\BattleLog.cpp" />
+    <ClCompile Include="src\BattleUI\CardUI.cpp" />
+    <ClCompile Include="src\BattleUI\Progressbar.cpp" />
+    <ClCompile Include="src\BattleUI\UIWidget.cpp" />
+    <ClCompile Include="src\InputManager\InputManager.cpp" />
+    <ClCompile Include="src\Common\ConsolePrinter.cpp" />
+>>>>>>> Stashed changes
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="src\battelfield\battlefield.cpp" />
     <ClCompile Include="src\BattleManager\BattleManager.cpp" />
@@ -144,6 +155,17 @@
     <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< Updated upstream
+=======
+    <ClInclude Include="Boss.h" />
+    <ClInclude Include="include\BattleUI\BattleGrid.h" />
+    <ClInclude Include="include\BattleUI\BattleLog.h" />
+    <ClInclude Include="include\BattleUI\CardUI.h" />
+    <ClInclude Include="include\BattleUI\Progressbar.h" />
+    <ClInclude Include="include\BattleUI\Text.h" />
+    <ClInclude Include="include\BattleUI\UIWidget.h" />
+    <ClInclude Include="include\Common\ConsolePrinter.h" />
+>>>>>>> Stashed changes
     <ClInclude Include="include\battlefield\battlefield.h" />
     <ClInclude Include="include\BattleManager\BattleManager.h" />
     <ClInclude Include="include\Cards.h" />

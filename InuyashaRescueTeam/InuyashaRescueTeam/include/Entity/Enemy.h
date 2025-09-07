@@ -22,9 +22,14 @@ public:
     void AddCard(const std::shared_ptr<Card>& c) { deck.push_back(c); }
     void AddCardWeight(const std::string& cardName, int weight) { cardWeights[cardName] = weight; }
 
+<<<<<<< Updated upstream
     std::shared_ptr<Card> GetRandomCard(int playerX, int playerY, int enemyX, int enemyY);
     void RecoverStamina(int amount) 
     {
+=======
+    virtual std::shared_ptr<Card> GetRandomCard(int playerX, int playerY, int enemyX, int enemyY);
+    void RecoverStamina(int amount) {
+>>>>>>> Stashed changes
         SetStamina(GetStamina() + amount);
     }
 

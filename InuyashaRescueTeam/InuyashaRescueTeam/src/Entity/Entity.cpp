@@ -2,7 +2,7 @@
 
 // 생성자 
 Entity::Entity(const std::string& name, int level, int hp, int stamina, int atk, int def)
-    : Name(name), Level(level), HP(hp), Stamina(stamina), ATK(atk), DEF(def) {
+    : Name(name), Level(level), HP(hp), Stamina(stamina), ATK(atk), DEF(def), MaxHP(hp), MaxStamina(stamina) { // MaxHP, MaxStamina를 초기 체력/스태미나로 초기화
 }
 
 // 소멸자 
@@ -24,7 +24,13 @@ int Entity::GetHP() const { return HP; }
 int Entity::GetStamina() const { return Stamina; }
 int Entity::GetATK() const { return ATK; }
 int Entity::GetDEF() const { return DEF; }
+
+int Entity::GetMaxHP() const { return MaxHP; }
+int Entity::GetMaxStamina() const { return MaxStamina; }
+
 std::string Entity::GetName() const { return Name; }
+
+
 
 // 정보 설정 
 void Entity::SetHP(int hp)

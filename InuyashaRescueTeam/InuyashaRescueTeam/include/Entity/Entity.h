@@ -14,6 +14,9 @@ protected:
     int ATK;
     int DEF;
 
+    int MaxHP;      
+    int MaxStamina; 
+
 public:
     // 생성자 및 소멸자
     Entity(const std::string& name, int level, int hp, int stamina, int atk, int def);
@@ -28,9 +31,13 @@ public:
     int GetStamina() const;
     int GetATK() const;
     int GetDEF() const;
+
+    int GetMaxHP() const;
+    int GetMaxStamina() const; 
+
     std::string GetName() const;
 
-    // 정보 설정 (Setter) 
+    // 정보 설정 (Setter) 
     void SetHP(int hp);
     void SetStamina(int stamina);
 

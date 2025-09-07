@@ -20,6 +20,24 @@ void BattleManager::StartBattle()
 		std::cout << enemy->GetName() << "이(가) [" << eCard->C_GetName() << "] 카드를 선택했다!\n";
 		system("cls");
 		Resolve(pCard, eCard, field);
+<<<<<<< Updated upstream
+=======
+
+        _Player_HPBar.SetValue(player.get()->GetHP());
+        _Player_ENBar.SetValue(player.get()->GetStamina());
+
+        _Enemy_HPBar.SetValue(enemy.get()->GetHP());
+        _Enemy_ENBar.SetValue(enemy.get()->GetStamina());
+
+        _Player_HPBar.Draw();
+        _Player_ENBar.Draw();
+
+        _Enemy_HPBar.Draw();
+        _Enemy_ENBar.Draw();
+        ShowUI();
+        _Grid.Draw();
+
+>>>>>>> Stashed changes
 		Healstamina();
 		enemy->RecoverStamina(10);
 	}
@@ -59,15 +77,9 @@ void BattleManager::ShowUI()
 	// 3x3 범위 안에 있는지 확인
 	bool isInAttackRange = (distanceX <= 1 && distanceY <= 1);
 
-	//-------------임시 테스트용---------------
-	std::cout << "==== 전투 UI ====\n";
-	std::cout << player->GetName() << " HP: " << player->GetHP() << " Stamina: " << player->GetStamina()
-		<< " | " << enemy->GetName() << " HP: " << enemy->GetHP() << " Stamina: " << enemy->GetStamina();
-
 	if (isInAttackRange) {
 		std::cout << " ★"; // 공격 가중치 범위 안에 있을 때 ★ 표시
 	}
-	std::cout << "\n";
 }
 
 std::shared_ptr<Card> BattleManager::PlayerTurn()

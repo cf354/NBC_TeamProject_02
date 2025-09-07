@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+<<<<<<< Updated upstream
     <Filter Include="Source Files">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
@@ -131,5 +132,61 @@
     <ClInclude Include="include\Merchant\Merchant.h">
       <Filter>Header Files\Merchant</Filter>
     </ClInclude>
+=======
+    <ClCompile Include="src\BattleUI\BattleGrid.cpp" />
+    <ClCompile Include="src\BattleUI\BattleLog.cpp" />
+    <ClCompile Include="src\BattleUI\CardUI.cpp" />
+    <ClCompile Include="src\BattleUI\Progressbar.cpp" />
+    <ClCompile Include="src\BattleUI\UIWidget.cpp" />
+    <ClCompile Include="src\InputManager\InputManager.cpp" />
+    <ClCompile Include="src\Common\ConsolePrinter.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="src\Common\RandomManager.cpp" />
+    <ClCompile Include="src\Map\MapManager.cpp" />
+    <ClCompile Include="src\battelfield\battlefield.cpp" />
+    <ClCompile Include="src\BattleManager\BattleManager.cpp" />
+    <ClCompile Include="src\Card\Card.cpp" />
+    <ClCompile Include="src\Card\C_Attack.cpp" />
+    <ClCompile Include="src\Card\C_Guard.cpp" />
+    <ClCompile Include="src\Card\C_Move.cpp" />
+    <ClCompile Include="src\Entity\Enemy.cpp" />
+    <ClCompile Include="src\Entity\Entity.cpp" />
+    <ClCompile Include="src\Entity\Player.cpp" />
+    <ClCompile Include="src\GameManager\GameManager.cpp" />
+    <ClCompile Include="src\Merchant\Merchant.cpp" />
+    <ClCompile Include="src\SoundManager\SoundManager.cpp" />
+    <ClCompile Include="test_main_taewoong.cpp" />
+    <ClCompile Include="Boss.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\BattleUI\BattleGrid.h" />
+    <ClInclude Include="include\BattleUI\BattleLog.h" />
+    <ClInclude Include="include\BattleUI\CardUI.h" />
+    <ClInclude Include="include\BattleUI\Progressbar.h" />
+    <ClInclude Include="include\BattleUI\Text.h" />
+    <ClInclude Include="include\BattleUI\UIWidget.h" />
+    <ClInclude Include="include\Common\ConsolePrinter.h" />
+    <ClInclude Include="include\battlefield\battlefield.h" />
+    <ClInclude Include="include\BattleManager\BattleManager.h" />
+    <ClInclude Include="include\Cards.h" />
+    <ClInclude Include="include\Card\Card.h" />
+    <ClInclude Include="include\Card\C_Attack.h" />
+    <ClInclude Include="include\Card\C_Guard.h" />
+    <ClInclude Include="include\Card\C_Move.h" />
+    <ClInclude Include="include\Entities.h" />
+    <ClInclude Include="include\Entity\Enemy.h" />
+    <ClInclude Include="include\Entity\Entity.h" />
+    <ClInclude Include="include\Entity\Player.h" />
+    <ClInclude Include="include\GameManager\GameManager.h" />
+    <ClInclude Include="include\Merchant\Merchant.h" />
+    <ClInclude Include="include\InputManager\InputManager.h" />
+    <ClInclude Include="include\Map\MapManager.h" />
+    <ClInclude Include="include\Map\MapTypes.h" />
+    <ClInclude Include="include\Common\RandomManager.h" />
+    <ClInclude Include="include\Common\Singleton.h" />
+    <ClInclude Include="include\BattleUI\BattleUIGroup.h" />
+    <ClInclude Include="include\SoundManager\SoundManager.h" />
+    <ClInclude Include="Boss.h" />
+>>>>>>> Stashed changes
   </ItemGroup>
 </Project>
