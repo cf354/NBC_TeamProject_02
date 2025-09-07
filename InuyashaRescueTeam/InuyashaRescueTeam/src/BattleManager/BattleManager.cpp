@@ -1,4 +1,4 @@
-﻿#include "BattleManager/BattleManager.h"
+#include "BattleManager/BattleManager.h"
 #include "Card/C_Move.h"
 #include "Card/C_Attack.h"
 #include "Card/C_Guard.h"
@@ -63,7 +63,7 @@ void BattleManager::StartBattle()
 
         _Grid.Draw();
         Resolve(pCard, eCard, field);
-
+        SOUND_MANAGER->PlayBgm(BGMType::BossMapTheme);
         player->RecoverStamina(15);
         enemy->RecoverStamina(10);
 
@@ -136,17 +136,37 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
         field.field_move(moveCard->M_GetX(), moveCard->M_GetY(), 1);
         _Grid.SetCharacter(field.PlayerPositionX, field.PlayerPositionY, "@", Color::RED, Color::BLACK);
     }
+    if (auto moveCard = dynamic_cast<C_Move*>(eCard.get())) {//적 이동 
+        field.field_move(moveCard->M_GetX(), moveCard->M_GetY(), 2);
+        if (!IsSetEnemyCharacterWhenPlayerAttacked) {
+            _Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, "#", Color::BLUE, Color::BLACK);
+        }
+        //_Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, "#", Color::BLUE, Color::BLACK);
+        //std::cout << "적이 이동했습니다." << std::endl;
+        _Log.PrintLog("적이 이동했습니다.");
+
+    }
     //체력 OR 스태미나 힐
     //적 이동
-    else if (auto defenseCard = dynamic_cast<C_Guard*>(pCard.get())) //플레이어 방어
+    if (auto defenseCard = dynamic_cast<C_Guard*>(pCard.get())) //플레이어 방어
     {
         _Grid.SetCharacter(field.PlayerPositionX, field.PlayerPositionY, "@", Color::RED, Color::BLACK);
         pCardDEF += defenseCard->G_GetDEF();
         _Log.PrintLog("방어가 " + std::to_string(defenseCard->G_GetDEF()) + "만큼 상승했다.");
         //std::cout << "방어가 " << defenseCard->G_GetDEF() << "만큼 상승했다." << std::endl;
     }
-    //적 방어
-    else if (auto attackCard = dynamic_cast<C_Attack*>(pCard.get())) //÷̾ 
+    if (auto defenseCard = dynamic_cast<C_Guard*>(eCard.get())) {//적 방어
+        eCardDEF += defenseCard->G_GetDEF();
+        if (!IsSetEnemyCharacterWhenPlayerAttacked) {
+            _Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, "#", Color::BLUE, Color::BLACK);
+        }
+        //_Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, "#", Color::BLUE, Color::BLACK);
+        //std::cout << "적의 방어가 " << eCardDEF << "만큼 상승했다." << std::endl;
+        _Log.PrintLog("적의 방어가 " + std::to_string(eCardDEF) + "만큼 상승했다.");
+    }
+
+
+    if (auto attackCard = dynamic_cast<C_Attack*>(pCard.get())) //플레이어 공격
     {
 
 
@@ -172,29 +192,8 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
             //std::cout << "공격에 실패했다." << std::endl;
         }
 
-    }
-
-    // 적 행동
-    if (auto moveCard = dynamic_cast<C_Move*>(eCard.get())) {
-        field.field_move(moveCard->M_GetX(), moveCard->M_GetY(), 2);
-        if (!IsSetEnemyCharacterWhenPlayerAttacked) {
-            _Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, "#", Color::BLUE, Color::BLACK);
-        }
-        //_Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, "#", Color::BLUE, Color::BLACK);
-        //std::cout << "적이 이동했습니다." << std::endl;
-        _Log.PrintLog("적이 이동했습니다.");
-
-    }
-    else if (auto defenseCard = dynamic_cast<C_Guard*>(eCard.get())) {
-        eCardDEF += defenseCard->G_GetDEF();
-        if (!IsSetEnemyCharacterWhenPlayerAttacked) {
-            _Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, "#", Color::BLUE, Color::BLACK);
-        }
-        //_Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, "#", Color::BLUE, Color::BLACK);
-        //std::cout << "적의 방어가 " << eCardDEF << "만큼 상승했다." << std::endl;
-        _Log.PrintLog("적의 방어가 " + std::to_string(eCardDEF) + "만큼 상승했다.");
-    }
-    else if (auto attackCard = dynamic_cast<C_Attack*>(eCard.get())) {
+    }     
+    if (auto attackCard = dynamic_cast<C_Attack*>(eCard.get())) {//적 공격
         if (enemy->GetStamina() < attackCard->C_GetCost()) {
             //std::cout << "적의 스태미나가 부족합니다." << std::endl;
             _Log.PrintLog("적의 스태미나가 부족합니다.");
