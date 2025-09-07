@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <iostream>
 #include "Cards.h"
 #include "Entities.h"
@@ -51,7 +51,6 @@ public:
     
 private:
     void Healstamina();
-    void ShowCard(std::vector<std::shared_ptr<Card>> card);
     void ShowUI();
     std::shared_ptr<Card> PlayerTurn();
     void Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> eCard, BattleField& field);
