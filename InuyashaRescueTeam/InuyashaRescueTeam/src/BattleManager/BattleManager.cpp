@@ -63,7 +63,7 @@ void BattleManager::StartBattle()
 
         _Grid.Draw();
         Resolve(pCard, eCard, field);
-
+        SOUND_MANAGER->PlayBgm(BGMType::BossMapTheme);
         player->RecoverStamina(15);
         enemy->RecoverStamina(10);
 
