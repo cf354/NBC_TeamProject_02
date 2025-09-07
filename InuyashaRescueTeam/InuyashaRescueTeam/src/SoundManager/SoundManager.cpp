@@ -1,9 +1,6 @@
 #include "SoundManager\SoundManager.h"
 #include <iostream>
 
-
-
-
 void SoundManager::Init()
 {
 	cardSEMap["WindScar"] = SEType::WindScar;

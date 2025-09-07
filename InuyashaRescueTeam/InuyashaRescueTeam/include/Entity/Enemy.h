@@ -24,9 +24,9 @@ public:
     void AddCardWeight(const std::string& cardName, int weight) { cardWeights[cardName] = weight; }
 
     virtual std::shared_ptr<Card> GetRandomCard(int playerX, int playerY, int enemyX, int enemyY);
-    void RecoverStamina(int amount) {
-        SetStamina(GetStamina() + amount);
-    }
+    //void RecoverStamina(int amount) {
+    //    SetStamina(GetStamina() + amount);
+    //}
 
     ~Enemy() {};
 
