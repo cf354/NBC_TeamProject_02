@@ -86,8 +86,7 @@ void BattleManager::StartBattle()
 
 void BattleManager::Healstamina()
 {
-    // 스테미너 관리 Entity로 이관한다 하셔서 오류 방지를 위해 주석 처리 해놨습니다. 
-    // player->AddStamina(15)
+    player->RecoverStamina(15);
 }
 
 void BattleManager::ShowUI()//하빈
