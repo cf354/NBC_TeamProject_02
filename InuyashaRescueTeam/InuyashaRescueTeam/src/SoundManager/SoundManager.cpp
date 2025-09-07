@@ -1,9 +1,6 @@
 #include "SoundManager\SoundManager.h"
 #include <iostream>
 
-
-
-
 void SoundManager::Init()
 {
 	cardSEMap["WindScar"] = SEType::WindScar;
@@ -36,6 +33,7 @@ void SoundManager::LoadBgm(BGMType type, const std::string& path)
 	auto music = std::make_unique<sf::Music>();
 	if (music->openFromFile(path)) {
 		bgm[type] = std::move(music);
+        bgm[type]->setLoop(true);
 	}
 }
 

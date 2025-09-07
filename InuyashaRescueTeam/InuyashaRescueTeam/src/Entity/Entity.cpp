@@ -1,8 +1,19 @@
 #include "Entity\Entity.h"
 
-// 생성자 
+// 생성자
 Entity::Entity(const std::string& name, int level, int hp, int stamina, int atk, int def)
-    : Name(name), Level(level), HP(hp), Stamina(stamina), ATK(atk), DEF(def) {
+    : Name(name), Level(level), ATK(atk), DEF(def)
+{
+    // 생성 시 넘겨준 값이 곧 최대치
+    MAXHP = hp;
+    MAXStamina = stamina;
+
+    // 현재 체력/스태미나를 최대치 범위 내로 보정
+    HP = (hp > MAXHP) ? MAXHP : hp;
+    if (HP < 0) HP = 0;
+
+    Stamina = (stamina > MAXStamina) ? MAXStamina : stamina;
+    if (Stamina < 0) Stamina = 0;
 }
 
 // 소멸자 
@@ -15,7 +26,7 @@ void Entity::TakeDamage(int damage)
 
     if (HP < 0) { HP = 0; }
 
-    std::cout << Name << "이(가) " << damage << "의 데미지를 입었습니다. 현재 HP: " << HP << std::endl;
+    //std::cout << Name << "이(가) " << damage << "의 데미지를 입었습니다. 현재 HP: " << HP << std::endl;
 }
 
 // 정보 반환 
