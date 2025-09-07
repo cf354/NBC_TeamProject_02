@@ -20,6 +20,7 @@ public:
 		_Color_Font = font;
 		_opposite = opposite;
 	}
+
 protected:
 
 private:
