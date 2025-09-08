@@ -198,9 +198,9 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
         _Grid.SetCharacter(field.PlayerPositionX, field.PlayerPositionY, INU_BATTLE);
     }
 
-    if (auto Staminaheal = dynamic_cast<C_HealStamina*>(eCard.get())) {
+    if (auto Staminaheal = dynamic_cast<C_HealStamina*>(pCard.get())) {
         player->SetStamina(player->GetStamina() + Staminaheal->GetHamount());
-        _Log.PrintLog("체력을 " + std::to_string(Staminaheal->GetHamount()) + "만큼 회복했다.");
+        _Log.PrintLog("스태미나를 " + std::to_string(Staminaheal->GetHamount()) + "만큼 회복했다.");
         _Grid.SetCharacter(field.PlayerPositionX, field.PlayerPositionY, INU_BATTLE);
     }
 
