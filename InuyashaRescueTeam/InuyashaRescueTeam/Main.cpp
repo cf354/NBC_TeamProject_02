@@ -30,9 +30,9 @@ int main() {
     //GAME_MANAGER->Run();
 
 
-    //// 상점 테스트 부분
-     Merchant* test = new Merchant();
-     test->OpenShop();
+    // 상점 테스트 부분
+    Merchant* test = new Merchant();
+    test->OpenShop();
   
 //     ImagePrinter image;
 //     image.DrawImage(KEY, 0, 0);
