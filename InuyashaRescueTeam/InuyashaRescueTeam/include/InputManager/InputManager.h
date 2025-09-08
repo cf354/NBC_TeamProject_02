@@ -53,4 +53,5 @@ public:
 
     // 키 입력 (KeyAction) 변환 - State 인자를 받아 입력 구분
     KeyAction GetKeyAction(GameState currentState);
+    void FlushInputBuffer(); // 버퍼 비우기 
 };

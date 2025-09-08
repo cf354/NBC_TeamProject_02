@@ -38,6 +38,7 @@ void Merchant::OpenShop()
 		ShowInforPanel();
 		ShowCardInfo();
 		UserChoice = IM.GetKeyAction(GameState::MERCHANT); // 유저 입력
+        IM.FlushInputBuffer();
 		if (UserChoice == KeyAction::INVALID)
 		{
             //std::cin.get();
