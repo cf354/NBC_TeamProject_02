@@ -24,6 +24,12 @@ public:
     virtual void Draw() override;
     void AddLog(std::string s);
     void PrintLog(std::string s);
+    void Reset() {
+        for (int i = 0; i < _log.size(); i++)
+        {
+            _log.pop();
+        }
+    }
 
 private:
     void SetUI();

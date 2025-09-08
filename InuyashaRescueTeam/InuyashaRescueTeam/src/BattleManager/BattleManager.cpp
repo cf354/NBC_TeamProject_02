@@ -26,6 +26,7 @@ void BattleManager::Init(std::shared_ptr<Player>p, std::shared_ptr<Enemy>e)
     field.battlegrid[field.PlayerPositionY][field.PlayerPositionX] = 1;
     field.battlegrid[field.EnemyPositionY][field.EnemyPositionX] = 2;
     _Grid.ReSet_Characters();
+    _Log.Reset();
 }
 
 void BattleManager::StartBattle()
@@ -41,7 +42,7 @@ void BattleManager::StartBattle()
 
     _HPTEXT.Draw();
     _ENTEXT.Draw();
-    _Grid.SetCharacter(field.PlayerPositionX, field.PlayerPositionY, INU_BATTLE);
+    _Grid.SetCharacter(field.PlayerPositionX, field.PlayerPositionY, player->GetSpriteFileFath());
     _Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, enemy->GetSpriteFileFath());
     _Grid.Draw();
     _Log.Draw();
@@ -181,7 +182,7 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
     if (auto moveCard = dynamic_cast<C_Move*>(pCard.get())) //플레이어 이동
     {
         field.field_move(moveCard->M_GetX()*moveCard->M_GetDistance(), moveCard->M_GetY()*moveCard->M_GetDistance(), 1);
-        _Grid.SetCharacter(field.PlayerPositionX, field.PlayerPositionY, INU_BATTLE);
+        _Grid.SetCharacter(field.PlayerPositionX, field.PlayerPositionY, player->GetSpriteFileFath());
     }
     if (auto moveCard = dynamic_cast<C_Move*>(eCard.get())) {//적 이동 
        
@@ -195,23 +196,23 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
     if (auto HPheal = dynamic_cast<C_HealHP*>(pCard.get())){
         player->SetHP(player->GetHP() + HPheal->GetHamount());
         _Log.PrintLog("체력을 "+std::to_string(HPheal->GetHamount())+"만큼 회복했다.");
-        _Grid.SetCharacter(field.PlayerPositionX, field.PlayerPositionY, INU_BATTLE);
+        _Grid.SetCharacter(field.PlayerPositionX, field.PlayerPositionY, player->GetSpriteFileFath());
     }
 
     if (auto Staminaheal = dynamic_cast<C_HealStamina*>(eCard.get())) {
         player->SetStamina(player->GetStamina() + Staminaheal->GetHamount());
         _Log.PrintLog("체력을 " + std::to_string(Staminaheal->GetHamount()) + "만큼 회복했다.");
-        _Grid.SetCharacter(field.PlayerPositionX, field.PlayerPositionY, INU_BATTLE);
+        _Grid.SetCharacter(field.PlayerPositionX, field.PlayerPositionY, player->GetSpriteFileFath());
     }
 
     //적 이동
     if (auto defenseCard = dynamic_cast<C_Guard*>(pCard.get())) //플레이어 방어
     {
         pCardDEF += defenseCard->G_GetDEF();
-        _Grid.SetCharacter(field.PlayerPositionX, field.PlayerPositionY, INU_BATTLE);
+        _Grid.SetCharacter(field.PlayerPositionX, field.PlayerPositionY, player->GetSpriteFileFath());
         _Log.PrintLog("방어가 " + std::to_string(defenseCard->G_GetDEF()) + "만큼 상승했다.");
     }
-    if (auto defenseCard = dynamic_cast<C_Guard*>(eCard.get())) {//적 방어
+    if (auto defenseCard = dynamic_cast<C_Guard*>(pCard.get())) {//적 방어
         eCardDEF += defenseCard->G_GetDEF();
         _Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, enemy->GetSpriteFileFath());
         isEnemyCharacterSetted = true;
@@ -227,7 +228,7 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
 
         player->SetStamina(player->GetStamina() - attackCard->C_GetCost());
         
-        _Grid.SetCharacter(field.PlayerPositionX, field.PlayerPositionY, INU_BATTLE);
+        _Grid.SetCharacter(field.PlayerPositionX, field.PlayerPositionY, player->GetSpriteFileFath());
         if (!isEnemyCharacterSetted) {
             _Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, enemy->GetSpriteFileFath());
             isEnemyCharacterSetted = true;

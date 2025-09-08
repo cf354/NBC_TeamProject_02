@@ -37,7 +37,7 @@ private:
 public:
 	virtual void Draw() override;
     void SetMaxValue(int value) {
-        _MaxValue = value > _MaxValue ? value : _MaxValue;
+        _MaxValue = value > 0 ? value : _MaxValue;
     }
 	void SetValue(int value) {
 		_Value = _MaxValue > value ? value: _MaxValue;
