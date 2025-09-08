@@ -212,7 +212,7 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
         _Grid.SetCharacter(field.PlayerPositionX, field.PlayerPositionY, player->GetSpriteFileFath());
         _Log.PrintLog("방어가 " + std::to_string(defenseCard->G_GetDEF()) + "만큼 상승했다.");
     }
-    if (auto defenseCard = dynamic_cast<C_Guard*>(pCard.get())) {//적 방어
+    if (auto defenseCard = dynamic_cast<C_Guard*>(eCard.get())) {//적 방어
         eCardDEF += defenseCard->G_GetDEF();
         _Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, enemy->GetSpriteFileFath());
         isEnemyCharacterSetted = true;

@@ -30,6 +30,7 @@ void Merchant::OpenShop()
 	KeyAction UserChoice;
     SOUND_MANAGER->PlayBgm(BGMType::ShopBgm);
 
+
     IM.FlushInputBuffer();
     DrawBackground();
     DrawShopUI();

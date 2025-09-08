@@ -26,6 +26,9 @@ void SoundManager::Init()
     SOUND_MANAGER->LoadSE(SEType::BladeStrike, "sound\\BladeStrike.wav");
     SOUND_MANAGER->LoadSE(SEType::Adamant_Barrage, "sound\\Adamant_Barrage.wav");//효과음추가
     SOUND_MANAGER->LoadSE(SEType::Backlash_Wave, "sound\\Backlash_Wave.wav");
+    SOUND_MANAGER->LoadSE(SEType::CardMoveSelect, "sound\\CardMoveSelect.wav");
+    SOUND_MANAGER->LoadSE(SEType::CardSelect, "sound\\CardSelect.wav");
+
 
 	SOUND_MANAGER->SetBgmVolume(10.f);//소리설정
 	SOUND_MANAGER->SetSEVolume(10.f);
