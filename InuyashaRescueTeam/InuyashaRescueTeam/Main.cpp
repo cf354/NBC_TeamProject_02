@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <vector>
 #include <string>
 #include "Cards.h"
@@ -26,8 +26,6 @@ int main() {
     {
         GAME_MANAGER->Update();
     }
-
-    GAME_MANAGER->Run();
 
 
     // 상점 테스트 부분
