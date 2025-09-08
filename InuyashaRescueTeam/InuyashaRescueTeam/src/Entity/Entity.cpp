@@ -25,6 +25,8 @@ int Entity::GetStamina() const { return Stamina; }
 int Entity::GetATK() const { return ATK; }
 int Entity::GetDEF() const { return DEF; }
 std::string Entity::GetName() const { return Name; }
+int Entity::GetMAXHP() const { return MAXHP;  }
+int Entity::GetMAXStamina() const { return MAXStamina; }
 
 // 정보 설정 
 void Entity::SetHP(int hp)
