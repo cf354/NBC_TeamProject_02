@@ -195,11 +195,13 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
     if (auto HPheal = dynamic_cast<C_HealHP*>(pCard.get())){
         player->SetHP(player->GetHP() + HPheal->GetHamount());
         _Log.PrintLog("체력을 "+std::to_string(HPheal->GetHamount())+"만큼 회복했다.");
+        _Grid.SetCharacter(field.PlayerPositionX, field.PlayerPositionY, INU_BATTLE);
     }
 
     if (auto Staminaheal = dynamic_cast<C_HealStamina*>(eCard.get())) {
         player->SetStamina(player->GetStamina() + Staminaheal->GetHamount());
         _Log.PrintLog("체력을 " + std::to_string(Staminaheal->GetHamount()) + "만큼 회복했다.");
+        _Grid.SetCharacter(field.PlayerPositionX, field.PlayerPositionY, INU_BATTLE);
     }
 
     //적 이동
