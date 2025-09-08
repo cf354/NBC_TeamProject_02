@@ -16,6 +16,13 @@ void BattleManager::Init(std::shared_ptr<Player>p, std::shared_ptr<Enemy>e)
 
 void BattleManager::StartBattle()
 {
+    //player.hide
+
+    CONSOLE_CURSOR_INFO cursorInfo;
+    GetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursorInfo);
+    cursorInfo.bVisible = false; // 커서를 보이지 않게 설정
+    SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursorInfo);
+
     std::cout << "전투 시작!\n";
 
     _HPTEXT.Draw();
