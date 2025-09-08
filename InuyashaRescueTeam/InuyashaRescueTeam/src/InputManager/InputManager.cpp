@@ -8,6 +8,16 @@ InputManager& InputManager::GetInstance()
     return instance;
 }
 
+// 입력 버퍼 비우기
+void InputManager::FlushInputBuffer()
+{
+    // 버퍼에 키 입력이 없을 때까지 계속해서 키를 읽어와서 버리기
+    while (_kbhit())
+    {
+        _getch();
+    }
+}
+
 KeyAction InputManager::GetKeyAction(GameState currentState)
 {
     // 실시간 키 상태 확인 (필드 이동 전용)

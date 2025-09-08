@@ -38,6 +38,7 @@ void Merchant::OpenShop()
 		ShowInforPanel();
 		ShowCardInfo();
 		UserChoice = IM.GetKeyAction(GameState::MERCHANT); // 유저 입력
+        IM.FlushInputBuffer();
 		if (UserChoice == KeyAction::INVALID)
 		{
             //std::cin.get();
@@ -92,6 +93,7 @@ void Merchant::OpenShop()
 	}
 	system("cls");
 	std::cout << "상점을 닫습니다." << std::endl;
+    GAME_MANAGER->SetState(GameManagerState::Map);
 }
 
 void Merchant::MakeList()

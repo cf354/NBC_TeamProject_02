@@ -21,12 +21,14 @@ public:
 	void ScreenRelease();
 	void Render();
 
+    void SetActiveBuffer(int hIdx);
+
 	void DataClear();
 	void SetData(int y, int x, wchar_t c);
 
 private:
 	HANDLE hConsole[2];									// 깜빡임 없애기 위해 버퍼 2개 사용
-	int hIdx = 0;
+	int hIdx = 0;       // 다음에 출력할 버퍼 인덱스
 
 	wchar_t data[DATA_HEIGHT][DATA_WIDTH];			// 전체 데이터
 };

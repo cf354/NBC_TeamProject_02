@@ -1,4 +1,4 @@
-#include "BattleManager/BattleManager.h"
+﻿#include "BattleManager/BattleManager.h"
 #include "Card/C_Move.h"
 #include "Card/C_Attack.h"
 #include "Card/C_Guard.h"
@@ -55,6 +55,14 @@ void BattleManager::StartBattle()
 
         std::cin.get();
         std::shared_ptr<Card> pCard = PlayerTurn();
+        while (auto a = dynamic_cast<C_Move*>(pCard.get())) {           
+            if (field.MoveCheck(a->M_GetX() * a->M_GetDistance(), a->M_GetY() * a->M_GetDistance(), 1)) {
+                
+                break;
+            }
+            _Log.PrintLog("이동할 수 없습니다");
+            pCard = PlayerTurn();
+        }
         while (pCard->C_GetCost() > player->GetStamina())
         {
             _Log.PrintLog("스태미나가 부족합니다!");
@@ -64,6 +72,17 @@ void BattleManager::StartBattle()
 
         // 적 턴 시작 시 플레이어와 적의 위치를 GetRandomCard 함수에 전달
         std::shared_ptr<Card> eCard = enemy->GetRandomCard(field.PlayerPositionX, field.PlayerPositionY, field.EnemyPositionX, field.EnemyPositionY);
+        
+        while (auto a = dynamic_cast<C_Move*>(eCard.get())) {
+            if (field.MoveCheck(a->M_GetX() * a->M_GetDistance(), a->M_GetY() * a->M_GetDistance(), 2)) {
+                break;
+            }           
+            eCard = enemy->GetRandomCard(field.PlayerPositionX, field.PlayerPositionY, field.EnemyPositionX, field.EnemyPositionY);
+        }
+        while (eCard->C_GetCost() > enemy->GetStamina())
+        {            
+            eCard = enemy->GetRandomCard(field.PlayerPositionX, field.PlayerPositionY, field.EnemyPositionX, field.EnemyPositionY);
+        }
         _Log.PrintLog(enemy->GetName() + "이(가) [" + eCard->C_GetName() + "] 카드를 선택했다!");
         //std::cout << enemy->GetName()<<   "이(가) [" << eCard->C_GetName() << "] 카드를 선택했다!\n";
         //
@@ -138,12 +157,23 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
         _Grid.SetCharacter(field.PlayerPositionX, field.PlayerPositionY, INU_BATTLE);
     }
     if (auto moveCard = dynamic_cast<C_Move*>(eCard.get())) {//적 이동 
+       
         field.field_move(moveCard->M_GetX(), moveCard->M_GetY(), 2);
         _Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, NARAK);
         _Log.PrintLog("적이 이동했습니다.");
 
     }
     //체력 OR 스태미나 힐
+    if (auto HPheal = dynamic_cast<C_HealHP*>(pCard.get())){
+        player->SetHP(player->GetHP() + HPheal->GetHamount());
+        _Log.PrintLog("체력을 "+std::to_string(HPheal->GetHamount())+"만큼 회복했다.");
+    }
+
+    if (auto Staminaheal = dynamic_cast<C_HealStamina*>(eCard.get())) {
+        player->SetStamina(player->GetStamina() + Staminaheal->GetHamount());
+        _Log.PrintLog("체력을 " + std::to_string(Staminaheal->GetHamount()) + "만큼 회복했다.");
+    }
+
     //적 이동
     if (auto defenseCard = dynamic_cast<C_Guard*>(pCard.get())) //플레이어 방어
     {
@@ -238,5 +268,6 @@ void BattleManager::EndBattle()
         enemy.reset();
     }
     system("cls");
+    GAME_MANAGER->SetState(GameManagerState::Map);
 }
 

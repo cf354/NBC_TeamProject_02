@@ -17,7 +17,7 @@ void ConsolePrinter::SetConsole()
 {
 	system("title InuYasha-Rescue");
 
-	hConsole[0] = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 0, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
+    hConsole[0] = GetStdHandle(STD_OUTPUT_HANDLE);
 	hConsole[1] = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 0, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
 
 	// 마우스 커서 사이즈 조정 및 제거
@@ -79,6 +79,12 @@ void ConsolePrinter::Render()
 	ScreenClear();
 	ScreenPrint();
 	ScreenFlip();
+}
+
+void ConsolePrinter::SetActiveBuffer(int hIdx)
+{
+    this->hIdx = hIdx;
+    SetConsoleActiveScreenBuffer(hConsole[hIdx]);
 }
 
 /// <summary>
