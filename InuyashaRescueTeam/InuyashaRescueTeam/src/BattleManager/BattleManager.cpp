@@ -1,4 +1,4 @@
-#include "BattleManager/BattleManager.h"
+﻿#include "BattleManager/BattleManager.h"
 #include "Card/C_Move.h"
 #include "Card/C_Attack.h"
 #include "Card/C_Guard.h"
@@ -68,7 +68,12 @@ void BattleManager::StartBattle()
 
     //ShowUI();
 
-    SOUND_MANAGER->PlayBgm(BGMType::BattleField);
+    if (auto a = dynamic_cast<Boss*>(enemy.get())) {
+        SOUND_MANAGER->PlayBgm(BGMType::BossTheme);
+    }
+    else {
+        SOUND_MANAGER->PlayBgm(BGMType::BattleField);
+    }
 
     while (!player->IsDead() && !enemy->IsDead()) {
         //field.field_print();
