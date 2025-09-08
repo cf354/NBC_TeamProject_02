@@ -100,3 +100,14 @@ void ImagePrinter::printHalfBlock(unsigned int rt, unsigned int gt, unsigned int
         L"▀\x1b[0m";
     WriteConsoleW(GetStdHandle(STD_OUTPUT_HANDLE), msg.c_str(), (DWORD)msg.size(), nullptr, nullptr);
 }
+
+void ImagePrinter::PlayGIF(const char* filename, int NumFrame, int delay, short OffsetX, short OffsetY)
+{
+    for (int i = 1; i <= NumFrame; ++i)
+    {
+        char framename[256];
+        sprintf_s(framename, sizeof(framename), "%s%02d.bmp", filename, i);
+        DrawImage(framename, 0, 0);
+        Sleep(delay);
+    }
+}
