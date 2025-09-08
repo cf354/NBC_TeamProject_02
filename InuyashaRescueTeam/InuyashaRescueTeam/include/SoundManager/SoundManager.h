@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <SFML/Audio.hpp>
 #include <SFML/System.hpp>
 #include <map>
@@ -15,11 +15,15 @@ enum class BGMType {
 	
 };
 enum class SEType {
-	WindScar,
-	BladesOfBlood,
-	IronReaver,
-	blop,
-	buy
+    WindScar,
+    BladesOfBlood,
+    IronReaver,
+    blop,
+    buy,
+    BladeStrike,
+    Adamant_Barrage,
+    Backlash_Wave,
+    None
 };
 
 class SoundManager : public Singleton<SoundManager>
