@@ -110,28 +110,33 @@ std::vector<std::shared_ptr <Card>>* GameManager::GetAllCardsList()
     return &AllCardsList;
 }
 
-void GameManager::Battle(int enemyId)
+void GameManager::Battle(bool isBoss)
 {
     shared_ptr<Enemy> enemy;
 
-    switch (enemyId)
+    if (isBoss)
     {
-    case 1:
         // 나락 (Boss)
         enemy = std::make_shared<Boss>("나락", 2, 100, 60, 16, 6, 20, 40, EnemyType::Naraku);
-        break;
-    case 2:
-        // 셋쇼마루
-        enemy = std::make_shared<Enemy>("셋쇼마루", 1, 50, 30, 8, 3, 10, 20, EnemyType::Sesshomaru);
-        break;
-    case 3:
-        // 반코츠
-        enemy = std::make_shared<Enemy>("반코츠", 1, 60, 40, 10, 5, 12, 25, EnemyType::Bankotsu);
-        break;
-    //default:
-    //    // 기본 적으로 설정
-    //    enemy = std::make_shared<Enemy>("요괴", 1, 30, 20, 5, 2, 5, 10, EnemyType::Normal);
-    //    break;
+    }
+    else
+    {
+        // normal 적이 더 많이 나올텐데 걍 함
+        int enemyType = RANDOM_MANAGER->Range(0, (int)EnemyType::MAX);
+        switch ((EnemyType)enemyType)
+        {
+            case EnemyType::Sesshomaru:
+                enemy = std::make_shared<Enemy>("셋쇼마루", 1, 50, 30, 8, 3, 10, 20, EnemyType::Sesshomaru);
+                break;
+            case EnemyType::Bankotsu:
+                // 반코츠
+                enemy = std::make_shared<Enemy>("반코츠", 1, 60, 40, 10, 5, 12, 25, EnemyType::Bankotsu);
+                break;
+            default:
+                // 기본 적으로 설정
+                enemy = std::make_shared<Enemy>("요괴", 1, 30, 20, 5, 2, 5, 10, EnemyType::Normal);
+                break;
+        }
     }
 
     // 이 부분에서 InitDeck()을 호출합니다.

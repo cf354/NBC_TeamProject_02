@@ -549,7 +549,7 @@ void MapManager::UpdatePlayer()
                     double rand = RANDOM_MANAGER->Range(0.0, 1.0);
                     if (rand <= 0.02)
                     {
-                        GAME_MANAGER->Battle(1);
+                        GAME_MANAGER->Battle(false);
                         return;
                     }
                     break;
@@ -563,7 +563,7 @@ void MapManager::UpdatePlayer()
 				return;
 			case ObjType::Boss:
 				// GameManager 보스 전투 호출
-                GAME_MANAGER->Battle(2);
+                GAME_MANAGER->Battle(true);
 				return;
 			default:
 				break;

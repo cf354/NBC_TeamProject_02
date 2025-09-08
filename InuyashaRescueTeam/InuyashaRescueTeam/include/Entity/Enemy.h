@@ -11,7 +11,8 @@ enum class EnemyType {
     Normal,
     Sesshomaru,
     Bankotsu,
-    Naraku
+    Naraku,
+    MAX,
 };
 
 class Enemy : public Entity {
