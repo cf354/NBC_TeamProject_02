@@ -50,8 +50,8 @@ void clearLine(int lineNumber)
 }
 
 // 생성자 정의
-Player::Player(const std::string& name, int level, int hp, int stamina, int atk, int def)
-    : Entity(name, level, hp, stamina, atk, def) 
+Player::Player(const std::string& name, int level, int hp, int stamina, int atk, int def, const char* spritefilefath)
+    : Entity(name, level, hp, stamina, atk, def, spritefilefath)
 {
     // 플레이어 정보 초기화
     this->EXP = 0;

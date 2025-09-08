@@ -48,7 +48,7 @@ private:
 
 public:
     // 생성자 
-    Player(const std::string& name, int level, int hp, int stamina, int atk, int def);
+    Player(const std::string& name, int level, int hp, int stamina, int atk, int def, const char* spritefilefath);
 
     // 정보 반환 (Getter)
     int GetMoney() const;

@@ -42,7 +42,7 @@ void BattleManager::StartBattle()
     _HPTEXT.Draw();
     _ENTEXT.Draw();
     _Grid.SetCharacter(field.PlayerPositionX, field.PlayerPositionY, INU_BATTLE);
-    _Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, NARAK);
+    _Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, enemy->GetSpriteFileFath());
     _Grid.Draw();
     _Log.Draw();
 
@@ -186,7 +186,7 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
     if (auto moveCard = dynamic_cast<C_Move*>(eCard.get())) {//적 이동 
        
         field.field_move(moveCard->M_GetX(), moveCard->M_GetY(), 2);
-        _Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, NARAK);
+        _Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, enemy->GetSpriteFileFath());
         isEnemyCharacterSetted = true;
         _Log.PrintLog("적이 이동했습니다.");
 
@@ -211,7 +211,7 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
     }
     if (auto defenseCard = dynamic_cast<C_Guard*>(eCard.get())) {//적 방어
         eCardDEF += defenseCard->G_GetDEF();
-        _Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, NARAK);
+        _Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, enemy->GetSpriteFileFath());
         isEnemyCharacterSetted = true;
         _Log.PrintLog("적의 방어가 " + std::to_string(eCardDEF) + "만큼 상승했다.");
     }
@@ -227,7 +227,7 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
         
         _Grid.SetCharacter(field.PlayerPositionX, field.PlayerPositionY, INU_BATTLE);
         if (!isEnemyCharacterSetted) {
-            _Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, NARAK);
+            _Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, enemy->GetSpriteFileFath());
             isEnemyCharacterSetted = true;
         }
         _Grid.PaintBlocks(field.PlayerPositionX, field.PlayerPositionY, attackCard->A_GetRange(), Color::RED);
@@ -248,7 +248,7 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
         }
         else {
             if (!isEnemyCharacterSetted) {
-                _Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, NARAK);
+                _Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, enemy->GetSpriteFileFath());
                 isEnemyCharacterSetted = true;
             }
             _Grid.PaintBlocks(field.EnemyPositionX, field.EnemyPositionY, attackCard->A_GetRange(), Color::BLUE);

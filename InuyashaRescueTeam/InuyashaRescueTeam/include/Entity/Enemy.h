@@ -25,13 +25,13 @@ protected:
 
 public:
     // 생성자에 EnemyType 인수를 추가
-    Enemy(std::string n, int lv, int h, int s, int a, int d, int dm, int de, EnemyType t)
-        : Entity(n, lv, h, s, a, d), drop_money(dm), drop_exp(de), type(t) {}
-
+    Enemy(std::string n, int lv, int h, int s, int a, int d, int dm, int de, const char* spritefilefath, EnemyType t)
+        : Entity(n, lv, h, s, a, d, spritefilefath), drop_money(dm), drop_exp(de), type(t) {}
+    
     // 기본 생성자 (필요할 경우를 위해 추가)
-    Enemy(std::string n, int lv, int h, int s, int a, int d, int dm, int de)
-        : Enemy(n, lv, h, s, a, d, dm, de, EnemyType::Normal) {}
-
+    Enemy(std::string n, int lv, int h, int s, int a, int d, int dm, int de, const char* spritefilefath)
+        : Enemy(n, lv, h, s, a, d, dm, de, spritefilefath, EnemyType::Normal) {
+    }
 
     int getExp() { return drop_exp; }
     int getmoney() { return drop_money; }

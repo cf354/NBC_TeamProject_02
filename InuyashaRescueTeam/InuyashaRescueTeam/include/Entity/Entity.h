@@ -15,9 +15,11 @@ protected:
     int MAXHP;
     int MAXStamina;
 
+    const char* SpriteFileFath;
+
 public:
     // 생성자 및 소멸자
-    Entity(const std::string& name, int level, int hp, int stamina, int atk, int def);
+    Entity(const std::string& name, int level, int hp, int stamina, int atk, int def, const char* spritefilefath);
     virtual ~Entity();
 
     // 피격 시 데미지 계산
@@ -33,6 +35,8 @@ public:
 
     int GetMAXHP() const;
     int GetMAXStamina() const;
+
+    const char* GetSpriteFileFath() const;
 
     // 정보 설정 (Setter)
     void SetHP(int hp);

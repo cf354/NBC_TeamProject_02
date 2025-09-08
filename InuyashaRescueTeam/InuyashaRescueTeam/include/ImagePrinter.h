@@ -32,6 +32,8 @@ struct BMPInfoHeader {
 #define INU_BATTLE "../images/Inuyasha.bmp"
 #define NARAK "../images/narak.bmp"
 #define SESSHO "../images/Sesshomaru.bmp"
+#define BANKOTSU "../images/Bankotsu.bmp"
+#define YURA "../images/Yura.bmp"
 
 class ImagePrinter
 {

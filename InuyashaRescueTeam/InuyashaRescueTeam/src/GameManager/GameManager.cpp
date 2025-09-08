@@ -19,7 +19,7 @@ void GameManager::Init()
     SOUND_MANAGER->Init();
 
 #pragma region ExampleBattleInit
-    player = std::make_shared<Player>("이누야샤", 1, 100, 100, 10, 5);
+    player = std::make_shared<Player>("이누야샤", 1, 100, 100, 10, 5, INU_BATTLE);
 
     AllCardsList.emplace_back(std::make_shared<C_Move>("MoveRight", 0, 10, 1, 1, 0)); // 0 // C_Move(std::string n,int C, int G, int d, int dirx, int diry) :distance(d), x(dirx), y(diry) { Name = n; Cost = C; Gold = G; };
     AllCardsList.emplace_back(std::make_shared<C_Move>("MoveLeft", 0, 10, 1, -1, 0)); // 1
@@ -117,7 +117,7 @@ void GameManager::Battle(bool isBoss)
     if (isBoss)
     {
         // 나락 (Boss)
-        enemy = std::make_shared<Boss>("나락", 2, 100, 60, 16, 6, 20, 40, EnemyType::Naraku);
+        enemy = std::make_shared<Boss>("나락", 2, 100, 60, 16, 6, 20, 40, NARAK, EnemyType::Naraku);
     }
     else
     {
@@ -126,15 +126,15 @@ void GameManager::Battle(bool isBoss)
         switch ((EnemyType)enemyType)
         {
             case EnemyType::Sesshomaru:
-                enemy = std::make_shared<Enemy>("셋쇼마루", 1, 50, 30, 8, 3, 10, 20, EnemyType::Sesshomaru);
+                enemy = std::make_shared<Enemy>("셋쇼마루", 1, 50, 30, 8, 3, 10, 20, SESSHO, EnemyType::Sesshomaru);
                 break;
             case EnemyType::Bankotsu:
                 // 반코츠
-                enemy = std::make_shared<Enemy>("반코츠", 1, 60, 40, 10, 5, 12, 25, EnemyType::Bankotsu);
+                enemy = std::make_shared<Enemy>("반코츠", 1, 60, 40, 10, 5, 12, 25, BANKOTSU, EnemyType::Bankotsu);
                 break;
             default:
                 // 기본 적으로 설정
-                enemy = std::make_shared<Enemy>("요괴", 1, 30, 20, 5, 2, 5, 10, EnemyType::Normal);
+                enemy = std::make_shared<Enemy>("역발의 유라", 1, 30, 20, 5, 2, 5, 10, YURA, EnemyType::Normal);
                 break;
         }
     }
