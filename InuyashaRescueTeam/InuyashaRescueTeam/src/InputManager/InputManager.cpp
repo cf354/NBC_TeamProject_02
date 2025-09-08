@@ -44,14 +44,17 @@ KeyAction InputManager::GetKeyAction(GameState currentState)
         { // 상점에 필요한 기능 추가해주세요.
           // 카드 구매, 판매 등등
         case 'q': case 'Q': return KeyAction::QUIT; // 상점 나가기
+        case 'f': case 'F': return KeyAction::SELECT; // 물건 선택
         }
         if (keyInput == 224) { // 방향키로 아이템 선택
             keyInput = _getch();
             switch (keyInput)
             {
                 // "InputManager.h"의 "enum class KeyAction" 필요한 액션 추가 후 사용
-                // case 72: return KeyAction::NEXT_ITEM; // 위 아이템 (에시)
-                // case 80: return KeyAction::NEXT_ITEM; // 아래 아이템 (에시)
+                 case 72: return KeyAction::PREV_ITEM;
+                 case 80: return KeyAction::NEXT_ITEM;
+                 case 75: return KeyAction::SHOP_MERCHANT;
+                 case 77: return KeyAction::SHOP_PLAYER;
             }
         }
         break; // MERCHANT 상태 처리 끝
