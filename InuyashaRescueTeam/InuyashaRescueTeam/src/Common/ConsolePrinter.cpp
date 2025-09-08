@@ -83,6 +83,7 @@ void ConsolePrinter::Render()
 
 void ConsolePrinter::SetActiveBuffer(int hIdx)
 {
+    this->hIdx = hIdx;
     SetConsoleActiveScreenBuffer(hConsole[hIdx]);
 }
 
