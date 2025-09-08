@@ -427,6 +427,13 @@ void MapManager::EnterNextStage()
 		CreateBossRoom();
 		MakePlayerObj();
 		objPlayer->pos = Vector2D(DATA_WIDTH / 8 * 3, DATA_HEIGHT / 2);
+
+        MapObj* objBoss = new MapObj();
+        objBoss->size = Vector2D(1, 1);
+        objBoss->strRender = L"B";
+        objects.push_back(objBoss);
+        objBoss->pos = Vector2D(DATA_WIDTH / 8 * 5, DATA_HEIGHT / 2);
+        vecType[objBoss->pos.y][objBoss->pos.x] = ObjType::Boss;
 	}
 }
 
@@ -529,23 +536,35 @@ void MapManager::UpdatePlayer()
 	move[1] = Vector2D(0, (GetAsyncKeyState(VK_UP) & 0x8000 ? -1 : GetAsyncKeyState(VK_DOWN) & 0x8000 ? 1 : 0));
 	for (int i = 0; i < 2; i++)
 	{
+        if (move[i] == Vector2D(0, 0))
+            continue;
+
 		Vector2D lastPos = objPlayer->pos;
 		Vector2D newPos = objPlayer->pos + move[i];
 		switch (vecType[newPos.y][newPos.x])
 		{
 			case ObjType::None:
-				objPlayer->pos = newPos;
-				break;
+                {
+                    objPlayer->pos = newPos;
+                    double rand = RANDOM_MANAGER->Range(0.0, 1.0);
+                    if (rand <= 0.02)
+                    {
+                        GAME_MANAGER->Battle(1);
+                        return;
+                    }
+                    break;
+                }
 			case ObjType::Stairs:
 				EnterNextStage();
-				break;
+				return;
 			case ObjType::Merchant:
 				// GameManager Merchant 호출
                 GAME_MANAGER->SetState(GameManagerState::Merchant);
-				break;
+				return;
 			case ObjType::Boss:
 				// GameManager 보스 전투 호출
-				break;
+                GAME_MANAGER->Battle(2);
+				return;
 			default:
 				break;
 		}
