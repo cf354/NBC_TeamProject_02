@@ -30,6 +30,9 @@ public:
     int GetDEF() const;
     std::string GetName() const;
 
+    int GetMAXHP() const;
+    int GetMAXStamina() const;
+
     // 정보 설정 (Setter) 
     void SetHP(int hp);
     void SetStamina(int stamina);
