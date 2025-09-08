@@ -35,7 +35,9 @@ public:
 
     // 정보 설정 (Setter) 
     void SetHP(int hp);
+    void SetMaxHP(int mHP);
     void SetStamina(int stamina);
+    void SetMaxStamina(int mSP);
 
     void RecoverStamina(int amount) {
         SetStamina(GetStamina() + amount);

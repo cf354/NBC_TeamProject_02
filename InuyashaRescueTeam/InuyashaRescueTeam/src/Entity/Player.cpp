@@ -55,7 +55,7 @@ Player::Player(const std::string& name, int level, int hp, int stamina, int atk,
 {
     // 플레이어 정보 초기화
     this->EXP = 0;
-    this->maxEXP = 100 * this->Level;
+    this->maxEXP = 20 * this->Level;
     this->Money = 0;
     this->posX = 0;
     this->posY = 0;
@@ -155,11 +155,13 @@ void Player::LevelUP()
     // 경험치 초기화 및 요구량 재설정
     EXP -= maxEXP;
     Level++;
-    maxEXP = 100 * Level;
+    maxEXP = 20 * Level;
 
     // 레벨 업에 따른 스텟 상승
     HP += 20;
+    this->SetMaxHP(this->GetMAXHP() + 20);
     Stamina += 10;
+    this->SetMaxStamina(this->GetMAXStamina() + 20);
     ATK += 5;
     DEF += 2;
 
