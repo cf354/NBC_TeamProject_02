@@ -69,12 +69,11 @@ KeyAction InputManager::GetKeyAction(GameState currentState)
 
             // 상점(MERCHANT) 상태 - 맵 이동 중 키 입력 처리
         case GameState::MERCHANT:
-        {
             switch (keyInput)
             { // 상점에 필요한 기능 추가해주세요.
               // 카드 구매, 판매 등등
-            case 'q': case 'Q': return KeyAction::QUIT; // 상점 나가기
-            case 'f': case 'F': return KeyAction::SELECT; // 물건 선택
+                case 'q': case 'Q': return KeyAction::QUIT; // 상점 나가기
+                case 'f': case 'F': return KeyAction::SELECT; // 물건 선택
             }
             if (keyInput == 224) { // 방향키로 아이템 선택
                 keyInput = _getch();
@@ -86,6 +85,7 @@ KeyAction InputManager::GetKeyAction(GameState currentState)
                 case 75: return KeyAction::SHOP_MERCHANT;
                 case 77: return KeyAction::SHOP_PLAYER;
                 }
+            }
             case GameState::BATTLE:
                 switch (keyInput)
                 {
@@ -99,6 +99,5 @@ KeyAction InputManager::GetKeyAction(GameState currentState)
         }
 
         return KeyAction::INVALID; // 아무 키도 눌리지 않았거나 유효하지 않은 키
-        }
-    }
+
 }

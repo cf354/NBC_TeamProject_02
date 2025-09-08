@@ -27,10 +27,10 @@ void Merchant::OpenShop()
 {
 	InputManager& IM = InputManager::GetInstance();
 	KeyAction UserChoice;
+
 	while (1)
 	{
-		system("cls");
-		DrawBackground();
+        DrawBackground();
 		DrawShop();
 		ShowList();
 		DrawPlayerInven();
@@ -342,4 +342,5 @@ void Merchant::TradeCard(short _index, bool _isPlayer)
 	{
 		index = ShopList.size() - 1;
 	}
+    system("cls");
 }
