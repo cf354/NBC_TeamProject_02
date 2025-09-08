@@ -3,6 +3,7 @@
 #include "Common/ConsolePrinter.h"
 #include "SoundManager/SoundManager.h"
 #include "Common/RandomManager.h"
+#include "Merchant\Merchant.h"
 #include <conio.h>
 
 void GameManager::Init()
@@ -108,6 +109,7 @@ void GameManager::Init()
     enemy->AddCardWeight("E_LineAttack", 2);
     
     //사운드
+
     SOUND_MANAGER->Init();
     BATTLE_MANAGER->Init(player, enemy);
     
@@ -116,19 +118,12 @@ void GameManager::Init()
 #pragma endregion
 
     MAP_MANAGER->EnterNextStage();
+    SetState(GameManagerState::Map);
 }
 
 void GameManager::Update()
 {
-    CONSOLE_PRINTER->Update();
-    MAP_MANAGER->UpdatePlayer();
-    MAP_MANAGER->Draw();
-    CONSOLE_PRINTER->Render();
-}
-
-void GameManager::Run()
-{
-    BATTLE_MANAGER->StartBattle();
+    UpdateState(currState);
 }
 
 std::weak_ptr<Player> GameManager::GetPlayer()
@@ -139,4 +134,127 @@ std::weak_ptr<Player> GameManager::GetPlayer()
 std::vector<std::shared_ptr <Card>>* GameManager::GetAllCardsList()
 {
     return &AllCardsList;
+}
+
+void GameManager::SetState(GameManagerState state)
+{
+    if (currState == state)
+        return;
+
+    if (currState != GameManagerState::None)
+        ExitState(currState);
+    currState = state;
+    EnterState(currState);
+}
+
+void GameManager::EnterState(GameManagerState state)
+{
+    switch (state)
+    {
+        case GameManagerState::Title:
+            EnterTitle();
+            break;
+        case GameManagerState::Map:
+            EnterMap();
+            break;
+        case GameManagerState::Battle:
+            EnterMap();
+            break;
+        case GameManagerState::Merchant:
+            EnterMerchant();
+            break;
+    }
+}
+
+void GameManager::UpdateState(GameManagerState state)
+{
+    switch (state)
+    {
+        case GameManagerState::Title:
+            UpdateTitle();
+            break;
+        case GameManagerState::Map:
+            UpdateMap();
+            break;
+        case GameManagerState::Battle:
+            UpdateMap();
+            break;
+        case GameManagerState::Merchant:
+            UpdateMerchant();
+            break;
+    }
+}
+
+void GameManager::ExitState(GameManagerState state)
+{
+    switch (state)
+    {
+        case GameManagerState::Title:
+            ExitTitle();
+            break;
+        case GameManagerState::Map:
+            ExitMap();
+            break;
+        case GameManagerState::Battle:
+            ExitMap();
+            break;
+        case GameManagerState::Merchant:
+            ExitMerchant();
+            break;
+    }
+}
+
+void GameManager::EnterTitle()
+{
+}
+
+void GameManager::UpdateTitle()
+{
+}
+
+void GameManager::ExitTitle()
+{
+}
+
+void GameManager::EnterMap()
+{
+}
+
+void GameManager::UpdateMap()
+{
+    CONSOLE_PRINTER->Update();
+    MAP_MANAGER->UpdatePlayer();
+    MAP_MANAGER->Draw();
+    CONSOLE_PRINTER->Render();
+}
+
+void GameManager::ExitMap()
+{
+}
+
+void GameManager::EnterBattle()
+{
+    BATTLE_MANAGER->StartBattle();
+}
+
+void GameManager::UpdateBattle()
+{
+}
+
+void GameManager::ExitBattle()
+{
+}
+
+void GameManager::EnterMerchant()
+{
+    Merchant* test = new Merchant();
+    test->OpenShop();
+}
+
+void GameManager::UpdateMerchant()
+{
+}
+
+void GameManager::ExitMerchant()
+{
 }

@@ -22,17 +22,17 @@ int main() {
     //// 게임매니저 사용할 때, GAME_MANAGER-> 로 접근
     GAME_MANAGER->Init();
 
-    //while (true)
-    //{
-    //    GAME_MANAGER->Update();
-    //}
+    while (true)
+    {
+        GAME_MANAGER->Update();
+    }
 
     //GAME_MANAGER->Run();
 
 
     // 상점 테스트 부분
-    Merchant* test = new Merchant();
-    test->OpenShop();
+    //Merchant* test = new Merchant();
+    //test->OpenShop();
   
 //     ImagePrinter image;
 //     image.DrawImage(KEY, 0, 0);
