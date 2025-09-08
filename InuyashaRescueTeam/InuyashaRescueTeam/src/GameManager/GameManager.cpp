@@ -132,7 +132,7 @@ void GameManager::Battle(int enemyId)
     //    // 기본 적으로 설정
     //    enemy = std::make_shared<Enemy>("요괴", 1, 30, 20, 5, 2, 5, 10, EnemyType::Normal);
     //    break;
-    //}
+    }
 
     // 이 부분에서 InitDeck()을 호출합니다.
     enemy->InitDeck();
@@ -222,7 +222,7 @@ void GameManager::EnterTitle()
 {
     ImagePrinter* imagePrinter = new ImagePrinter();
     imagePrinter->DrawImage(KEY, 0, 0);
-    imagePrinter->PlayGIF(KAGOME_GIF, 10, 300, 0, 0);
+    
 }
 
 void GameManager::UpdateTitle()
