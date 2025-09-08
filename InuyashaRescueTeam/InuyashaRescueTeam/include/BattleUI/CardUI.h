@@ -41,4 +41,6 @@ private:
     void DrawMoveCard(C_Move& Card, int x, int y);
     void DrawAttackCard(C_Attack& Card, int x, int y);
     void DrawGuardCard(C_Guard& Card, int x, int y);
+    void DrawHealCard(C_HealHP& Card, int x, int y);
+    void DrawStaminaHealCard(C_HealStamina& Card, int x, int y);
 };

@@ -14,13 +14,13 @@ enum class GameManagerState
     Map,
     Battle,
     Merchant,
+    Ending,
 };
 
 class GameManager : public Singleton<GameManager>
 {
 private:
     std::shared_ptr<Player> player;
-    std::shared_ptr<Enemy> enemy;
     std::vector<std::shared_ptr <Card>> AllCardsList;
 
     GameManagerState currState = GameManagerState::None;
@@ -32,6 +32,8 @@ public:
 
     std::weak_ptr<Player> GetPlayer();
     std::vector<std::shared_ptr <Card>>* GetAllCardsList();
+
+    void Battle(int enemyId);
 
     void SetState(GameManagerState state);
 
@@ -55,6 +57,10 @@ private:
     void EnterMerchant();
     void UpdateMerchant();
     void ExitMerchant();
+
+    void EnterEnding();
+    void UpdateEnding();
+    void ExitEnding();
 };
 
 #define GAME_MANAGER (GameManager::GetInstance())

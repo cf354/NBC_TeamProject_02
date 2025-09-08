@@ -1,4 +1,5 @@
 #include "BattleUI/BattleGrid.h"
+#include <fstream>
 
 void BattleGrid::Draw()
 {
@@ -105,23 +106,50 @@ void BattleGrid::SetCharacter(int x, int y, std::string string, Color font, Colo
 	_Character_Position[y][x].push_back(string);
 }
 
+void BattleGrid::SetCharacter(int x, int y, const char* filename)
+{
+    if (!checkInputX(x)) return;// checkInputX is false
+    if (!checkInputY(y)) return;//checkInputY is false
+
+    _IsSetedCharcter = true;
+
+    _Character_BMP_Position[y][x].push_back(filename);
+}
+
 void BattleGrid::DrawCharacter()
 {
 	if (!_IsSetedCharcter) return; //_IsSetedCharcter is false
+
+    ImagePrinter _ImagePrinter;
+
+    int size;
 
 	for (size_t y = 0; y < 3; y++)
 	{
 		for (size_t x = 0; x < 4; x++)
 		{
-			if (!_Character_Position[y][x].empty()) //is not empty
+			if (!_Character_BMP_Position[y][x].empty()) //is not empty
 			{
-				GoToXY(_spawnX + x * _GridWidth + _GridWidth/2, _spawnY + y * _GridHeight + _GridHeight/2);
-				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), _Character_Postion_Color[y][x]);
-				for (std::string s : _Character_Position[y][x])
-				{
-					std::cout << s;                    
-				}
-				tbColor();
+                size = _Character_BMP_Position[y][x].size();
+                for (size_t i = 0; i < size; i++)
+                {
+                    std::ifstream file(_Character_BMP_Position[y][x][i], std::ios::binary);
+                    if (!file)
+                    {
+                        break;
+                    }
+                    else {
+                        file.seekg(14);
+                        BMPInfoHeader ih;
+                        file.read(reinterpret_cast<char*>(&ih), sizeof(ih));
+
+                        int halfwidth = (_GridWidth / size) + (_GridWidth * i);
+                        int remain_space = halfwidth - ih.biWidth;
+                        int spawnx = _spawnX + x * _GridWidth + (remain_space / 2);
+                        int spawny = _spawnY + y * _GridHeight + 1;
+                        _ImagePrinter.DrawImage(_Character_BMP_Position[y][x][i], spawnx, spawny);
+                    }
+                }
 			}
 		}
 	}

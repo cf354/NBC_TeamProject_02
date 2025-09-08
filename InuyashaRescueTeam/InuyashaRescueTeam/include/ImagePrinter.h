@@ -28,11 +28,16 @@ struct BMPInfoHeader {
 #define KEY      "../images/inu_logo_key.bmp"
 #define INU      "../images/inu.bmp"
 #define KIKYO      "../images/kikyo.bmp"
+#define KAGOME_GIF "../images/kagome_gif/frame_"
+#define INU_BATTLE "../images/Inuyasha.bmp"
+#define NARAK "../images/narak.bmp"
+#define SESSHO "../images/Sesshomaru.bmp"
 
 class ImagePrinter
 {
 public:
     void DrawImage(const char* filename, short OffsetX, short OffsetY);
     void printHalfBlock(unsigned int rt, unsigned int gt, unsigned int bt, unsigned int rb, unsigned int gb, unsigned int bb);
+    void PlayGIF(const char* filename, int NumFrame, int delay, short OffsetX, short OffsetY);
 };
 

@@ -14,34 +14,8 @@ void GameManager::Init()
     RANDOM_MANAGER->Init();
     CONSOLE_PRINTER->Init();
 
-#pragma region EnemySelection
-
-    std::cout << "적이 나타났다! (임시 적 선택 UI)\n";
-    std::cout << "1. 셋쇼마루 (Enemy)\n";
-    std::cout << "2. 나락 (Boss)\n";
-    std::cout << "선택: ";
-
-    char choice;
-    while (true) {
-        choice = _getch();
-        if (choice == '1') {
-            enemy = std::make_shared<Enemy>("셋쇼마루", 1, 50, 30, 8, 3, 10, 20);
-            std::cout << "\n셋쇼마루를 선택했습니다.\n";
-            break;
-        }
-        else if (choice == '2') {
-            enemy = std::make_shared<Boss>("나락", 2, 100, 60, 16, 6, 20, 40);
-            std::cout << "\n나락을 선택했습니다.\n";
-            break;
-        }
-        else {
-            // 잘못된 입력 시, 다시 입력을 받습니다.
-            std::cout << "\n잘못된 입력입니다. 1 또는 2를 눌러주세요: \n";
-        }
-    }
-    system("cls");
-
-#pragma endregion EnemySelection
+    //사운드
+    SOUND_MANAGER->Init();
 
 #pragma region ExampleBattleInit
     player = std::make_shared<Player>("이누야샤", 1, 100, 100, 10, 5);
@@ -110,13 +84,49 @@ void GameManager::Init()
     player->AddCard(AllCardsList[5]); // BladesOfBlood
     player->AddCard(AllCardsList[6]); // IronReaver
     player->AddCard(AllCardsList[7]); // WindScar
-    player->AddCard(AllCardsList[9]); // Guard
+
+    player->AddCard(AllCardsList[8]); // Guard
+    player->AddCard(AllCardsList[9]); // DoubleMoveRight
     
+#pragma endregion
 
+    MAP_MANAGER->EnterNextStage();
 
+    SetState(GameManagerState::Title);
+}
+
+void GameManager::Update()
+{
+    UpdateState(currState);
+}
+
+std::weak_ptr<Player> GameManager::GetPlayer()
+{
+    return player;
+}
+
+std::vector<std::shared_ptr <Card>>* GameManager::GetAllCardsList()
+{
+    return &AllCardsList;
+}
+
+void GameManager::Battle(int enemyId)
+{
+    shared_ptr<Enemy> enemy;
+    switch (enemyId)
+    {
+        case 1:
+            enemy = std::make_shared<Enemy>("셋쇼마루", 1, 50, 30, 8, 3, 10, 20);
+            break;
+        case 2:
+            enemy = std::make_shared<Boss>("나락", 2, 100, 60, 16, 6, 20, 40);
+            break;
+        default:
+            return;
+    }
 
     // **적(Enemy) 카드 덱 구성 및 가중치 부여**
-    
+
     enemy->AddCard(std::make_shared<C_Move>("E_MoveRight", 0, 0, 1, 1, 0));
     enemy->AddCard(std::make_shared<C_Move>("E_MoveLeft", 0, 0, 1, -1, 0));
     enemy->AddCard(std::make_shared<C_Move>("E_MoveUp", 0, 0, 1, 0, -1));
@@ -135,32 +145,9 @@ void GameManager::Init()
     enemy->AddCardWeight("E_MoveDown", 1);
     enemy->AddCardWeight("E_WideStrike", 2);
     enemy->AddCardWeight("E_LineAttack", 2);
-    
-    //사운드
 
-    SOUND_MANAGER->Init();
     BATTLE_MANAGER->Init(player, enemy);
-    
-#pragma endregion
-
-    MAP_MANAGER->EnterNextStage();
-
     SetState(GameManagerState::Battle);
-}
-
-void GameManager::Update()
-{
-    UpdateState(currState);
-}
-
-std::weak_ptr<Player> GameManager::GetPlayer()
-{
-    return player;
-}
-
-std::vector<std::shared_ptr <Card>>* GameManager::GetAllCardsList()
-{
-    return &AllCardsList;
 }
 
 void GameManager::SetState(GameManagerState state)
@@ -190,6 +177,9 @@ void GameManager::EnterState(GameManagerState state)
         case GameManagerState::Merchant:
             EnterMerchant();
             break;
+        case GameManagerState::Ending:
+            EnterEnding();
+            break;
     }
 }
 
@@ -208,6 +198,9 @@ void GameManager::UpdateState(GameManagerState state)
             break;
         case GameManagerState::Merchant:
             UpdateMerchant();
+            break;
+        case GameManagerState::Ending:
+            UpdateEnding();
             break;
     }
 }
@@ -228,6 +221,9 @@ void GameManager::ExitState(GameManagerState state)
         case GameManagerState::Merchant:
             ExitMerchant();
             break;
+        case GameManagerState::Ending:
+            ExitEnding();
+            break;
     }
 }
 
@@ -235,6 +231,7 @@ void GameManager::EnterTitle()
 {
     ImagePrinter* imagePrinter = new ImagePrinter();
     imagePrinter->DrawImage(KEY, 0, 0);
+    imagePrinter->PlayGIF(KAGOME_GIF, 10, 300, 0, 0);
 }
 
 void GameManager::UpdateTitle()
@@ -292,5 +289,17 @@ void GameManager::UpdateMerchant()
 }
 
 void GameManager::ExitMerchant()
+{
+}
+
+void GameManager::EnterEnding()
+{
+}
+
+void GameManager::UpdateEnding()
+{
+}
+
+void GameManager::ExitEnding()
 {
 }
