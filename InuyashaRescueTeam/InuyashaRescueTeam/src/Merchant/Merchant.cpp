@@ -6,6 +6,7 @@
 #include "InputManager/InputManager.h"
 #include <string>
 #include "ImagePrinter.h"
+#include "algorithm"
 
 #define FOREGROUND_WHITE      FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE // text color contains blue.
 
@@ -18,7 +19,7 @@ Merchant::Merchant()
 	gap = 1;
 	height = ShopList.size() > InvenList.size() ? ShopList.size() : InvenList.size();
 	bShopType = false;
-	player->SetMoney(player->GetMoney() + 1000); // 테스트용 골드 부여
+	// player->SetMoney(player->GetMoney() + 1000); // 테스트용 골드 부여
 	OffsetX = 80;
 	OffsetY = 10;
 }
@@ -28,13 +29,13 @@ void Merchant::OpenShop()
 	InputManager& IM = InputManager::GetInstance();
 	KeyAction UserChoice;
     SOUND_MANAGER->PlayBgm(BGMType::ShopBgm);
-    
+
+    IM.FlushInputBuffer();
     DrawBackground();
     DrawShopUI();
 	while (1)
 	{
 		UserChoice = IM.GetKeyAction(GameState::MERCHANT); // 유저 입력
-        IM.FlushInputBuffer();
 		if (UserChoice == KeyAction::INVALID)
 		{
             //std::cin.get();
@@ -104,11 +105,14 @@ void Merchant::OpenShop()
 void Merchant::MakeList()
 {
 	std::vector<std::shared_ptr <Card>>* CardList = GAME_MANAGER->GetAllCardsList();
-	for (int i = 0; i < 13; ++i) // 일단 전부 다 넣음. 나중에 몇개넣을지는 변수로 지정하는 것으로 변경 예정
+    InvenList = player->GetDeck();
+	for (int i = 0; i < CardList->size(); ++i) // 일단 전부 다 넣음. 나중에 몇개넣을지는 변수로 지정하는 것으로 변경 예정
 	{
-		ShopList.emplace_back((*CardList)[i], false);
+        if (std::count(InvenList.begin(), InvenList.end(), (*CardList)[i]) == 0)
+        {
+            ShopList.emplace_back((*CardList)[i], false);
+        }
 	}
-	InvenList = player->GetDeck();
 }
 
 void Merchant::DrawBackground()
@@ -301,6 +305,34 @@ void Merchant::ShowCardInfo()
 		std::cout << "■";
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_WHITE);
 	}
+    else if (std::shared_ptr<C_HealHP> HealCard = std::dynamic_pointer_cast<C_HealHP>(TargetCard))
+    {
+        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { static_cast<short>(1 + OffsetX), static_cast<short>(height + 2 + 2 + OffsetY) });
+        std::cout << " ■ ■ ■ TYPE : Heal" << std::endl;
+        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { static_cast<short>(1 + OffsetX), static_cast<short>(height + 2 + 3 + OffsetY) });
+        std::cout << " ■ ■ ■ HEAL : " << HealCard->GetHamount();
+        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { static_cast<short>(1 + OffsetX), static_cast<short>(height + 2 + 4 + OffsetY) });
+        std::cout << " ■ ■ ■ COST : " << HealCard->C_GetCost();
+
+        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { static_cast<short>(4 + OffsetX), static_cast<short>(height + 2 + 3 + OffsetY) });
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE);
+        std::cout << "■";
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_WHITE);
+    }
+    else if (std::shared_ptr<C_HealStamina> StaminaCard = std::dynamic_pointer_cast<C_HealStamina>(TargetCard))
+    {
+        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { static_cast<short>(1 + OffsetX), static_cast<short>(height + 2 + 2 + OffsetY) });
+        std::cout << " ■ ■ ■ TYPE : HEAL" << std::endl;
+        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { static_cast<short>(1 + OffsetX), static_cast<short>(height + 2 + 3 + OffsetY) });
+        std::cout << " ■ ■ ■ HEAL : " << StaminaCard->GetHamount();
+        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { static_cast<short>(1 + OffsetX), static_cast<short>(height + 2 + 4 + OffsetY) });
+        std::cout << " ■ ■ ■ COST : " << StaminaCard->C_GetCost();
+
+        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { static_cast<short>(4 + OffsetX), static_cast<short>(height + 2 + 3 + OffsetY) });
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE);
+        std::cout << "■";
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_WHITE);
+    }
 	else if (std::shared_ptr<C_Attack> attackCard = std::dynamic_pointer_cast<C_Attack>(TargetCard))
 	{
 		SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { static_cast<short>(1 + OffsetX), static_cast<short>(height + 2 + 2 + OffsetY) });
