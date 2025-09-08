@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Card.h"
 class C_Move :
 	public Card

@@ -54,6 +54,14 @@ void BattleManager::StartBattle()
 
         std::cin.get();
         std::shared_ptr<Card> pCard = PlayerTurn();
+        while (auto a = dynamic_cast<C_Move*>(pCard.get())) {           
+            if (field.MoveCheck(a->M_GetX() * a->M_GetDistance(), a->M_GetY() * a->M_GetDistance(), 1)) {
+                
+                break;
+            }
+            _Log.PrintLog("이동할 수 없습니다");
+            pCard = PlayerTurn();
+        }
         while (pCard->C_GetCost() > player->GetStamina())
         {
             _Log.PrintLog("스태미나가 부족합니다!");
@@ -139,10 +147,11 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
     // 플레이어 행동
     if (auto moveCard = dynamic_cast<C_Move*>(pCard.get())) //플레이어 이동
     {
-        field.field_move(moveCard->M_GetX(), moveCard->M_GetY(), 1);
+        field.field_move((moveCard->M_GetX()) * (moveCard->M_GetDistance()), (moveCard->M_GetY()) * (moveCard->M_GetDistance()), 1);
         _Grid.SetCharacter(field.PlayerPositionX, field.PlayerPositionY, "@", Color::RED, Color::BLACK);
     }
     if (auto moveCard = dynamic_cast<C_Move*>(eCard.get())) {//적 이동 
+       
         field.field_move(moveCard->M_GetX(), moveCard->M_GetY(), 2);
         if (!IsSetEnemyCharacterWhenPlayerAttacked) {
             _Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, "#", Color::BLUE, Color::BLACK);

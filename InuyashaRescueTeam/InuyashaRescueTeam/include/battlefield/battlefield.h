@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <iostream>
 
 class BattleField {
@@ -13,4 +13,5 @@ public:
 
 	void field_move(int dirX, int dirY, int entityType); // 매개변수 추가
 	void field_print();
+    bool MoveCheck(int dirX,int dirY,int entityType);
 };
