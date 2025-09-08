@@ -21,10 +21,10 @@ int main() {
     // 게임매니저 사용할 때, GAME_MANAGER-> 로 접근
     GAME_MANAGER->Init();
 
-    while (true)
+   /* while (true)
     {
         GAME_MANAGER->Update();
-    }
+    }*/
 
     GAME_MANAGER->Run();
 
