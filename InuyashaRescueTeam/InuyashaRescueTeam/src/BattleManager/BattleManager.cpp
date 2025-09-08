@@ -25,20 +25,27 @@ void BattleManager::StartBattle()
     _Grid.Draw();
     _Log.Draw();
 
-    _Player_HPBar.SetValue(player.get()->GetHP());
-    _Player_ENBar.SetValue(player.get()->GetStamina());
+    _Player_HPBar.SetMaxValue(player->GetMAXHP());
+    _Player_ENBar.SetMaxValue(player->GetMAXStamina());
 
-    _Enemy_HPBar.SetValue(enemy.get()->GetHP());
-    _Enemy_ENBar.SetValue(enemy.get()->GetStamina());
+    _Player_HPBar.SetValue(player->GetHP());
+    _Player_ENBar.SetValue(player->GetStamina());
+
+    _Enemy_HPBar.SetMaxValue(enemy->GetMAXHP());
+    _Enemy_ENBar.SetMaxValue(enemy->GetMAXStamina());
+
+    _Enemy_HPBar.SetValue(enemy->GetHP());
+    _Enemy_ENBar.SetValue(enemy->GetStamina());
 
     _Player_HPBar.Draw();
     _Player_ENBar.Draw();
 
     _Enemy_HPBar.Draw();
-    ShowUI();
     _Enemy_ENBar.Draw();
 
+    //_HP
 
+    //ShowUI();
 
     SOUND_MANAGER->PlayBgm(BGMType::BattleField);
 
@@ -211,8 +218,6 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
                 player->TakeDamage(hitdamage);
                 _Log.PrintLog("적이 플레이어에게 " + std::to_string(hitdamage) + "의 피해를 입혔다.");
                 //std::cout << "적이 플레이어에게 " << hitdamage << "의 피해를 입혔다." << std::endl;
-
-
             }
             else {
                 //std::cout << "적의 공격이 실패했다." << std::endl;
@@ -251,5 +256,6 @@ void BattleManager::EndBattle()
         player->AddEXP(enemy->getExp());
         enemy.reset();
     }
+    system("cls");
 }
 

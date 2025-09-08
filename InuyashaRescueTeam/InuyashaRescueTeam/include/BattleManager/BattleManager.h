@@ -30,12 +30,12 @@ private:
 
 public:
     BattleManager()
-        : _Player_HPBar(97, 0, 0, 100, Color::YELLOW, Color::RED, true)
+        : _Player_HPBar(97, 0, 0, 0, Color::YELLOW, Color::RED, true)
         , _HPTEXT(_Player_HPBar.GetRight() + 1, _Player_HPBar.GetBottom() - 1, 4, "▥HP▥", YELLOW, BLACK)
-        , _Enemy_HPBar(97, _HPTEXT.GetRight(), _HPTEXT.GetBottom() - 1, 100, Color::YELLOW, Color::RED, false)
-        , _Player_ENBar(97, _Player_HPBar.GetLeft(), _Player_HPBar.GetBottom(), 100, Color::YELLOW, Color::BROWN, true)
+        , _Enemy_HPBar(97, _HPTEXT.GetRight(), _HPTEXT.GetBottom() - 1, 0, Color::YELLOW, Color::RED, false)
+        , _Player_ENBar(97, _Player_HPBar.GetLeft(), _Player_HPBar.GetBottom(), 0, Color::YELLOW, Color::BROWN, true)
         , _ENTEXT(_Player_ENBar.GetRight() + 1, _Player_ENBar.GetBottom() - 1, 4, "▥ST▥", YELLOW, BLACK)
-        , _Enemy_ENBar(97, _ENTEXT.GetRight(), _ENTEXT.GetBottom() - 1, 100, Color::YELLOW, Color::BROWN, false)
+        , _Enemy_ENBar(97, _ENTEXT.GetRight(), _ENTEXT.GetBottom() - 1, 0, Color::YELLOW, Color::BROWN, false)
         , _Grid(200, 42, _Player_ENBar.GetLeft(), _Player_ENBar.GetBottom())
         , _CardUI(200, 16, _Player_ENBar.GetLeft(), _Player_ENBar.GetBottom() + 5)
         , _Log(200, 6, _Grid.GetLeft(), _Grid.GetBottom())

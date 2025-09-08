@@ -22,33 +22,33 @@ KeyAction InputManager::GetKeyAction(GameState currentState)
     switch (currentState)
     {
         // 필드(FIELD) 상태 키 처리
-    case GameState::FIELD:
-    {
-        // 대각선 이동을 최우선으로 확인
-        if (isUpPressed && isLeftPressed) return KeyAction::MOVE_UP_LEFT;
-        if (isUpPressed && isRightPressed) return KeyAction::MOVE_UP_RIGHT;
-        if (isDownPressed && isLeftPressed) return KeyAction::MOVE_DOWN_LEFT;
-        if (isDownPressed && isRightPressed) return KeyAction::MOVE_DOWN_RIGHT;
+        case GameState::FIELD:
+        {
+            // 대각선 이동을 최우선으로 확인
+          if (isUpPressed && isLeftPressed) return KeyAction::MOVE_UP_LEFT;
+          if (isUpPressed && isRightPressed) return KeyAction::MOVE_UP_RIGHT;
+          if (isDownPressed && isLeftPressed) return KeyAction::MOVE_DOWN_LEFT;
+          if (isDownPressed && isRightPressed) return KeyAction::MOVE_DOWN_RIGHT;
 
-        // 상하좌우 이동 확인
-        if (isUpPressed) return KeyAction::MOVE_UP;
-        if (isDownPressed) return KeyAction::MOVE_DOWN;
-        if (isLeftPressed) return KeyAction::MOVE_LEFT;
-        if (isRightPressed) return KeyAction::MOVE_RIGHT;
-        break; // FIELD 움직임 처리 끝
-    }
+           // 상하좌우 이동 확인
+          if (isUpPressed) return KeyAction::MOVE_UP;
+          if (isDownPressed) return KeyAction::MOVE_DOWN;
+          if (isLeftPressed) return KeyAction::MOVE_LEFT;
+          if (isRightPressed) return KeyAction::MOVE_RIGHT;
+            break; // FIELD 움직임 처리 끝
+        }
     // 상점(MERCHANT) 상태 키 처리
-    case GameState::MERCHANT:
-    {
+        case GameState::MERCHANT:
+        {
         // 상점에서는 방향키 동시 입력을 사용하지 않으므로 _getch()로 처리
-        break;
-    }
+            break;
+        }
     // 전투(BATTLE) 상태 키 처리
-    case GameState::BATTLE:
-    {
+        case GameState::BATTLE:
+        {
         // 전투에서는 턴제이므로 _getch()로 처리
-        break;
-    }
+            break;
+        }
     }
     // --- 단발성 키 입력 감지 ---
     // _kbhit() - 키보드 버퍼 눌린 키 확인

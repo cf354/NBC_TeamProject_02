@@ -27,7 +27,7 @@ int main() {
     //    GAME_MANAGER->Update();
     //}
 
-    //GAME_MANAGER->Run();
+    GAME_MANAGER->Run();
 
 
     // 상점 테스트 부분
