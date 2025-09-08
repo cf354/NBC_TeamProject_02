@@ -297,6 +297,7 @@ void BattleManager::EndBattle()
     else {
         _Log.PrintLog("적 처치 성공!");
         player->AddEXP(enemy->getExp());
+        player->SetMoney(player->GetMoney() + enemy->getmoney());
         if (auto a = dynamic_cast<Boss*>(enemy.get())) {
             SOUND_MANAGER->PlayBgm(BGMType::EndBgm);
             ImagePrinter* imagePrinter = new ImagePrinter();

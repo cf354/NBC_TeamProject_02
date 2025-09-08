@@ -30,9 +30,9 @@ void Enemy::InitDeck() {
         AddCardWeight("DragonStrike", 3);
     }
     else if (type == EnemyType::Bankotsu) {
-        bool Banryu[3][3] = { {true, false, true}, {false, true, false}, {true, false, true} };
-        AddCard(std::make_shared<C_Attack>("BanRyu", 25, 0, 25, Banryu));
-        AddCardWeight("BanRyu", 3);
+        bool Barbaric_Dragon[3][3] = { {true, false, true}, {false, true, false}, {true, false, true} };
+        AddCard(std::make_shared<C_Attack>("Barbaric_Dragon", 25, 0, 25, Barbaric_Dragon));
+        AddCardWeight("Barbaric_Dragon", 3);
     }
 
     // 공통 카드 가중치 설정
@@ -55,7 +55,7 @@ std::shared_ptr<Card> Enemy::GetRandomCard(int playerX, int playerY, int enemyX,
             cardWeights["DragonStrike"] = 5;
         }
         else if (type == EnemyType::Bankotsu) {
-            cardWeights["BanRyu"] = 5;
+            cardWeights["Barbaric_Dragon"] = 5;
         }
         else {
             cardWeights["E_WideStrike"] = 4;
@@ -67,7 +67,7 @@ std::shared_ptr<Card> Enemy::GetRandomCard(int playerX, int playerY, int enemyX,
             cardWeights["DragonStrike"] = 3;
         }
         else if (type == EnemyType::Bankotsu) {
-            cardWeights["BanRyu"] = 3;
+            cardWeights["Barbaric_Dragon"] = 3;
         }
         else {
             cardWeights["E_WideStrike"] = 2;
