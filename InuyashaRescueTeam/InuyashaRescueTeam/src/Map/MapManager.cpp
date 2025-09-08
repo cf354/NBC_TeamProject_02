@@ -541,6 +541,7 @@ void MapManager::UpdatePlayer()
 				break;
 			case ObjType::Merchant:
 				// GameManager Merchant 호출
+                GAME_MANAGER->SetState(GameManagerState::Merchant);
 				break;
 			case ObjType::Boss:
 				// GameManager 보스 전투 호출

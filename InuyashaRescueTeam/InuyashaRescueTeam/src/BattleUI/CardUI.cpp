@@ -198,11 +198,15 @@ void CardUI::DrawAttackCard(C_Attack& Card, int x, int y)
 		{
 			if (range[i][j]) {
 				GoToXY(x + 1 + (j - 1) + 9, y + 1 + (i - 1) + 3);
-				tbColor(BLUE, BLACK);
+				tbColor(RED, BLACK);
 				std::cout << "■";
 			}
 		}
 	}
+
+    tbColor(GREEN, BLACK);
+    GoToXY(x + 1 + 9, y + 1 + 3);
+    std::cout << "■";
 
 	tbColor();
 }

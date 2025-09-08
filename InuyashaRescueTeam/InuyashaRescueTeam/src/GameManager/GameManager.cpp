@@ -3,6 +3,7 @@
 #include "Common/ConsolePrinter.h"
 #include "SoundManager/SoundManager.h"
 #include "Common/RandomManager.h"
+#include "Merchant\Merchant.h"
 #include <conio.h>
 
 
@@ -44,28 +45,40 @@ void GameManager::Init()
     player = std::make_shared<Player>("이누야샤", 1, 100, 100, 10, 5);
     //enemy = std::make_shared<Enemy>("셋쇼마루", 1, 50, 30, 8, 3, 10, 20); // EnemySelection 으로 적을 고를수 있기 때문에 임시로 추가되어있는 필요없는 부분
 
-    AllCardsList.emplace_back(std::make_shared<C_Move>("MoveRight", 0, 0, 1, 1, 0)); // 0 // C_Move(std::string n,int C, int G, int d, int dirx, int diry) :distance(d), x(dirx), y(diry) { Name = n; Cost = C; Gold = G; };
-    AllCardsList.emplace_back(std::make_shared<C_Move>("MoveLeft", 0, 0, 1, -1, 0)); // 1
-    AllCardsList.emplace_back(std::make_shared<C_Move>("MoveUp", 0, 0, 1, 0, -1)); // 2
-    AllCardsList.emplace_back(std::make_shared<C_Move>("MoveDown", 0, 0, 1, 0, 1)); // 3
-    bool BladeStrike[3][3] = { {false,true,false},{false,true,false},{false,true,false} };
-    AllCardsList.emplace_back(std::make_shared<C_Attack>("BladeStrike", 25, 0, 30, BladeStrike)); // 4 // C_Attack(std::string n, int C, int G, int A, bool r[3][3]) :ATK(A), Range(r) { Name = n; Cost = C; Gold = G; }
-    bool BladesOfBlood[3][3] = { {false,true,false},{true,true,true},{false,true,false} };
-    AllCardsList.emplace_back(std::make_shared<C_Attack>("BladesOfBlood", 25, 0, 25, BladesOfBlood)); //5
-    bool IronReaver[3][3] = { {true,false,true},{false,true,false},{true,false,true} };
-    AllCardsList.emplace_back(std::make_shared<C_Attack>("IronReaver", 35, 0, 25, IronReaver)); // 6
-    bool WindScar[3][3] = { {false,false,false},{false,true,false},{true,true,true} };
-    AllCardsList.emplace_back(std::make_shared<C_Attack>("WindScar", 50, 0, 50, WindScar)); // 7
-    AllCardsList.emplace_back(std::make_shared<C_Guard>("Guard", 0, 0, 15)); // 8 //C_Guard(std::string n, int C, int G, int D) :DEF(D) {Name = n; Cost = C; Gold = G;}
+    AllCardsList.emplace_back(std::make_shared<C_Move>("MoveRight", 0, 10, 1, 1, 0)); // 0 // C_Move(std::string n,int C, int G, int d, int dirx, int diry) :distance(d), x(dirx), y(diry) { Name = n; Cost = C; Gold = G; };
+    AllCardsList.emplace_back(std::make_shared<C_Move>("MoveLeft", 0, 10, 1, -1, 0)); // 1
+    AllCardsList.emplace_back(std::make_shared<C_Move>("MoveUp", 0, 10, 1, 0, -1)); // 2
+    AllCardsList.emplace_back(std::make_shared<C_Move>("MoveDown", 0, 10, 1, 0, 1)); // 3
+    bool BladeStrike[3][3] = {
+        {0,1,0},
+        {0,1,0},
+        {0,1,0} };
+    AllCardsList.emplace_back(std::make_shared<C_Attack>("BladeStrike", 25, 15, 30, BladeStrike)); // 4 // C_Attack(std::string n, int C, int G, int A, bool r[3][3]) :ATK(A), Range(r) { Name = n; Cost = C; Gold = G; }
+    bool BladesOfBlood[3][3] = {
+        {0,1,0},
+        {1,1,1},
+        {0,1,0} };
+    AllCardsList.emplace_back(std::make_shared<C_Attack>("BladesOfBlood", 25, 20, 25, BladesOfBlood)); //5
+    bool IronReaver[3][3] = {
+        {1,0,1},
+        {0,1,0},
+        {1,0,1} };
+    AllCardsList.emplace_back(std::make_shared<C_Attack>("IronReaver", 35, 25, 25, IronReaver)); // 6
+    bool WindScar[3][3] = {
+        {0,0,0},
+        {0,1,0},
+        {1,1,1} };
+    AllCardsList.emplace_back(std::make_shared<C_Attack>("WindScar", 50, 30, 50, WindScar)); // 7
+    AllCardsList.emplace_back(std::make_shared<C_Guard>("Guard", 0, 10, 15)); // 8 //C_Guard(std::string n, int C, int G, int D) :DEF(D) {Name = n; Cost = C; Gold = G;}
 
-
-    AllCardsList.emplace_back(std::make_shared<C_Move>("DoubleMoveRight", 0, 0, 1, 2, 0)); // 9
-    AllCardsList.emplace_back(std::make_shared<C_Move>("DoubleMoveLeft", 0, 0, 1, -2, 0)); // 10
-    AllCardsList.emplace_back(std::make_shared<C_Move>("DoubleMoveUp", 0, 0, 1, 0, -1)); // 11
-    AllCardsList.emplace_back(std::make_shared<C_Move>("DoubleMoveDown", 0, 0, 1, 0, 1)); // 12
-    
+    AllCardsList.emplace_back(std::make_shared<C_Move>("DoubleMoveRight", 0, 5, 2, 1, 0)); // 9
+    AllCardsList.emplace_back(std::make_shared<C_Move>("DoubleMoveLeft", 0, 10, 2, -1, 0)); // 10
+    AllCardsList.emplace_back(std::make_shared<C_Move>("DoubleMoveUp", 0, 15, 2, 0, -1)); // 11
+    AllCardsList.emplace_back(std::make_shared<C_Move>("DoubleMoveDown", 0, 20, 2, 0, 1)); // 12
+  
     AllCardsList.emplace_back(std::make_shared<C_HealHP>("Heal", 0, 0,30)); // 13 C_HealHP(std::string n, int C, int G,int h) :Card(n, C, G),Hamount(h)
     AllCardsList.emplace_back(std::make_shared<C_HealStamina>("Energy UP", 0, 0, 10)); // 14 C_HealStamina(std::string n, int C, int G, int h) :Card(n, C, G), Samount(h)
+
 
     // 기본 카드 몇 장 추가
     player->AddCard(AllCardsList[0]); // MoveRight
@@ -105,25 +118,19 @@ void GameManager::Init()
     enemy->AddCardWeight("E_LineAttack", 2);
     
     //사운드
+
     SOUND_MANAGER->Init();
     BATTLE_MANAGER->Init(player, enemy);
     
 #pragma endregion
 
     MAP_MANAGER->EnterNextStage();
+    SetState(GameManagerState::Map);
 }
 
 void GameManager::Update()
 {
-    CONSOLE_PRINTER->Update();
-    MAP_MANAGER->UpdatePlayer();
-    MAP_MANAGER->Draw();
-    CONSOLE_PRINTER->Render();
-}
-
-void GameManager::Run()
-{
-    BATTLE_MANAGER->StartBattle();
+    UpdateState(currState);
 }
 
 std::weak_ptr<Player> GameManager::GetPlayer()
@@ -134,4 +141,127 @@ std::weak_ptr<Player> GameManager::GetPlayer()
 std::vector<std::shared_ptr <Card>>* GameManager::GetAllCardsList()
 {
     return &AllCardsList;
+}
+
+void GameManager::SetState(GameManagerState state)
+{
+    if (currState == state)
+        return;
+
+    if (currState != GameManagerState::None)
+        ExitState(currState);
+    currState = state;
+    EnterState(currState);
+}
+
+void GameManager::EnterState(GameManagerState state)
+{
+    switch (state)
+    {
+        case GameManagerState::Title:
+            EnterTitle();
+            break;
+        case GameManagerState::Map:
+            EnterMap();
+            break;
+        case GameManagerState::Battle:
+            EnterBattle();
+            break;
+        case GameManagerState::Merchant:
+            EnterMerchant();
+            break;
+    }
+}
+
+void GameManager::UpdateState(GameManagerState state)
+{
+    switch (state)
+    {
+        case GameManagerState::Title:
+            UpdateTitle();
+            break;
+        case GameManagerState::Map:
+            UpdateMap();
+            break;
+        case GameManagerState::Battle:
+            UpdateBattle();
+            break;
+        case GameManagerState::Merchant:
+            UpdateMerchant();
+            break;
+    }
+}
+
+void GameManager::ExitState(GameManagerState state)
+{
+    switch (state)
+    {
+        case GameManagerState::Title:
+            ExitTitle();
+            break;
+        case GameManagerState::Map:
+            ExitMap();
+            break;
+        case GameManagerState::Battle:
+            ExitBattle();
+            break;
+        case GameManagerState::Merchant:
+            ExitMerchant();
+            break;
+    }
+}
+
+void GameManager::EnterTitle()
+{
+}
+
+void GameManager::UpdateTitle()
+{
+}
+
+void GameManager::ExitTitle()
+{
+}
+
+void GameManager::EnterMap()
+{
+}
+
+void GameManager::UpdateMap()
+{
+    CONSOLE_PRINTER->Update();
+    MAP_MANAGER->UpdatePlayer();
+    MAP_MANAGER->Draw();
+    CONSOLE_PRINTER->Render();
+}
+
+void GameManager::ExitMap()
+{
+}
+
+void GameManager::EnterBattle()
+{
+    BATTLE_MANAGER->StartBattle();
+}
+
+void GameManager::UpdateBattle()
+{
+}
+
+void GameManager::ExitBattle()
+{
+}
+
+void GameManager::EnterMerchant()
+{
+    Merchant* test = new Merchant();
+    test->OpenShop();
+}
+
+void GameManager::UpdateMerchant()
+{
+}
+
+void GameManager::ExitMerchant()
+{
 }

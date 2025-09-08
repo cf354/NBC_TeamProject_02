@@ -27,7 +27,7 @@ void Boss::InitDeck() {
 // 보스 전용 랜덤 카드 선택
 std::shared_ptr<Card> Boss::GetRandomCard(int playerX, int playerY, int enemyX, int enemyY) {
     // 체력이 50% 이하일 때 페이즈 전환
-    if (GetHP() < GetHP() / 2 && phase == 1) {   // 체력 가져오는거 아직 구현 못함
+    if (GetHP() < GetMAXHP() / 2 && phase == 1) {   // 체력 가져오는거 아직 구현 못함
         phase = 2;
 
         // 새로운 강력한 카드 추가
