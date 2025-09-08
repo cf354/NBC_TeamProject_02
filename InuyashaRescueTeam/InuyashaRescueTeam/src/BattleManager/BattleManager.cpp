@@ -276,5 +276,6 @@ void BattleManager::EndBattle()
         enemy.reset();
     }
     system("cls");
+    GAME_MANAGER->SetState(GameManagerState::Map);
 }
 
