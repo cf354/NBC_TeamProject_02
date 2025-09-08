@@ -548,10 +548,15 @@ void MapManager::UpdatePlayer()
 			case ObjType::None:
                 {
                     objPlayer->pos = newPos;
-                    if (currStage < TOTAL_STAGE && RANDOM_MANAGER->Range(0.0, 1.0) <= ENCOUNT_ENEMY)
+                    if (currStage < TOTAL_STAGE)
                     {
-                        GAME_MANAGER->Battle(false);
-                        return;
+                        encountEnemy += DELTA_ENCOUNT_ENEMY;
+                        if (RANDOM_MANAGER->Range(0.0, 1.0) <= encountEnemy)
+                        {
+                            GAME_MANAGER->Battle(false);
+                            encountEnemy = MIN_ENCOUNT_ENEMY;
+                            return;
+                        }
                     }
                     break;
                 }
