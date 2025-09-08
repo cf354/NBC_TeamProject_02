@@ -2,6 +2,7 @@
 #include <conio.h>
 #include <locale>
 #include <codecvt> 
+#include "SoundManager/SoundManager.h"
 
 void CardUI::Draw()
 {
@@ -261,6 +262,7 @@ std::shared_ptr<Card> CardUI::ChoseCard(std::vector<std::shared_ptr<Card>> Cards
 			input = _getch();
 			if (input == -32) {
 				input = _getch();
+                SOUND_MANAGER->PlaySE(SEType::CardMoveSelect);
 				switch (input)
 				{
 				case LEFT: {
@@ -303,6 +305,7 @@ std::shared_ptr<Card> CardUI::ChoseCard(std::vector<std::shared_ptr<Card>> Cards
 			}
 			else if(input == 13){
 				result = Cards[x + (_Count_Column * y)];
+                SOUND_MANAGER->PlaySE(SEType::CardSelect);
 			}
 		}
 	}

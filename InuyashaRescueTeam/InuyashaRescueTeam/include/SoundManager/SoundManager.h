@@ -24,6 +24,8 @@ enum class SEType {
     BladeStrike,
     Adamant_Barrage,
     Backlash_Wave,
+    CardMoveSelect,
+    CardSelect,
     None
 };
 
