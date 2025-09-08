@@ -33,7 +33,7 @@ public:
     std::weak_ptr<Player> GetPlayer();
     std::vector<std::shared_ptr <Card>>* GetAllCardsList();
 
-    void Battle(int enemyId);
+    void Battle(bool isBoss);
 
     void SetState(GameManagerState state);
 

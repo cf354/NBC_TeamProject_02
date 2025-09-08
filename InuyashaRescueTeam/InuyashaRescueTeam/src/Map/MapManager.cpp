@@ -550,7 +550,7 @@ void MapManager::UpdatePlayer()
                     objPlayer->pos = newPos;
                     if (currStage < TOTAL_STAGE && RANDOM_MANAGER->Range(0.0, 1.0) <= ENCOUNT_ENEMY)
                     {
-                        GAME_MANAGER->Battle(1);
+                        GAME_MANAGER->Battle(false);
                         return;
                     }
                     break;
@@ -562,7 +562,7 @@ void MapManager::UpdatePlayer()
                 GAME_MANAGER->SetState(GameManagerState::Merchant);
 				return;
 			case ObjType::Boss:
-                GAME_MANAGER->Battle(2);
+                GAME_MANAGER->Battle(true);
 				return;
 			default:
 				break;
