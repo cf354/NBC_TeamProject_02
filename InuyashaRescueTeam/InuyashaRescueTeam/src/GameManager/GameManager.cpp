@@ -110,7 +110,7 @@ void GameManager::Init()
     player->AddCard(AllCardsList[5]); // BladesOfBlood
     player->AddCard(AllCardsList[6]); // IronReaver
     player->AddCard(AllCardsList[7]); // WindScar
-    player->AddCard(AllCardsList[9]); // Guard
+    player->AddCard(AllCardsList[8]); // Guard
     
 
 
