@@ -430,11 +430,18 @@ void MapManager::EnterNextStage()
 		objPlayer->pos = Vector2D(DATA_WIDTH / 8 * 3, DATA_HEIGHT / 2);
 
         MapObj* objBoss = new MapObj();
-        objBoss->size = Vector2D(1, 1);
-        objBoss->strRender = L"B";
+        objBoss->size = Vector2D(11, 3);
+        objBoss->strRender = L"┌─────────┐│ B O S S │└─────────┘";
         objects.push_back(objBoss);
-        objBoss->pos = Vector2D(DATA_WIDTH / 8 * 5, DATA_HEIGHT / 2);
-        vecType[objBoss->pos.y][objBoss->pos.x] = ObjType::Boss;
+        objBoss->pos = Vector2D(DATA_WIDTH / 8 * 5, DATA_HEIGHT / 2 + (objBoss->size.y - 1) / 2);
+        Vector2D lt = objBoss->pos - Vector2D((objBoss->size.x - 1) / 2, objBoss->size.y - 1);
+        for (int i = 0; i < objBoss->size.y; i++)
+        {
+            for (int j = 0; j < objBoss->size.x; j++)
+            {
+                vecType[lt.y + i][lt.x + j] = ObjType::Boss;
+            }
+        }
         SOUND_MANAGER->PlayBgm(BGMType::BossMapTheme);
 	}
 }
