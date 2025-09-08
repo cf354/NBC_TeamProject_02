@@ -158,7 +158,7 @@ void GameManager::EnterState(GameManagerState state)
             EnterMap();
             break;
         case GameManagerState::Battle:
-            EnterMap();
+            EnterBattle();
             break;
         case GameManagerState::Merchant:
             EnterMerchant();
@@ -177,7 +177,7 @@ void GameManager::UpdateState(GameManagerState state)
             UpdateMap();
             break;
         case GameManagerState::Battle:
-            UpdateMap();
+            UpdateBattle();
             break;
         case GameManagerState::Merchant:
             UpdateMerchant();
@@ -196,7 +196,7 @@ void GameManager::ExitState(GameManagerState state)
             ExitMap();
             break;
         case GameManagerState::Battle:
-            ExitMap();
+            ExitBattle();
             break;
         case GameManagerState::Merchant:
             ExitMerchant();
