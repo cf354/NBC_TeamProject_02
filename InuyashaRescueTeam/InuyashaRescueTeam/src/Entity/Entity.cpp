@@ -1,8 +1,8 @@
 #include "Entity\Entity.h"
 
 // 생성자
-Entity::Entity(const std::string& name, int level, int hp, int stamina, int atk, int def)
-    : Name(name), Level(level), ATK(atk), DEF(def)
+Entity::Entity(const std::string& name, int level, int hp, int stamina, int atk, int def, const char* spritefilefath)
+    : Name(name), Level(level), ATK(atk), DEF(def), SpriteFileFath(spritefilefath)
 {
     // 생성 시 넘겨준 값이 곧 최대치
     MAXHP = hp;
@@ -38,6 +38,7 @@ int Entity::GetDEF() const { return DEF; }
 std::string Entity::GetName() const { return Name; }
 int Entity::GetMAXHP() const { return MAXHP; }
 int Entity::GetMAXStamina() const { return MAXStamina; }
+const char* Entity::GetSpriteFileFath() const{ return SpriteFileFath; }
 
 // 정보 설정 
 void Entity::SetHP(int hp)

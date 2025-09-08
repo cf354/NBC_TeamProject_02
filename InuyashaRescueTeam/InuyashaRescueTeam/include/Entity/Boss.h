@@ -12,8 +12,9 @@ private:
 
 public:
     // 생성자에 EnemyType 인수를 추가
-    Boss(std::string n, int lv, int h, int s, int a, int d, int dm, int de, EnemyType t)
-        : Enemy(n, lv, h, s, a, d, dm, de, t) {}
+    Boss(std::string n, int lv, int h, int s, int a, int d, int dm, int de, const char* spritefilefath, EnemyType t)
+        : Enemy(n, lv, h, s, a, d, dm, de, spritefilefath, t) {
+    }
 
     // 보스 전용 덱 초기화 로직을 오버라이드
     void InitDeck() override;
