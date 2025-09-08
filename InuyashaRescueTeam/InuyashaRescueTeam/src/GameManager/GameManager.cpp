@@ -108,8 +108,6 @@ void GameManager::Init()
     SOUND_MANAGER->Init();
     BATTLE_MANAGER->Init(player, enemy);
     
-
-    enemy->AddCard(std::make_shared<C_Move>("MoveDown", 0, 0, 1, 0, -1));
 #pragma endregion
 
     MAP_MANAGER->EnterNextStage();
