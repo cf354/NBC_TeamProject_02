@@ -145,7 +145,7 @@ void GameManager::Init()
 
     MAP_MANAGER->EnterNextStage();
 
-    SetState(GameManagerState::Title);
+    SetState(GameManagerState::Battle);
 }
 
 void GameManager::Update()

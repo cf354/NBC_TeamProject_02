@@ -71,6 +71,17 @@ void BattleManager::StartBattle()
 
         // 적 턴 시작 시 플레이어와 적의 위치를 GetRandomCard 함수에 전달
         std::shared_ptr<Card> eCard = enemy->GetRandomCard(field.PlayerPositionX, field.PlayerPositionY, field.EnemyPositionX, field.EnemyPositionY);
+        
+        while (auto a = dynamic_cast<C_Move*>(eCard.get())) {
+            if (field.MoveCheck(a->M_GetX() * a->M_GetDistance(), a->M_GetY() * a->M_GetDistance(), 2)) {
+                break;
+            }           
+            eCard = enemy->GetRandomCard(field.PlayerPositionX, field.PlayerPositionY, field.EnemyPositionX, field.EnemyPositionY);
+        }
+        while (eCard->C_GetCost() > enemy->GetStamina())
+        {            
+            eCard = enemy->GetRandomCard(field.PlayerPositionX, field.PlayerPositionY, field.EnemyPositionX, field.EnemyPositionY);
+        }
         _Log.PrintLog(enemy->GetName() + "이(가) [" + eCard->C_GetName() + "] 카드를 선택했다!");
         //std::cout << enemy->GetName()<<   "이(가) [" << eCard->C_GetName() << "] 카드를 선택했다!\n";
         //
