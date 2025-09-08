@@ -114,6 +114,9 @@
     <ClCompile Include="src\Common\ConsolePrinter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ImagePrinter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\BattleUI\Progressbar.cpp">
       <Filter>Source Files\BattleUI</Filter>
     </ClCompile>
@@ -194,6 +197,7 @@
     <ClInclude Include="include\Common\ConsolePrinter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\ImagePrinter.h">
     <ClInclude Include="include\BattleUI\BattleGrid.h">
       <Filter>Header Files\BattleUI</Filter>
     </ClInclude>

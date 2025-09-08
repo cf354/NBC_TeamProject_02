@@ -140,6 +140,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\ImagePrinter.cpp" />
     <ClCompile Include="src\BattleUI\BattleGrid.cpp" />
     <ClCompile Include="src\BattleUI\BattleLog.cpp" />
     <ClCompile Include="src\BattleUI\CardUI.cpp" />
@@ -186,6 +187,7 @@
     <ClInclude Include="include\Entity\Entity.h" />
     <ClInclude Include="include\Entity\Player.h" />
     <ClInclude Include="include\GameManager\GameManager.h" />
+    <ClInclude Include="include\ImagePrinter.h" />
     <ClInclude Include="include\Merchant\Merchant.h" />
     <ClInclude Include="include\InputManager\InputManager.h" />
     <ClInclude Include="include\Map\MapManager.h" />

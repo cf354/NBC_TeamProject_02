@@ -67,21 +67,24 @@ KeyAction InputManager::GetKeyAction(GameState currentState)
             }
             break;
 
-        case GameState::MERCHANT:
+    // 상점(MERCHANT) 상태 - 맵 이동 중 키 입력 처리
+    case GameState::MERCHANT:
+    {
+        switch (keyInput)
+        { // 상점에 필요한 기능 추가해주세요.
+          // 카드 구매, 판매 등등
+        case 'q': case 'Q': return KeyAction::QUIT; // 상점 나가기
+        case 'f': case 'F': return KeyAction::SELECT; // 물건 선택
+        }
+        if (keyInput == 224) { // 방향키로 아이템 선택
+            keyInput = _getch();
             switch (keyInput)
             {
-                //case 'b': case 'B': return KeyAction::BUY;
-                //case 's': case 'S': return KeyAction::SELL;
-                //case 'q': case 'Q': return KeyAction::QUIT;
-                //}
-                //if (keyInput == 224) { // 방향키
-                //    keyInput = _getch();
-                //    switch (keyInput) {
-                //    case 72: return KeyAction::NAVIGATE_UP;
-                //    case 80: return KeyAction::NAVIGATE_DOWN;
-                //    }
-                //}
-                break;
+                // "InputManager.h"의 "enum class KeyAction" 필요한 액션 추가 후 사용
+                 case 72: return KeyAction::PREV_ITEM;
+                 case 80: return KeyAction::NEXT_ITEM;
+                 case 75: return KeyAction::SHOP_MERCHANT;
+                 case 77: return KeyAction::SHOP_PLAYER;
             }
         case GameState::BATTLE:
             switch (keyInput)
