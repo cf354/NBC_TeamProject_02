@@ -2,6 +2,7 @@
 #include "UIWidget.h"
 #include <string>
 #include <vector>
+#include "ImagePrinter.h"
 
 //플레이어위치, 플레이어 스킬 범위, 적 위치, 적 스킬 범위
 
@@ -33,6 +34,7 @@ private:
 
 	bool _IsSetedCharcter = false;
 	std::vector<std::string> _Character_Position[3][4] = {};
+    std::vector<const char*> _Character_BMP_Position[3][4] = {};
 	int _Character_Postion_Color[3][4] = {};
 
 	std::string _GridTop = "";
@@ -44,6 +46,20 @@ public:
 	virtual void Draw() override;	
 	void PaintBlocks(int x,int y, bool (*range)[3], Color background);
 	void SetCharacter(int x, int y, std::string string, Color font, Color background);
+    void SetCharacter(int x, int y, const char* filename);
+
+    void ReSet_Characters() {
+        for (size_t i = 0; i < 3; i++)
+        {
+            for (size_t k = 0; k < 4; k++)
+            {
+                _Character_BMP_Position[i][k].clear();
+            }
+        }
+
+        _IsSetedCharcter = false;
+    }
+
 	void Reset_Character_Position() {
 		for (size_t i = 0; i < 3; i++)
 		{

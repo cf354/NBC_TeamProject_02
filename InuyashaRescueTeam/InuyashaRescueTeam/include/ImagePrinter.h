@@ -28,6 +28,9 @@ struct BMPInfoHeader {
 #define KEY      "../images/inu_logo_key.bmp"
 #define INU      "../images/inu.bmp"
 #define KIKYO      "../images/kikyo.bmp"
+#define INU_BATTLE "../images/Inuyasha.bmp"
+#define NARAK "../images/narak.bmp"
+#define SESSHO "../images/Sesshomaru.bmp"
 
 class ImagePrinter
 {

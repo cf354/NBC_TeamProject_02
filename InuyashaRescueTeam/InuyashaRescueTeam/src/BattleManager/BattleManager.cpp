@@ -5,6 +5,7 @@
 #include "Entity/Player.h"
 #include "Entity/Enemy.h"
 #include "BattleUI/CardUI.h"
+//#include "ImagePrinter.h"
 
 
 
@@ -20,8 +21,8 @@ void BattleManager::StartBattle()
 
     _HPTEXT.Draw();
     _ENTEXT.Draw();
-    _Grid.SetCharacter(field.PlayerPositionX, field.PlayerPositionY, "@", Color::RED, Color::BLACK);
-    _Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, "#", Color::BLUE, Color::BLACK);
+    _Grid.SetCharacter(field.PlayerPositionX, field.PlayerPositionY, INU_BATTLE);
+    _Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, NARAK);
     _Grid.Draw();
     _Log.Draw();
 
@@ -66,13 +67,12 @@ void BattleManager::StartBattle()
         _Log.PrintLog(enemy->GetName() + "이(가) [" + eCard->C_GetName() + "] 카드를 선택했다!");
         //std::cout << enemy->GetName()<<   "이(가) [" << eCard->C_GetName() << "] 카드를 선택했다!\n";
         //
-        _Grid.Reset_Character_Position();
+        _Grid.ReSet_Characters();
 
         _Grid.Draw();
         Resolve(pCard, eCard, field);
         player->RecoverStamina(15);
         enemy->RecoverStamina(10);
-
 
         _Player_HPBar.SetValue(player.get()->GetHP());
         _Player_ENBar.SetValue(player.get()->GetStamina());
@@ -93,9 +93,6 @@ void BattleManager::StartBattle()
     }
     EndBattle();
 }
-
-
-
 
 
 void BattleManager::ShowUI()//하빈
@@ -134,21 +131,15 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
     int pCardDEF = 0;
     int eCardDEF = 0;
 
-    bool IsSetEnemyCharacterWhenPlayerAttacked = false;
-
     // 플레이어 행동
     if (auto moveCard = dynamic_cast<C_Move*>(pCard.get())) //플레이어 이동
     {
         field.field_move(moveCard->M_GetX(), moveCard->M_GetY(), 1);
-        _Grid.SetCharacter(field.PlayerPositionX, field.PlayerPositionY, "@", Color::RED, Color::BLACK);
+        _Grid.SetCharacter(field.PlayerPositionX, field.PlayerPositionY, INU_BATTLE);
     }
     if (auto moveCard = dynamic_cast<C_Move*>(eCard.get())) {//적 이동 
         field.field_move(moveCard->M_GetX(), moveCard->M_GetY(), 2);
-        if (!IsSetEnemyCharacterWhenPlayerAttacked) {
-            _Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, "#", Color::BLUE, Color::BLACK);
-        }
-        //_Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, "#", Color::BLUE, Color::BLACK);
-        //std::cout << "적이 이동했습니다." << std::endl;
+        _Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, NARAK);
         _Log.PrintLog("적이 이동했습니다.");
 
     }
@@ -156,33 +147,28 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
     //적 이동
     if (auto defenseCard = dynamic_cast<C_Guard*>(pCard.get())) //플레이어 방어
     {
-        _Grid.SetCharacter(field.PlayerPositionX, field.PlayerPositionY, "@", Color::RED, Color::BLACK);
         pCardDEF += defenseCard->G_GetDEF();
+        _Grid.SetCharacter(field.PlayerPositionX, field.PlayerPositionY, INU_BATTLE);
         _Log.PrintLog("방어가 " + std::to_string(defenseCard->G_GetDEF()) + "만큼 상승했다.");
-        //std::cout << "방어가 " << defenseCard->G_GetDEF() << "만큼 상승했다." << std::endl;
     }
     if (auto defenseCard = dynamic_cast<C_Guard*>(eCard.get())) {//적 방어
         eCardDEF += defenseCard->G_GetDEF();
-        if (!IsSetEnemyCharacterWhenPlayerAttacked) {
-            _Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, "#", Color::BLUE, Color::BLACK);
-        }
-        //_Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, "#", Color::BLUE, Color::BLACK);
-        //std::cout << "적의 방어가 " << eCardDEF << "만큼 상승했다." << std::endl;
+        _Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, NARAK);
         _Log.PrintLog("적의 방어가 " + std::to_string(eCardDEF) + "만큼 상승했다.");
     }
 
 
+    bool IsSetEnemyCharacterWhenPlayerAttacked = false;
+
     if (auto attackCard = dynamic_cast<C_Attack*>(pCard.get())) //플레이어 공격
     {
-
-
         std::vector<std::shared_ptr <Card>>* AllCardsList = GAME_MANAGER->GetAllCardsList();
 
         SOUND_MANAGER->PlaySE(SOUND_MANAGER->GetCardSEType(attackCard->C_GetName()));
 
         player->SetStamina(player->GetStamina() - attackCard->C_GetCost());
-        _Grid.SetCharacter(field.PlayerPositionX, field.PlayerPositionY, "@", Color::RED, Color::BLACK);
-        _Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, "#", Color::BLUE, Color::BLACK);
+        _Grid.SetCharacter(field.PlayerPositionX, field.PlayerPositionY, INU_BATTLE);
+        //_Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, NARAK);
         _Grid.PaintBlocks(field.PlayerPositionX, field.PlayerPositionY, attackCard->A_GetRange(), Color::RED);
         IsSetEnemyCharacterWhenPlayerAttacked = true;
 
@@ -191,23 +177,20 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
             if (hitdamage < 0) hitdamage = 0;
             enemy->TakeDamage(hitdamage);
             _Log.PrintLog("플레이어가 적에게 " + std::to_string(hitdamage) + "의 피해를 입혔다.");
-            //std::cout << "플레이어가 적에게 " << hitdamage << "의 피해를 입혔다." << std::endl;
         }
         else {
             _Log.PrintLog("공격에 실패했다.");
-            //std::cout << "공격에 실패했다." << std::endl;
         }
-
     }     
     if (auto attackCard = dynamic_cast<C_Attack*>(eCard.get())) {//적 공격
         if (enemy->GetStamina() < attackCard->C_GetCost()) {
-            //std::cout << "적의 스태미나가 부족합니다." << std::endl;
             _Log.PrintLog("적의 스태미나가 부족합니다.");
         }
         else {
-            if (!IsSetEnemyCharacterWhenPlayerAttacked) {
-                _Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, "#", Color::BLUE, Color::BLACK);
-            }
+            _Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, NARAK);
+            /*if (!IsSetEnemyCharacterWhenPlayerAttacked) {
+                _Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, NARAK);
+            }*/
             _Grid.PaintBlocks(field.EnemyPositionX, field.EnemyPositionY, attackCard->A_GetRange(), Color::BLUE);
 
             enemy->SetStamina(enemy->GetStamina() - attackCard->C_GetCost());
@@ -217,10 +200,8 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
                 if (hitdamage < 0) hitdamage = 0;
                 player->TakeDamage(hitdamage);
                 _Log.PrintLog("적이 플레이어에게 " + std::to_string(hitdamage) + "의 피해를 입혔다.");
-                //std::cout << "적이 플레이어에게 " << hitdamage << "의 피해를 입혔다." << std::endl;
             }
             else {
-                //std::cout << "적의 공격이 실패했다." << std::endl;
                 _Log.PrintLog("적의 공격이 실패했다.");
             }
         }
