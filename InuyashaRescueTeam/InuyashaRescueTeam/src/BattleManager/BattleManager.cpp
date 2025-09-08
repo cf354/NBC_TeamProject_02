@@ -138,6 +138,8 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
     int pCardDEF = 0;
     int eCardDEF = 0;
 
+    bool isEnemyCharacterSetted = false;
+
     // 플레이어 행동
     if (auto moveCard = dynamic_cast<C_Move*>(pCard.get())) //플레이어 이동
     {
@@ -147,6 +149,7 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
     if (auto moveCard = dynamic_cast<C_Move*>(eCard.get())) {//적 이동 
         field.field_move(moveCard->M_GetX(), moveCard->M_GetY(), 2);
         _Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, NARAK);
+        isEnemyCharacterSetted = true;
         _Log.PrintLog("적이 이동했습니다.");
 
     }
@@ -161,11 +164,10 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
     if (auto defenseCard = dynamic_cast<C_Guard*>(eCard.get())) {//적 방어
         eCardDEF += defenseCard->G_GetDEF();
         _Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, NARAK);
+        isEnemyCharacterSetted = true;
         _Log.PrintLog("적의 방어가 " + std::to_string(eCardDEF) + "만큼 상승했다.");
     }
 
-
-    bool IsSetEnemyCharacterWhenPlayerAttacked = false;
 
     if (auto attackCard = dynamic_cast<C_Attack*>(pCard.get())) //플레이어 공격
     {
@@ -174,10 +176,13 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
         SOUND_MANAGER->PlaySE(SOUND_MANAGER->GetCardSEType(attackCard->C_GetName()));
 
         player->SetStamina(player->GetStamina() - attackCard->C_GetCost());
+        
         _Grid.SetCharacter(field.PlayerPositionX, field.PlayerPositionY, INU_BATTLE);
-        //_Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, NARAK);
+        if (!isEnemyCharacterSetted) {
+            _Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, NARAK);
+            isEnemyCharacterSetted = true;
+        }
         _Grid.PaintBlocks(field.PlayerPositionX, field.PlayerPositionY, attackCard->A_GetRange(), Color::RED);
-        IsSetEnemyCharacterWhenPlayerAttacked = true;
 
         if (HitCheck(1, attackCard)) {
             int hitdamage = attackCard->A_GetATK() + player->GetATK() - enemy->GetDEF() - eCardDEF;
@@ -194,10 +199,10 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
             _Log.PrintLog("적의 스태미나가 부족합니다.");
         }
         else {
-            _Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, NARAK);
-            /*if (!IsSetEnemyCharacterWhenPlayerAttacked) {
+            if (!isEnemyCharacterSetted) {
                 _Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, NARAK);
-            }*/
+                isEnemyCharacterSetted = true;
+            }
             _Grid.PaintBlocks(field.EnemyPositionX, field.EnemyPositionY, attackCard->A_GetRange(), Color::BLUE);
 
             enemy->SetStamina(enemy->GetStamina() - attackCard->C_GetCost());
