@@ -28,6 +28,7 @@
     <ClCompile Include="test_main_taewoong.cpp" />
   </ItemGroup>
   <ItemGroup>
+
     <ClInclude Include="include\BattleUI\BattleGrid.h" />
     <ClInclude Include="include\BattleUI\BattleLog.h" />
     <ClInclude Include="include\BattleUI\CardUI.h" />
@@ -57,5 +58,6 @@
     <ClInclude Include="include\Common\Singleton.h" />
     <ClInclude Include="include\BattleUI\BattleUIGroup.h" />
     <ClInclude Include="include\SoundManager\SoundManager.h" />
+
   </ItemGroup>
 </Project>

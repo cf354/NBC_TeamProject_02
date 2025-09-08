@@ -1,4 +1,4 @@
-#include "BattleManager/BattleManager.h"
+﻿#include "BattleManager/BattleManager.h"
 #include "Card/C_Move.h"
 #include "Card/C_Attack.h"
 #include "Card/C_Guard.h"
@@ -153,6 +153,16 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
 
     }
     //체력 OR 스태미나 힐
+    if (auto HPheal = dynamic_cast<C_HealHP*>(pCard.get())){
+        player->SetHP(player->GetHP() + HPheal->GetHamount());
+        _Log.PrintLog("체력을 "+std::to_string(HPheal->GetHamount())+"만큼 회복했다.");
+    }
+
+    if (auto Staminaheal = dynamic_cast<C_HealStamina*>(eCard.get())) {
+        player->SetStamina(player->GetStamina() + Staminaheal->GetHamount());
+        _Log.PrintLog("체력을 " + std::to_string(Staminaheal->GetHamount()) + "만큼 회복했다.");
+    }
+
     //적 이동
     if (auto defenseCard = dynamic_cast<C_Guard*>(pCard.get())) //플레이어 방어
     {
