@@ -69,15 +69,32 @@ void GameManager::Init()
         {0,1,0},
         {1,1,1} };
     AllCardsList.emplace_back(std::make_shared<C_Attack>("WindScar", 50, 30, 50, WindScar)); // 7
-    AllCardsList.emplace_back(std::make_shared<C_Guard>("Guard", 0, 10, 15)); // 8 //C_Guard(std::string n, int C, int G, int D) :DEF(D) {Name = n; Cost = C; Gold = G;}
-
+    
+    
+    AllCardsList.emplace_back(std::make_shared<C_Guard>("Guard", 0, 10, 15)); //8  //C_Guard(std::string n, int C, int G, int D) :DEF(D) {Name = n; Cost = C; Gold = G;}
+    
+    
+    
     AllCardsList.emplace_back(std::make_shared<C_Move>("DoubleMoveRight", 0, 5, 2, 1, 0)); // 9
     AllCardsList.emplace_back(std::make_shared<C_Move>("DoubleMoveLeft", 0, 10, 2, -1, 0)); // 10
     AllCardsList.emplace_back(std::make_shared<C_Move>("DoubleMoveUp", 0, 15, 2, 0, -1)); // 11
     AllCardsList.emplace_back(std::make_shared<C_Move>("DoubleMoveDown", 0, 20, 2, 0, 1)); // 12
+
+    bool Adamant_Barrage[3][3] = {
+        {1,1,1},
+        {1,1,1},
+        {1,1,1} };
+    AllCardsList.emplace_back(std::make_shared<C_Attack>("Adamant_Barrage", 70, 100, 30, Adamant_Barrage));//13
+
+    bool Backlash_Wave[3][3]{
+        {0,0,1},
+        {0,1,1},
+        {0,0,1}
+    };
+    AllCardsList.emplace_back(std::make_shared<C_Attack>("Backlash_Wave", 50, 70, 40, Backlash_Wave));//14
   
-    AllCardsList.emplace_back(std::make_shared<C_HealHP>("Heal", 0, 0,30)); // 13 C_HealHP(std::string n, int C, int G,int h) :Card(n, C, G),Hamount(h)
-    AllCardsList.emplace_back(std::make_shared<C_HealStamina>("Energy UP", 0, 0, 10)); // 14 C_HealStamina(std::string n, int C, int G, int h) :Card(n, C, G), Samount(h)
+    AllCardsList.emplace_back(std::make_shared<C_HealHP>("Heal", 0, 0,30)); //15  C_HealHP(std::string n, int C, int G,int h) :Card(n, C, G),Hamount(h)
+    AllCardsList.emplace_back(std::make_shared<C_HealStamina>("Energy UP", 0, 0, 10)); //16  C_HealStamina(std::string n, int C, int G, int h) :Card(n, C, G), Samount(h)
 
 
     // 기본 카드 몇 장 추가
@@ -91,10 +108,10 @@ void GameManager::Init()
     player->AddCard(AllCardsList[5]); // BladesOfBlood
     player->AddCard(AllCardsList[6]); // IronReaver
     player->AddCard(AllCardsList[7]); // WindScar
-    player->AddCard(AllCardsList[8]); // Guard
+    player->AddCard(AllCardsList[9]); // Guard
+    
 
-    player->AddCard(AllCardsList[13]);
-    player->AddCard(AllCardsList[14]);
+
 
     // **적(Enemy) 카드 덱 구성 및 가중치 부여**
     
@@ -125,7 +142,7 @@ void GameManager::Init()
 #pragma endregion
 
     MAP_MANAGER->EnterNextStage();
-    SetState(GameManagerState::Map);
+    SetState(GameManagerState::Battle);
 }
 
 void GameManager::Update()
