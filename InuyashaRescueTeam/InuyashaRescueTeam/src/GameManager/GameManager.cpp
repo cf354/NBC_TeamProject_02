@@ -222,7 +222,7 @@ void GameManager::EnterTitle()
 {
     ImagePrinter* imagePrinter = new ImagePrinter();
     imagePrinter->DrawImage(KEY, 0, 0);
-    
+
 }
 
 void GameManager::UpdateTitle()
