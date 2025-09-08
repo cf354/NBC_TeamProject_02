@@ -45,10 +45,21 @@ void Entity::SetHP(int hp)
     this->HP = hp;
 }
 
+void Entity::SetMaxHP(int hp)
+{
+    this->MAXHP = hp;
+}
+
 void Entity::SetStamina(int stamina)
 {
     this->Stamina = stamina;
 }
+
+void Entity::SetMaxStamina(int mSP)
+{
+    this->MAXStamina = mSP;
+}
+
 bool Entity::IsDead()
 {
     if (HP > 0) {
