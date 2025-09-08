@@ -21,19 +21,21 @@ int main() {
 
     //// 게임매니저 사용할 때, GAME_MANAGER-> 로 접근
     GAME_MANAGER->Init();
-    MAP_MANAGER->EnterNextStage();
 
     //while (true)
     //{
     //    GAME_MANAGER->Update();
     //}
- 
-    // 상점 테스트 부분
-    Merchant* test = new Merchant();
-    test->OpenShop();
 
-    ImagePrinter image;
-    image.DrawImage(KEY, 0, 0);
+    GAME_MANAGER->Run();
+
+
+    //// 상점 테스트 부분
+//     Merchant* test = new Merchant();
+//     test->OpenShop();
+  
+//     ImagePrinter image;
+//     image.DrawImage(KEY, 0, 0);
 
     return 0;
 }

@@ -5,6 +5,7 @@
 #include <map>
 #include "Card/Card.h"
 
+
 class Enemy : public Entity {
 private:
     int drop_money;
@@ -18,23 +19,15 @@ public:
 
     int getExp() { return drop_exp; }
     int getmoney() { return drop_money; }
-
+    std::string GetName();
     void AddCard(const std::shared_ptr<Card>& c) { deck.push_back(c); }
     void AddCardWeight(const std::string& cardName, int weight) { cardWeights[cardName] = weight; }
 
-    std::shared_ptr<Card> GetRandomCard(int playerX, int playerY, int enemyX, int enemyY);
-    void RecoverStamina(int amount) {
-        SetStamina(GetStamina() + amount);
-    }
+    virtual std::shared_ptr<Card> GetRandomCard(int playerX, int playerY, int enemyX, int enemyY);
+    //void RecoverStamina(int amount) {
+    //    SetStamina(GetStamina() + amount);
+    //}
 
     ~Enemy() {};
 
-
-
-	//----------------임시----------------
-
-	std::shared_ptr<Card> GetRandomCard() {
-		int idx = rand() % deck.size();
-		return deck[idx];
-	}
 };

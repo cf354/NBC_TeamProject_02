@@ -8,6 +8,7 @@ using namespace std;
 class RandomManager : public Singleton<RandomManager>
 {
 public:
+	void Init();
 	void SetSeed(unsigned int seed);
 	unsigned int GetSeed();
 	void SetCompletelyRandom();

@@ -9,7 +9,8 @@ private:
 	int x = 0;
 	int y = 0;
 public:
-	C_Move(std::string n, int C, int G, int d, int dirx, int diry) :Card(n, C, G), distance(d), x(dirx), y(diry) {}
+	C_Move(std::string n, int C, int G, int d, int dirx, int diry) :Card(n, C, G), distance(d), x(dirx), y(diry) {
+    }
 	int M_GetX() {
 		return x;
 	}

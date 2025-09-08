@@ -8,6 +8,11 @@ enum class KeyAction
     MOVE_DOWN,
     MOVE_LEFT,
     MOVE_RIGHT,
+    // 대각선 이동 액션 추가
+    MOVE_UP_LEFT,
+    MOVE_UP_RIGHT,
+    MOVE_DOWN_LEFT,
+    MOVE_DOWN_RIGHT,
     ENTER_MERCHANT,     // 상점 입장    - 테스트용으로 임의로 넣은 것 입니다. 뺴도 되요
     PREV_ITEM,          // 상점 아이템 인덱스 감소
     NEXT_ITEM,          // 상점 아이템 인덱스 증가
