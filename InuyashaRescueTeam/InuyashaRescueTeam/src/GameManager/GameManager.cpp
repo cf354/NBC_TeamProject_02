@@ -5,6 +5,8 @@
 #include "Common/RandomManager.h"
 #include "Merchant\Merchant.h"
 #include <conio.h>
+#include "InputManager/InputManager.h"
+#include "ImagePrinter.h"
 
 void GameManager::Init()
 {
@@ -206,6 +208,8 @@ void GameManager::ExitState(GameManagerState state)
 
 void GameManager::EnterTitle()
 {
+    ImagePrinter* imagePrinter = new ImagePrinter();
+    imagePrinter->DrawImage(KEY, 0, 0);
 }
 
 void GameManager::UpdateTitle()
@@ -230,6 +234,8 @@ void GameManager::UpdateMap()
 
 void GameManager::ExitMap()
 {
+    CONSOLE_PRINTER->SetActiveBuffer(0);
+    CONSOLE_PRINTER->ScreenClear();
 }
 
 void GameManager::EnterBattle()

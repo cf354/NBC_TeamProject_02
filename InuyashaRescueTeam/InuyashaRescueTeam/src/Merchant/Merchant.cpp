@@ -92,6 +92,7 @@ void Merchant::OpenShop()
 	}
 	system("cls");
 	std::cout << "상점을 닫습니다." << std::endl;
+    GAME_MANAGER->SetState(GameManagerState::Map);
 }
 
 void Merchant::MakeList()

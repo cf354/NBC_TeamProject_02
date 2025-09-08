@@ -21,6 +21,8 @@ public:
 	void ScreenRelease();
 	void Render();
 
+    void SetActiveBuffer(int hIdx);
+
 	void DataClear();
 	void SetData(int y, int x, wchar_t c);
 
