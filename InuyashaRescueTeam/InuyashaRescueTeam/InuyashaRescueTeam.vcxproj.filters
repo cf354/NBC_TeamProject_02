@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Source Files">
@@ -114,6 +114,9 @@
     <ClCompile Include="src\Common\ConsolePrinter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ImagePrinter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\BattleUI\Progressbar.cpp">
       <Filter>Source Files\BattleUI</Filter>
     </ClCompile>
@@ -194,6 +197,7 @@
     <ClInclude Include="include\Common\ConsolePrinter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\ImagePrinter.h" />
     <ClInclude Include="include\BattleUI\BattleGrid.h">
       <Filter>Header Files\BattleUI</Filter>
     </ClInclude>
@@ -220,6 +224,12 @@
     </ClInclude>
     <ClInclude Include="include\Entity\Boss.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Card\C_HealStamina.h">
+      <Filter>Header Files\Card</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Card\C_HealHP.h">
+      <Filter>Header Files\Card</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <vector>
 #include <string>
 #include "Cards.h"
@@ -21,10 +21,10 @@ int main() {
     // 게임매니저 사용할 때, GAME_MANAGER-> 로 접근
     GAME_MANAGER->Init();
 
-    //while (true)
-    //{
-    //    GAME_MANAGER->Update();
-    //}
+    while (true)
+    {
+        GAME_MANAGER->Update();
+    }
 
     GAME_MANAGER->Run();
 
