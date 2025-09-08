@@ -14,6 +14,9 @@ void GameManager::Init()
     RANDOM_MANAGER->Init();
     CONSOLE_PRINTER->Init();
 
+    //사운드
+    SOUND_MANAGER->Init();
+
 #pragma region ExampleBattleInit
     player = std::make_shared<Player>("이누야샤", 1, 100, 100, 10, 5);
     //enemy = std::make_shared<Enemy>("셋쇼마루", 1, 50, 30, 8, 3, 10, 20); // EnemySelection 으로 적을 고를수 있기 때문에 임시로 추가되어있는 필요없는 부분
@@ -81,11 +84,9 @@ void GameManager::Init()
     player->AddCard(AllCardsList[5]); // BladesOfBlood
     player->AddCard(AllCardsList[6]); // IronReaver
     player->AddCard(AllCardsList[7]); // WindScar
-    player->AddCard(AllCardsList[9]); // Guard
 
-    //사운드
-
-    SOUND_MANAGER->Init();
+    player->AddCard(AllCardsList[8]); // Guard
+    player->AddCard(AllCardsList[9]); // DoubleMoveRight
     
 #pragma endregion
 
@@ -230,6 +231,7 @@ void GameManager::EnterTitle()
 {
     ImagePrinter* imagePrinter = new ImagePrinter();
     imagePrinter->DrawImage(KEY, 0, 0);
+    imagePrinter->PlayGIF(KAGOME_GIF, 10, 300, 0, 0);
 }
 
 void GameManager::UpdateTitle()

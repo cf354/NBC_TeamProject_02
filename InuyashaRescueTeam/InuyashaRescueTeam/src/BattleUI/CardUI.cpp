@@ -70,67 +70,18 @@ void CardUI::PrintCards(std::vector<std::shared_ptr<Card>> Cards)
         {
             DrawAttackCard(*attackCard, spawnX + drawX, spawnY + drawY);
         }
+        else if (auto StaminaHealCard = dynamic_cast<C_HealStamina*>(card.get()))
+        {
+            DrawStaminaHealCard(*StaminaHealCard, spawnX + drawX, spawnY + drawY);
+        }
+        else if (auto HealCard = dynamic_cast<C_HealHP*>(card.get()))
+        {
+            DrawHealCard(*HealCard, spawnX + drawX, spawnY + drawY);
+        }
 
 		CardCount_Showed++;
 	}
 }
-
-//void PrintCards(std::vector<Card*> Cards, int startIndex);
-/*
-//void CardUI::PrintCards(std::vector<Card*> Cards, int startIndex)
-//{
-//	GoToXY(_spawnX, _spawnY);
-//
-//	int CardCount_Showed = 0;
-//	int index = startIndex;
-//	Card* card;
-//	int drawX = 0;
-//	int drawY = 0;
-//	while (CardCount_Showed != _CanSeeCardMaxCount && index != Cards.size())
-//	{
-//		drawX = (CardCount_Showed % _Count_Column) * 14;
-//		drawY = (CardCount_Showed / _Count_Column) * 7;
-//
-//		card = Cards[index];
-//
-//		GoToXY(_spawnX + drawX, _spawnY + drawY);
-//		std::cout << "바람의바람의";
-//		GoToXY(_spawnX + drawX, _spawnY + drawY + 1);
-//		std::cout << "상처";
-//		GoToXY(_spawnX + drawX, _spawnY + drawY + 2);
-//		std::cout << "NAMENAMENAME";
-//
-//		GoToXY(_spawnX + drawX, _spawnY + drawY + 3);
-//		std::cout << "DM : " << card->_Value;
-//		GoToXY(_spawnX + drawX, _spawnY + drawY + 5);
-//		std::cout << "EN : " << card->_Stamina_cost;
-//
-//		GoToXY(_spawnX + drawX + 9, _spawnY + drawY + 3);
-//
-//		switch (card->_Type)
-//		{
-//		case Move:
-//		{
-//			Card_Move* MoveCard = static_cast<Card_Move*>(card);
-//			DrawMoveCard(*MoveCard, _spawnX + drawX + 9, _spawnY + drawY + 3);
-//			break;
-//		}
-//		case Attack:
-//		{
-//			Card_Attack* AttackCard = static_cast<Card_Attack*>(card);
-//			DrawAttackCard(*AttackCard, _spawnX + drawX + 9, _spawnY + drawY + 3);
-//			break;
-//		}
-//		default:
-//			DrawHealCard(*card, _spawnX + drawX + 9, _spawnY + drawY + 3);
-//			break;
-//		}
-//
-//		CardCount_Showed++;
-//		index++;
-//	}
-//}
-*/
 
 void CardUI::DrawClear()
 {
@@ -159,8 +110,8 @@ void CardUI::DrawMoveCard(C_Move& Card, int x, int y)
 	GoToXY(x + 9, y + 5);
 	std::cout << "■■■";
 	
-	int up = Card.M_GetY();
-	int right = Card.M_GetX();
+	int up = Card.M_GetY() * Card.M_GetDistance();
+	int right = Card.M_GetX() * Card.M_GetDistance();
 
 	int chX = 1 - (right / 2);
 	int chY = 1 - (up / 2);
@@ -232,6 +183,52 @@ void CardUI::DrawGuardCard(C_Guard& Card, int x, int y)
 	std::cout << "■";
 
 	tbColor();
+}
+
+void CardUI::DrawHealCard(C_HealHP& Card, int x, int y)
+{
+    PrintCardName(Card.C_GetName(), x, y);
+
+    GoToXY(x, y + 3);
+    std::cout << "DM : " << Card.GetHamount();
+    GoToXY(x, y + 5);
+    std::cout << "EN : " << Card.C_GetCost();
+
+    GoToXY(x + 9, y + 3);
+    std::cout << "■■■";
+    GoToXY(x + 9, y + 4);
+    std::cout << "■■■";
+    GoToXY(x + 9, y + 5);
+    std::cout << "■■■";
+
+    GoToXY(x + 1 + 9, y + 1 + 3);
+    tbColor(GREEN, BLACK);
+    std::cout << "■";
+
+    tbColor();
+}
+
+void CardUI::DrawStaminaHealCard(C_HealStamina& Card, int x, int y)
+{
+    PrintCardName(Card.C_GetName(), x, y);
+
+    GoToXY(x, y + 3);
+    std::cout << "DM : " << Card.GetHamount();
+    GoToXY(x, y + 5);
+    std::cout << "EN : " << Card.C_GetCost();
+
+    GoToXY(x + 9, y + 3);
+    std::cout << "■■■";
+    GoToXY(x + 9, y + 4);
+    std::cout << "■■■";
+    GoToXY(x + 9, y + 5);
+    std::cout << "■■■";
+
+    GoToXY(x + 1 + 9, y + 1 + 3);
+    tbColor(GREEN, BLACK);
+    std::cout << "■";
+
+    tbColor();
 }
 
 #define UP 72
@@ -349,19 +346,3 @@ void CardUI::PrintCardName(const std::string &name, int x, int y)
         std::wcout << wsname[i];
     }
 }
-
-//void CardUI::DrawHealCard(C_Heal Card, int x, int y)
-//{
-//    GoToXY(x + 9, y + 3);
-//    std::cout << "■■■";
-//    GoToXY(x + 9, y + 4);
-//    std::cout << "■■■";
-//    GoToXY(x + 9, y + 5);
-//    std::cout << "■■■";
-//
-//	GoToXY(x + 1, y + 1);
-//	tbColor(GREEN, BLACK);
-//	std::cout << "■";
-//
-//	tbColor();
-//}
