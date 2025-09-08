@@ -40,6 +40,7 @@ void Merchant::OpenShop()
 		UserChoice = IM.GetKeyAction(GameState::MERCHANT); // 유저 입력
 		if (UserChoice == KeyAction::INVALID)
 		{
+            //std::cin.get();
 			continue;
 		}
 		else if (UserChoice == KeyAction::QUIT) // Q 선택시 퇴장
