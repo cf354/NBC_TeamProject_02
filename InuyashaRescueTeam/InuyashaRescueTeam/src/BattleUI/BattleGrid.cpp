@@ -1,5 +1,8 @@
 #include "BattleUI/BattleGrid.h"
 #include <fstream>
+#include <conio.h>
+
+
 
 void BattleGrid::Draw()
 {
@@ -92,7 +95,9 @@ void BattleGrid::PaintBlocks(int x, int y, bool (*range)[3], Color background)
 	tbColor();
 
 	DrawCharacter();
-    std::cin.get();
+    while (!_kbhit()){}
+    std::cin.clear();
+    std::cin.ignore(1000, '\n');
 }
 
 void BattleGrid::SetCharacter(int x, int y, std::string string, Color font, Color background)
