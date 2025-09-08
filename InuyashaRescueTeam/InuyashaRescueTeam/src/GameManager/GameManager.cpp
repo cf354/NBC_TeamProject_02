@@ -231,13 +231,6 @@ void GameManager::EnterTitle()
 {
     ImagePrinter* imagePrinter = new ImagePrinter();
     imagePrinter->DrawImage(KEY, 0, 0);
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-    
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 }
 
 void GameManager::UpdateTitle()
