@@ -1,10 +1,11 @@
-#include "GameManager\GameManager.h"
+﻿#include "GameManager\GameManager.h"
 #include "Map/MapManager.h"
 #include "Common/ConsolePrinter.h"
 #include "SoundManager/SoundManager.h"
 #include "Common/RandomManager.h"
 #include "Merchant\Merchant.h"
 #include <conio.h>
+
 
 void GameManager::Init()
 {
@@ -74,18 +75,26 @@ void GameManager::Init()
     AllCardsList.emplace_back(std::make_shared<C_Move>("DoubleMoveLeft", 0, 10, 2, -1, 0)); // 10
     AllCardsList.emplace_back(std::make_shared<C_Move>("DoubleMoveUp", 0, 15, 2, 0, -1)); // 11
     AllCardsList.emplace_back(std::make_shared<C_Move>("DoubleMoveDown", 0, 20, 2, 0, 1)); // 12
+  
+    AllCardsList.emplace_back(std::make_shared<C_HealHP>("Heal", 0, 0,30)); // 13 C_HealHP(std::string n, int C, int G,int h) :Card(n, C, G),Hamount(h)
+    AllCardsList.emplace_back(std::make_shared<C_HealStamina>("Energy UP", 0, 0, 10)); // 14 C_HealStamina(std::string n, int C, int G, int h) :Card(n, C, G), Samount(h)
+
 
     // 기본 카드 몇 장 추가
     player->AddCard(AllCardsList[0]); // MoveRight
     player->AddCard(AllCardsList[1]); // MoveLeft
     player->AddCard(AllCardsList[2]); // MoveUp
     player->AddCard(AllCardsList[3]); // MoveDown
-
+    
+    
     player->AddCard(AllCardsList[4]); // BladeStrike
     player->AddCard(AllCardsList[5]); // BladesOfBlood
     player->AddCard(AllCardsList[6]); // IronReaver
     player->AddCard(AllCardsList[7]); // WindScar
     player->AddCard(AllCardsList[8]); // Guard
+
+    player->AddCard(AllCardsList[13]);
+    player->AddCard(AllCardsList[14]);
 
     // **적(Enemy) 카드 덱 구성 및 가중치 부여**
     
@@ -113,8 +122,6 @@ void GameManager::Init()
     SOUND_MANAGER->Init();
     BATTLE_MANAGER->Init(player, enemy);
     
-
-    enemy->AddCard(std::make_shared<C_Move>("MoveDown", 0, 0, 1, 0, -1));
 #pragma endregion
 
     MAP_MANAGER->EnterNextStage();

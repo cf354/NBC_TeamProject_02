@@ -28,6 +28,7 @@ int main() {
     }
 
 
+
     // 상점 테스트 부분
     //Merchant* test = new Merchant();
     //test->OpenShop();

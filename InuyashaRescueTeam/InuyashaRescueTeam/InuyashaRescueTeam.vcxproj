@@ -173,6 +173,8 @@
     <ClInclude Include="include\BattleUI\Progressbar.h" />
     <ClInclude Include="include\BattleUI\Text.h" />
     <ClInclude Include="include\BattleUI\UIWidget.h" />
+    <ClInclude Include="include\Card\C_HealHP.h" />
+    <ClInclude Include="include\Card\C_HealStamina.h" />
     <ClInclude Include="include\Common\ConsolePrinter.h" />
     <ClInclude Include="include\battlefield\battlefield.h" />
     <ClInclude Include="include\BattleManager\BattleManager.h" />
