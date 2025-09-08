@@ -127,7 +127,7 @@ void GameManager::Init()
 #pragma endregion
 
     MAP_MANAGER->EnterNextStage();
-    SetState(GameManagerState::Map);
+    SetState(GameManagerState::Title);
 }
 
 void GameManager::Update()
@@ -221,10 +221,15 @@ void GameManager::EnterTitle()
 
 void GameManager::UpdateTitle()
 {
+    if (_kbhit())
+    {
+        SetState(GameManagerState::Map);
+    }
 }
 
 void GameManager::ExitTitle()
 {
+    system("cls");
 }
 
 void GameManager::EnterMap()
