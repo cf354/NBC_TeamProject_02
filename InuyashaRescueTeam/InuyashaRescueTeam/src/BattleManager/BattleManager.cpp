@@ -55,8 +55,6 @@ void BattleManager::StartBattle()
 
     //ShowUI();
 
-    SOUND_MANAGER->PlayBgm(BGMType::BattleField);
-
     while (!player->IsDead() && !enemy->IsDead()) {
         //field.field_print();
 

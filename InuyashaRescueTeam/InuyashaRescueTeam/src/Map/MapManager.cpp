@@ -401,7 +401,7 @@ void MapManager::Release()
 
 void MapManager::EnterNextStage()
 {
-	if (currStage >= totalStage)
+	if (currStage >= TOTAL_STAGE)
 		return;
 
 	// 이미 다른 스테이지에서 사용한 시드값이면 다시 할당
@@ -411,13 +411,14 @@ void MapManager::EnterNextStage()
 	}
 	this->seed = RANDOM_MANAGER->GetSeed();
 	vecSeed.push_back(this->seed);
-	if (++currStage < totalStage)
+	if (++currStage < TOTAL_STAGE)
 	{
 		CreateMap(seed);
 		MakePlayerObj();
 		MakeStairs();
 		MakeMerchant();
 		PlaceMapObjRandomRoom(objPlayer, ObjType::None, false);
+        SOUND_MANAGER->PlayBgm(BGMType::NoneBattleField);
 		/*int playerRoom = RANDOM_MANAGER->Range(0, vecNode.size());
 		Vector2D roomPos = vecNode[playerRoom]->pos;
 		objPlayer->pos = Vector2D(roomPos.x * sizeMultipleX, roomPos.y * sizeMultipleY);*/
@@ -434,6 +435,7 @@ void MapManager::EnterNextStage()
         objects.push_back(objBoss);
         objBoss->pos = Vector2D(DATA_WIDTH / 8 * 5, DATA_HEIGHT / 2);
         vecType[objBoss->pos.y][objBoss->pos.x] = ObjType::Boss;
+        SOUND_MANAGER->PlayBgm(BGMType::BossMapTheme);
 	}
 }
 
@@ -546,8 +548,7 @@ void MapManager::UpdatePlayer()
 			case ObjType::None:
                 {
                     objPlayer->pos = newPos;
-                    double rand = RANDOM_MANAGER->Range(0.0, 1.0);
-                    if (rand <= 0.02)
+                    if (currStage < TOTAL_STAGE && RANDOM_MANAGER->Range(0.0, 1.0) <= ENCOUNT_ENEMY)
                     {
                         GAME_MANAGER->Battle(1);
                         return;
@@ -558,11 +559,9 @@ void MapManager::UpdatePlayer()
 				EnterNextStage();
 				return;
 			case ObjType::Merchant:
-				// GameManager Merchant 호출
                 GAME_MANAGER->SetState(GameManagerState::Merchant);
 				return;
 			case ObjType::Boss:
-				// GameManager 보스 전투 호출
                 GAME_MANAGER->Battle(2);
 				return;
 			default:

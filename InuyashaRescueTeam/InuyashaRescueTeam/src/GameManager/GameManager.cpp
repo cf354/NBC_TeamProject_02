@@ -231,7 +231,7 @@ void GameManager::EnterTitle()
 {
     ImagePrinter* imagePrinter = new ImagePrinter();
     imagePrinter->DrawImage(KEY, 0, 0);
-    imagePrinter->PlayGIF(KAGOME_GIF, 10, 300, 0, 0);
+    SOUND_MANAGER->PlayBgm(BGMType::StartScene);
 }
 
 void GameManager::UpdateTitle()
@@ -249,6 +249,7 @@ void GameManager::ExitTitle()
 
 void GameManager::EnterMap()
 {
+    SOUND_MANAGER->PlayBgm(BGMType::NoneBattleField);
 }
 
 void GameManager::UpdateMap()
@@ -267,6 +268,7 @@ void GameManager::ExitMap()
 
 void GameManager::EnterBattle()
 {
+    SOUND_MANAGER->PlayBgm(BGMType::BattleField);
     BATTLE_MANAGER->StartBattle();
 }
 
@@ -294,6 +296,8 @@ void GameManager::ExitMerchant()
 
 void GameManager::EnterEnding()
 {
+    ImagePrinter* imagePrinter = new ImagePrinter();
+    imagePrinter->PlayGIF(KAGOME_GIF, 10, 300, 0, 0);
 }
 
 void GameManager::UpdateEnding()

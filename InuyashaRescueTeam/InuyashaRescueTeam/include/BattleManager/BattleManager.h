@@ -7,7 +7,6 @@
 #include <SFML\System.hpp>
 #include "BattleUI/BattleUIGroup.h"
 #include "Common\Singleton.h"
-#include "SoundManager/SoundManager.h"
 #include "GameManager/GameManager.h"
 
 class BattleManager:public Singleton<BattleManager> {
