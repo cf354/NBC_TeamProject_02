@@ -6,6 +6,7 @@
 #include "InputManager/InputManager.h"
 #include <string>
 #include "ImagePrinter.h"
+#include "algorithm"
 
 #define FOREGROUND_WHITE      FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE // text color contains blue.
 
@@ -18,7 +19,7 @@ Merchant::Merchant()
 	gap = 1;
 	height = ShopList.size() > InvenList.size() ? ShopList.size() : InvenList.size();
 	bShopType = false;
-	player->SetMoney(1000); // 테스트용 골드 부여
+	// player->SetMoney(player->GetMoney() + 1000); // 테스트용 골드 부여
 	OffsetX = 80;
 	OffsetY = 10;
 }
@@ -27,18 +28,14 @@ void Merchant::OpenShop()
 {
 	InputManager& IM = InputManager::GetInstance();
 	KeyAction UserChoice;
+    SOUND_MANAGER->PlayBgm(BGMType::ShopBgm);
 
+    IM.FlushInputBuffer();
+    DrawBackground();
+    DrawShopUI();
 	while (1)
 	{
-        DrawBackground();
-		DrawShop();
-		ShowList();
-		DrawPlayerInven();
-		ShowPlayerInvenList();
-		ShowInforPanel();
-		ShowCardInfo();
 		UserChoice = IM.GetKeyAction(GameState::MERCHANT); // 유저 입력
-        IM.FlushInputBuffer();
 		if (UserChoice == KeyAction::INVALID)
 		{
             //std::cin.get();
@@ -53,6 +50,8 @@ void Merchant::OpenShop()
 			if (index > 0)
 			{
 				--index;
+                DrawShopUI();
+                SOUND_MANAGER->PlaySE(SEType::blop);
 			}
 		}
 		else if (UserChoice == KeyAction::NEXT_ITEM)
@@ -60,10 +59,14 @@ void Merchant::OpenShop()
 			if (bShopType == false && index < ShopList.size() - 1)
 			{
 				++index;
+                DrawShopUI();
+                SOUND_MANAGER->PlaySE(SEType::blop);
 			}
 			else if (bShopType == true && index < InvenList.size() - 1)
 			{
 				++index;
+                DrawShopUI();
+                SOUND_MANAGER->PlaySE(SEType::blop);
 			}
 		}
 		else if (UserChoice == KeyAction::SHOP_MERCHANT)
@@ -74,9 +77,10 @@ void Merchant::OpenShop()
 			}
 			bShopType = false;
 			if (index > ShopList.size() - 1)
-			{
+            {
 				index = ShopList.size() - 1;
 			}
+            DrawShopUI();
 		}
 		else if (UserChoice == KeyAction::SHOP_PLAYER)
 		{
@@ -85,10 +89,12 @@ void Merchant::OpenShop()
 			{
 				index = InvenList.size() - 1;
 			}
+            DrawShopUI();
 		}
 		else if (UserChoice == KeyAction::SELECT)
 		{
 			TradeCard(index, bShopType);
+            DrawShopUI();
 		}
 	}
 	system("cls");
@@ -99,18 +105,31 @@ void Merchant::OpenShop()
 void Merchant::MakeList()
 {
 	std::vector<std::shared_ptr <Card>>* CardList = GAME_MANAGER->GetAllCardsList();
-	for (int i = 0; i < 13; ++i) // 일단 전부 다 넣음. 나중에 몇개넣을지는 변수로 지정하는 것으로 변경 예정
+    InvenList = player->GetDeck();
+	for (int i = 0; i < CardList->size(); ++i) // 일단 전부 다 넣음. 나중에 몇개넣을지는 변수로 지정하는 것으로 변경 예정
 	{
-		ShopList.emplace_back((*CardList)[i], false);
+        if (std::count(InvenList.begin(), InvenList.end(), (*CardList)[i]) == 0)
+        {
+            ShopList.emplace_back((*CardList)[i], false);
+        }
 	}
-	InvenList = player->GetDeck();
 }
 
 void Merchant::DrawBackground()
 {
-	ImagePrinter image;
-	image.DrawImage(KIKYO, 0, 0);
-	image.DrawImage(INU, 140, 00);
+    ImagePrinter image;
+    image.DrawImage(KIKYO, 0, 0);
+    image.DrawImage(INU, 140, 00);
+}
+
+void Merchant::DrawShopUI()
+{
+    DrawShop();
+    ShowList();
+    DrawPlayerInven();
+    ShowPlayerInvenList();
+    ShowInforPanel();
+    ShowCardInfo();
 }
 
 void Merchant::DrawShop()
@@ -286,6 +305,34 @@ void Merchant::ShowCardInfo()
 		std::cout << "■";
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_WHITE);
 	}
+    else if (std::shared_ptr<C_HealHP> HealCard = std::dynamic_pointer_cast<C_HealHP>(TargetCard))
+    {
+        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { static_cast<short>(1 + OffsetX), static_cast<short>(height + 2 + 2 + OffsetY) });
+        std::cout << " ■ ■ ■ TYPE : Heal" << std::endl;
+        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { static_cast<short>(1 + OffsetX), static_cast<short>(height + 2 + 3 + OffsetY) });
+        std::cout << " ■ ■ ■ HEAL : " << HealCard->GetHamount();
+        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { static_cast<short>(1 + OffsetX), static_cast<short>(height + 2 + 4 + OffsetY) });
+        std::cout << " ■ ■ ■ COST : " << HealCard->C_GetCost();
+
+        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { static_cast<short>(4 + OffsetX), static_cast<short>(height + 2 + 3 + OffsetY) });
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE);
+        std::cout << "■";
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_WHITE);
+    }
+    else if (std::shared_ptr<C_HealStamina> StaminaCard = std::dynamic_pointer_cast<C_HealStamina>(TargetCard))
+    {
+        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { static_cast<short>(1 + OffsetX), static_cast<short>(height + 2 + 2 + OffsetY) });
+        std::cout << " ■ ■ ■ TYPE : HEAL" << std::endl;
+        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { static_cast<short>(1 + OffsetX), static_cast<short>(height + 2 + 3 + OffsetY) });
+        std::cout << " ■ ■ ■ HEAL : " << StaminaCard->GetHamount();
+        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { static_cast<short>(1 + OffsetX), static_cast<short>(height + 2 + 4 + OffsetY) });
+        std::cout << " ■ ■ ■ COST : " << StaminaCard->C_GetCost();
+
+        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { static_cast<short>(4 + OffsetX), static_cast<short>(height + 2 + 3 + OffsetY) });
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE);
+        std::cout << "■";
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_WHITE);
+    }
 	else if (std::shared_ptr<C_Attack> attackCard = std::dynamic_pointer_cast<C_Attack>(TargetCard))
 	{
 		SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { static_cast<short>(1 + OffsetX), static_cast<short>(height + 2 + 2 + OffsetY) });
@@ -329,6 +376,7 @@ void Merchant::TradeCard(short _index, bool _isPlayer)
 	else
 	{
 		player->SetMoney(player->GetMoney() - ShopList[_index].first->C_GetGold());
+        SOUND_MANAGER->PlaySE(SEType::buy);
 	}
 	player->AddCard(ShopList[_index].first);
 	ShopList.erase(ShopList.begin() + _index);
@@ -346,4 +394,5 @@ void Merchant::TradeCard(short _index, bool _isPlayer)
 		index = ShopList.size() - 1;
 	}
     system("cls");
+    DrawBackground();
 }

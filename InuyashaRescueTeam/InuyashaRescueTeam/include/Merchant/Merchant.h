@@ -13,6 +13,7 @@ public:
 private:
 	void MakeList(); // 판매할 물건 리스트 생성
 	void DrawBackground(); // 배경 그리기
+    void DrawShopUI();
 	void DrawShop(); // 판매 창 그리기
 	void ShowList(); // 판매할 물건을 보여줌
 	void DrawPlayerInven();
