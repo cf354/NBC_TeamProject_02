@@ -1,13 +1,14 @@
-﻿#include "GameManager\GameManager.h"
+﻿#include "GameManager/GameManager.h"
 #include "Map/MapManager.h"
 #include "Common/ConsolePrinter.h"
 #include "SoundManager/SoundManager.h"
 #include "Common/RandomManager.h"
-#include "Merchant\Merchant.h"
+#include "Merchant/Merchant.h"
 #include <conio.h>
 #include "InputManager/InputManager.h"
 #include "ImagePrinter.h"
-
+#include "Entity/Enemy.h"
+#include "Entity/Boss.h"
 
 void GameManager::Init()
 {
@@ -19,7 +20,6 @@ void GameManager::Init()
 
 #pragma region ExampleBattleInit
     player = std::make_shared<Player>("이누야샤", 1, 100, 100, 10, 5);
-    //enemy = std::make_shared<Enemy>("셋쇼마루", 1, 50, 30, 8, 3, 10, 20); // EnemySelection 으로 적을 고를수 있기 때문에 임시로 추가되어있는 필요없는 부분
 
     AllCardsList.emplace_back(std::make_shared<C_Move>("MoveRight", 0, 10, 1, 1, 0)); // 0 // C_Move(std::string n,int C, int G, int d, int dirx, int diry) :distance(d), x(dirx), y(diry) { Name = n; Cost = C; Gold = G; };
     AllCardsList.emplace_back(std::make_shared<C_Move>("MoveLeft", 0, 10, 1, -1, 0)); // 1
@@ -45,12 +45,12 @@ void GameManager::Init()
         {0,1,0},
         {1,1,1} };
     AllCardsList.emplace_back(std::make_shared<C_Attack>("WindScar", 50, 30, 50, WindScar)); // 7
-    
-    
+
+
     AllCardsList.emplace_back(std::make_shared<C_Guard>("Guard", 0, 10, 15)); //8  //C_Guard(std::string n, int C, int G, int D) :DEF(D) {Name = n; Cost = C; Gold = G;}
-    
-    
-    
+
+
+
     AllCardsList.emplace_back(std::make_shared<C_Move>("DoubleMoveRight", 0, 5, 2, 1, 0)); // 9
     AllCardsList.emplace_back(std::make_shared<C_Move>("DoubleMoveLeft", 0, 10, 2, -1, 0)); // 10
     AllCardsList.emplace_back(std::make_shared<C_Move>("DoubleMoveUp", 0, 15, 2, 0, -1)); // 11
@@ -68,8 +68,8 @@ void GameManager::Init()
         {0,0,1}
     };
     AllCardsList.emplace_back(std::make_shared<C_Attack>("Backlash_Wave", 50, 70, 40, Backlash_Wave));//14
-  
-    AllCardsList.emplace_back(std::make_shared<C_HealHP>("Heal", 0, 0,30)); //15  C_HealHP(std::string n, int C, int G,int h) :Card(n, C, G),Hamount(h)
+
+    AllCardsList.emplace_back(std::make_shared<C_HealHP>("Heal", 0, 0, 30)); //15  C_HealHP(std::string n, int C, int G,int h) :Card(n, C, G),Hamount(h)
     AllCardsList.emplace_back(std::make_shared<C_HealStamina>("Energy UP", 0, 0, 10)); //16  C_HealStamina(std::string n, int C, int G, int h) :Card(n, C, G), Samount(h)
 
 
@@ -78,8 +78,8 @@ void GameManager::Init()
     player->AddCard(AllCardsList[1]); // MoveLeft
     player->AddCard(AllCardsList[2]); // MoveUp
     player->AddCard(AllCardsList[3]); // MoveDown
-    
-    
+
+
     player->AddCard(AllCardsList[4]); // BladeStrike
     player->AddCard(AllCardsList[5]); // BladesOfBlood
     player->AddCard(AllCardsList[6]); // IronReaver
@@ -87,7 +87,7 @@ void GameManager::Init()
 
     player->AddCard(AllCardsList[8]); // Guard
     player->AddCard(AllCardsList[9]); // DoubleMoveRight
-    
+
 #pragma endregion
 
     MAP_MANAGER->EnterNextStage();
@@ -113,38 +113,29 @@ std::vector<std::shared_ptr <Card>>* GameManager::GetAllCardsList()
 void GameManager::Battle(int enemyId)
 {
     shared_ptr<Enemy> enemy;
+
     switch (enemyId)
     {
-        case 1:
-            enemy = std::make_shared<Enemy>("셋쇼마루", 1, 50, 30, 8, 3, 10, 20);
-            break;
-        case 2:
-            enemy = std::make_shared<Boss>("나락", 2, 100, 60, 16, 6, 20, 40);
-            break;
-        default:
-            return;
-    }
+    case 1:
+        // 셋쇼마루
+        enemy = std::make_shared<Enemy>("셋쇼마루", 1, 50, 30, 8, 3, 10, 20, EnemyType::Sesshomaru);
+        break;
+    case 2:
+        // 반코츠
+        enemy = std::make_shared<Enemy>("반코츠", 1, 60, 40, 10, 5, 12, 25, EnemyType::Bankotsu);
+        break;
+    case 3:
+        // 나락 (Boss)
+        enemy = std::make_shared<Boss>("나락", 2, 100, 60, 16, 6, 20, 40, EnemyType::Naraku);
+        break;
+    //default:
+    //    // 기본 적으로 설정
+    //    enemy = std::make_shared<Enemy>("요괴", 1, 30, 20, 5, 2, 5, 10, EnemyType::Normal);
+    //    break;
+    //}
 
-    // **적(Enemy) 카드 덱 구성 및 가중치 부여**
-
-    enemy->AddCard(std::make_shared<C_Move>("E_MoveRight", 0, 0, 1, 1, 0));
-    enemy->AddCard(std::make_shared<C_Move>("E_MoveLeft", 0, 0, 1, -1, 0));
-    enemy->AddCard(std::make_shared<C_Move>("E_MoveUp", 0, 0, 1, 0, -1));
-    enemy->AddCard(std::make_shared<C_Move>("E_MoveDown", 0, 0, 1, 0, 1));
-
-    bool E_WideStrike[3][3] = { {true, true, true}, {true, true, true}, {true, true, true} };
-    enemy->AddCard(std::make_shared<C_Attack>("E_WideStrike", 15, 0, 10, E_WideStrike));
-
-    bool E_LineAttack[3][3] = { {false, false, false}, {true, true, true}, {false, false, false} };
-    enemy->AddCard(std::make_shared<C_Attack>("E_LineAttack", 10, 0, 15, E_LineAttack));
-
-    // 이동 카드의 가중치를 1, 공격 카드의 가중치를 2로 설정 (공격을 더 선호)
-    enemy->AddCardWeight("E_MoveRight", 1);
-    enemy->AddCardWeight("E_MoveLeft", 1);
-    enemy->AddCardWeight("E_MoveUp", 1);
-    enemy->AddCardWeight("E_MoveDown", 1);
-    enemy->AddCardWeight("E_WideStrike", 2);
-    enemy->AddCardWeight("E_LineAttack", 2);
+    // 이 부분에서 InitDeck()을 호출합니다.
+    enemy->InitDeck();
 
     BATTLE_MANAGER->Init(player, enemy);
     SetState(GameManagerState::Battle);
@@ -165,21 +156,21 @@ void GameManager::EnterState(GameManagerState state)
 {
     switch (state)
     {
-        case GameManagerState::Title:
-            EnterTitle();
-            break;
-        case GameManagerState::Map:
-            EnterMap();
-            break;
-        case GameManagerState::Battle:
-            EnterBattle();
-            break;
-        case GameManagerState::Merchant:
-            EnterMerchant();
-            break;
-        case GameManagerState::Ending:
-            EnterEnding();
-            break;
+    case GameManagerState::Title:
+        EnterTitle();
+        break;
+    case GameManagerState::Map:
+        EnterMap();
+        break;
+    case GameManagerState::Battle:
+        EnterBattle();
+        break;
+    case GameManagerState::Merchant:
+        EnterMerchant();
+        break;
+    case GameManagerState::Ending:
+        EnterEnding();
+        break;
     }
 }
 
@@ -187,21 +178,21 @@ void GameManager::UpdateState(GameManagerState state)
 {
     switch (state)
     {
-        case GameManagerState::Title:
-            UpdateTitle();
-            break;
-        case GameManagerState::Map:
-            UpdateMap();
-            break;
-        case GameManagerState::Battle:
-            UpdateBattle();
-            break;
-        case GameManagerState::Merchant:
-            UpdateMerchant();
-            break;
-        case GameManagerState::Ending:
-            UpdateEnding();
-            break;
+    case GameManagerState::Title:
+        UpdateTitle();
+        break;
+    case GameManagerState::Map:
+        UpdateMap();
+        break;
+    case GameManagerState::Battle:
+        UpdateBattle();
+        break;
+    case GameManagerState::Merchant:
+        UpdateMerchant();
+        break;
+    case GameManagerState::Ending:
+        UpdateEnding();
+        break;
     }
 }
 
@@ -209,21 +200,21 @@ void GameManager::ExitState(GameManagerState state)
 {
     switch (state)
     {
-        case GameManagerState::Title:
-            ExitTitle();
-            break;
-        case GameManagerState::Map:
-            ExitMap();
-            break;
-        case GameManagerState::Battle:
-            ExitBattle();
-            break;
-        case GameManagerState::Merchant:
-            ExitMerchant();
-            break;
-        case GameManagerState::Ending:
-            ExitEnding();
-            break;
+    case GameManagerState::Title:
+        ExitTitle();
+        break;
+    case GameManagerState::Map:
+        ExitMap();
+        break;
+    case GameManagerState::Battle:
+        ExitBattle();
+        break;
+    case GameManagerState::Merchant:
+        ExitMerchant();
+        break;
+    case GameManagerState::Ending:
+        ExitEnding();
+        break;
     }
 }
 
