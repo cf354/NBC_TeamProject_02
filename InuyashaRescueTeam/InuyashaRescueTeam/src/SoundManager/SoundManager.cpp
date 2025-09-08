@@ -78,6 +78,7 @@ void SoundManager::SetBgmVolume(float volume) {
 			pair.second->setVolume(volume);  // unique_ptr -> sf::Music 접근
 		}
 	}
+    bgm[BGMType::NoneBattleField]->setVolume(volume+40.f);
 }
 
 void SoundManager::SetSEVolume(float volume)
@@ -85,6 +86,7 @@ void SoundManager::SetSEVolume(float volume)
 	for (auto& a : sound) {
 		a.second.setVolume(volume);
 	}
+    
 }
 
 
