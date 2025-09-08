@@ -248,7 +248,7 @@ private:
 	const int TOTAL_STAGE = 3;
 	int currStage = 0;											// 0으로 시작해서, 첫 스테이지 입장시 1
     const double MIN_ENCOUNT_ENEMY = 0.0005;
-    const double DELTA_ENCOUNT_ENEMY = 0.000025;
+    const double DELTA_ENCOUNT_ENEMY = 0.000005;
     double encountEnemy = MIN_ENCOUNT_ENEMY;
 	vector<int> vecSeed;										// 스테이지별 시드값 저장 (중복 없게 생성)
 
