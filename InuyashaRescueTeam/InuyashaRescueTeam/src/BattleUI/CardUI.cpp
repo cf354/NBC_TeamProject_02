@@ -110,8 +110,8 @@ void CardUI::DrawMoveCard(C_Move& Card, int x, int y)
 	GoToXY(x + 9, y + 5);
 	std::cout << "■■■";
 	
-	int up = Card.M_GetY();
-	int right = Card.M_GetX();
+	int up = Card.M_GetY() * Card.M_GetDistance();
+	int right = Card.M_GetX() * Card.M_GetDistance();
 
 	int chX = 1 - (right / 2);
 	int chY = 1 - (up / 2);
