@@ -18,7 +18,7 @@ Merchant::Merchant()
 	gap = 1;
 	height = ShopList.size() > InvenList.size() ? ShopList.size() : InvenList.size();
 	bShopType = false;
-	player->SetMoney(1000); // 테스트용 골드 부여
+	player->SetMoney(player->GetMoney() + 1000); // 테스트용 골드 부여
 	OffsetX = 80;
 	OffsetY = 10;
 }
@@ -27,16 +27,12 @@ void Merchant::OpenShop()
 {
 	InputManager& IM = InputManager::GetInstance();
 	KeyAction UserChoice;
-
+    SOUND_MANAGER->PlayBgm(BGMType::ShopBgm);
+    
+    DrawBackground();
+    DrawShopUI();
 	while (1)
 	{
-        DrawBackground();
-		DrawShop();
-		ShowList();
-		DrawPlayerInven();
-		ShowPlayerInvenList();
-		ShowInforPanel();
-		ShowCardInfo();
 		UserChoice = IM.GetKeyAction(GameState::MERCHANT); // 유저 입력
         IM.FlushInputBuffer();
 		if (UserChoice == KeyAction::INVALID)
@@ -53,6 +49,8 @@ void Merchant::OpenShop()
 			if (index > 0)
 			{
 				--index;
+                DrawShopUI();
+                SOUND_MANAGER->PlaySE(SEType::blop);
 			}
 		}
 		else if (UserChoice == KeyAction::NEXT_ITEM)
@@ -60,10 +58,14 @@ void Merchant::OpenShop()
 			if (bShopType == false && index < ShopList.size() - 1)
 			{
 				++index;
+                DrawShopUI();
+                SOUND_MANAGER->PlaySE(SEType::blop);
 			}
 			else if (bShopType == true && index < InvenList.size() - 1)
 			{
 				++index;
+                DrawShopUI();
+                SOUND_MANAGER->PlaySE(SEType::blop);
 			}
 		}
 		else if (UserChoice == KeyAction::SHOP_MERCHANT)
@@ -74,9 +76,10 @@ void Merchant::OpenShop()
 			}
 			bShopType = false;
 			if (index > ShopList.size() - 1)
-			{
+            {
 				index = ShopList.size() - 1;
 			}
+            DrawShopUI();
 		}
 		else if (UserChoice == KeyAction::SHOP_PLAYER)
 		{
@@ -85,10 +88,12 @@ void Merchant::OpenShop()
 			{
 				index = InvenList.size() - 1;
 			}
+            DrawShopUI();
 		}
 		else if (UserChoice == KeyAction::SELECT)
 		{
 			TradeCard(index, bShopType);
+            DrawShopUI();
 		}
 	}
 	system("cls");
@@ -108,9 +113,19 @@ void Merchant::MakeList()
 
 void Merchant::DrawBackground()
 {
-	ImagePrinter image;
-	image.DrawImage(KIKYO, 0, 0);
-	image.DrawImage(INU, 140, 00);
+    ImagePrinter image;
+    image.DrawImage(KIKYO, 0, 0);
+    image.DrawImage(INU, 140, 00);
+}
+
+void Merchant::DrawShopUI()
+{
+    DrawShop();
+    ShowList();
+    DrawPlayerInven();
+    ShowPlayerInvenList();
+    ShowInforPanel();
+    ShowCardInfo();
 }
 
 void Merchant::DrawShop()
@@ -329,6 +344,7 @@ void Merchant::TradeCard(short _index, bool _isPlayer)
 	else
 	{
 		player->SetMoney(player->GetMoney() - ShopList[_index].first->C_GetGold());
+        SOUND_MANAGER->PlaySE(SEType::buy);
 	}
 	player->AddCard(ShopList[_index].first);
 	ShopList.erase(ShopList.begin() + _index);
@@ -346,4 +362,5 @@ void Merchant::TradeCard(short _index, bool _isPlayer)
 		index = ShopList.size() - 1;
 	}
     system("cls");
+    DrawBackground();
 }
