@@ -1,6 +1,7 @@
-#pragma once // 헤더 파일 중복 포함 방지
+#pragma once
 #include <iostream>
 #include <string>
+#include <algorithm>
 
 class Entity {
 protected:
@@ -11,8 +12,8 @@ protected:
     int ATK;
     int DEF;
 
-    int MAXHP;       
-    int MAXStamina;  
+    int MAXHP;
+    int MAXStamina;
 
 public:
     // 생성자 및 소멸자
@@ -33,15 +34,15 @@ public:
     int GetMAXHP() const;
     int GetMAXStamina() const;
 
-    // 정보 설정 (Setter) 
+    // 정보 설정 (Setter)
     void SetHP(int hp);
     void SetMaxHP(int mHP);
     void SetStamina(int stamina);
     void SetMaxStamina(int mSP);
 
     void RecoverStamina(int amount) {
-        SetStamina(GetStamina() + amount);
+        Stamina = std::min(Stamina + amount, MAXStamina);
     }
-    
+
     bool IsDead();
 };
