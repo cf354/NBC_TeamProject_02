@@ -30,6 +30,7 @@ private:
 	std::map<SEType, sf::SoundBuffer>buffer;//효과음 버퍼
 	std::map<SEType, sf::Sound> sound;
 	std::map<std::string, SEType> cardSEMap;
+	sf::Music *currentbgm = nullptr;
 	
 public:
 	void Init();
