@@ -1,11 +1,11 @@
-﻿#include "BattleManager/BattleManager.h"
+#include "BattleManager/BattleManager.h"
 #include "Card/C_Move.h"
 #include "Card/C_Attack.h"
 #include "Card/C_Guard.h"
 #include "Entity/Player.h"
 #include "Entity/Enemy.h"
 #include "BattleUI/CardUI.h"
-//#include "ImagePrinter.h"
+#include "ImagePrinter.h"
 
 
 
@@ -13,6 +13,19 @@ void BattleManager::Init(std::shared_ptr<Player>p, std::shared_ptr<Enemy>e)
 {
     player = p;
     enemy = e;
+    
+    field.PlayerPositionX = 0;
+    field.PlayerPositionY = 1;
+    field.EnemyPositionX = 3;
+    field.EnemyPositionY = 1;
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 4; j++) {
+            field.battlegrid[i][j] = 0;
+        }
+    }
+    field.battlegrid[field.PlayerPositionY][field.PlayerPositionX] = 1;
+    field.battlegrid[field.EnemyPositionY][field.EnemyPositionX] = 2;
+    _Grid.ReSet_Characters();
 }
 
 void BattleManager::StartBattle()
@@ -272,12 +285,21 @@ bool BattleManager::HitCheck(int Entity, C_Attack* card)
 
 void BattleManager::EndBattle()
 {
-    if (player->IsDead())
+    if (player->IsDead()) {
         _Log.PrintLog("플레이어 패배...");
+        exit(0);
+    }
     else {
         _Log.PrintLog("적 처치 성공!");
         player->AddEXP(enemy->getExp());
+        if (auto a = dynamic_cast<Boss*>(enemy.get())) {
+            SOUND_MANAGER->PlayBgm(BGMType::EndBgm);
+            ImagePrinter* imagePrinter = new ImagePrinter();
+            imagePrinter->PlayGIF(KAGOME_GIF, 10, 300, 0, 0);
+            exit(0);
+        }
         enemy.reset();
+        
     }
     system("cls");
     GAME_MANAGER->SetState(GameManagerState::Map);

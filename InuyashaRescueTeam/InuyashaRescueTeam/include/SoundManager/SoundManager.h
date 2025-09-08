@@ -7,12 +7,12 @@
 
 
 enum class BGMType {
-	BattleField,
-	BossTheme,
-	NoneBattleField,
-	StartScene,
-	BossMapTheme
-	
+    BattleField,
+    BossTheme,
+    NoneBattleField,
+    StartScene,
+    BossMapTheme,
+    EndBgm	
 };
 enum class SEType {
     WindScar,

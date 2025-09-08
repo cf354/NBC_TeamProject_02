@@ -15,6 +15,7 @@ void SoundManager::Init()
 	SOUND_MANAGER->LoadBgm(BGMType::BossTheme, "sound\\BossBattleTheme.wav");
 	SOUND_MANAGER->LoadBgm(BGMType::NoneBattleField, "sound\\AffectionsTouchingAcrossTime.wav");//bgm추가
 	SOUND_MANAGER->LoadBgm(BGMType::BossMapTheme, "sound\\BossTheme.wav");
+    SOUND_MANAGER->LoadBgm(BGMType::EndBgm, "sound\\EndBgm.wav");
     
 
 	SOUND_MANAGER->LoadSE(SEType::WindScar, "sound\\WindScar.wav");

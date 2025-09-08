@@ -1,19 +1,6 @@
 ﻿#include "battlefield/battlefield.h"
 
-BattleField::BattleField()
-{
-	PlayerPositionX = 0;
-	PlayerPositionY = 2;
-	EnemyPositionX = 3;
-	EnemyPositionY = 1;
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 4; j++) {
-			battlegrid[i][j] = 0;
-		}
-	}
-	battlegrid[PlayerPositionY][PlayerPositionX] = 1;
-	battlegrid[EnemyPositionY][EnemyPositionX] = 2;
-}
+
 
 void BattleField::field_move(int dirX, int dirY, int entityType)
 {
