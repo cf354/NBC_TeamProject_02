@@ -1,5 +1,7 @@
 ﻿#include "GameManager/GameManager.h"
-#include "Map/MapManager.h"
+#include "Map/Managers/MapManager.h"
+#include "Map/Managers/SceneManager.h"
+#include "Common/TimeManager.h"
 #include "Common/ConsolePrinter.h"
 #include "SoundManager/SoundManager.h"
 #include "Common/RandomManager.h"
@@ -13,7 +15,9 @@
 void GameManager::Init()
 {
     RANDOM_MANAGER->Init();
+    TIME->Init();
     CONSOLE_PRINTER->Init();
+    SCENE_MANAGER->Init();
 
     //사운드
     SOUND_MANAGER->Init();
@@ -90,13 +94,12 @@ void GameManager::Init()
 
 #pragma endregion
 
-    MAP_MANAGER->EnterNextStage();
-
     SetState(GameManagerState::Title);
 }
 
 void GameManager::Update()
 {
+    TIME->Update();
     UpdateState(currState);
 }
 
@@ -245,14 +248,14 @@ void GameManager::ExitTitle()
 
 void GameManager::EnterMap()
 {
-    SOUND_MANAGER->PlayBgm(BGMType::NoneBattleField);
+    MAP_MANAGER->PlayStageBGM();
 }
 
 void GameManager::UpdateMap()
 {
     CONSOLE_PRINTER->Update();
-    MAP_MANAGER->UpdatePlayer();
-    MAP_MANAGER->Draw();
+    SCENE_MANAGER->Update();
+    SCENE_MANAGER->Render();
     CONSOLE_PRINTER->Render();
 }
 

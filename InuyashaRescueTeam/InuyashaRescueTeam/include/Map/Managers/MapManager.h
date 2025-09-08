@@ -1,7 +1,7 @@
-#pragma once
+﻿#pragma once
 #include <vector>
 #include <string>
-#include "MapTypes.h"
+#include "Map/MapTypes.h"
 #include "Common/Singleton.h"
 
 using namespace std;
@@ -168,17 +168,7 @@ struct AStarNode
 	AStarNode* parentNode;
 };
 
-
-// 간단한 게임이므로 오브젝트 타입으로 구분해서 충돌 처리
-// 충돌도 그냥 ObjType으로 구분해서, Player인 경우만 나머지랑 충돌처리 하게 함
-enum class ObjType
-{
-	None = -1,
-	WorldStatic,
-	Stairs,
-	Merchant,
-	Boss
-};
+class Actor;
 
 class MapManager : public Singleton<MapManager>
 {
@@ -217,11 +207,11 @@ public:
 	void EnterNextStage();
 	void MakeStairs();
 	void MakeMerchant();
-	void MakePlayerObj();
-	void PlaceMapObjRandomRoom(MapObj* obj, ObjType type, bool randomPos);		// MapObj 랜덤한 방에 가장자리에서 2씩 떨어진 자리에 생성 (여유 공간 충분해야 함)
+    void AddMapActor(Actor* actor);
+	void PlaceActorRandomRoom(Actor* actor, bool randomPos);		// MapObj 랜덤한 방에 가장자리에서 2씩 떨어진 자리에 생성 (여유 공간 충분해야 함)
 	void CreateBossRoom();
-	void UpdatePlayer();
-	void Draw();
+    void PlayStageBGM();
+    void CheckBattle();
 
 	Triangle* CreateTriangle(Node* a, Node* b, Node* c);
 	Triangle* CreateSuperTriangle(const vector<Vector2D>& points);
@@ -247,7 +237,7 @@ private:
 
 	const int TOTAL_STAGE = 3;
 	int currStage = 0;											// 0으로 시작해서, 첫 스테이지 입장시 1
-    const double MIN_ENCOUNT_ENEMY = 0.0005;
+    const double MIN_ENCOUNT_ENEMY = 0.00005;
     const double DELTA_ENCOUNT_ENEMY = 0.000005;
     double encountEnemy = MIN_ENCOUNT_ENEMY;
 	vector<int> vecSeed;										// 스테이지별 시드값 저장 (중복 없게 생성)
@@ -261,13 +251,7 @@ private:
 
 	vector<vector<wchar_t>> mapData;
 	int mapWidth, mapHeight;
-
-	// 맵만 만들려고 했는데, 그려내는 문제 때문에 씬매니저 같은 역할도 해야 할 듯
-	// 분리해서 만들기엔 게임 규모가 너무 작음
-	// 콜라이더 빼버림
-	vector<MapObj*> objects;
-	MapObj* objPlayer;
-	vector<vector<ObjType>> vecType;
+    vector<Actor*> mapActors;
 	vector<int> vecUsingNode;		// 플레이어, 계단, 상인 다 다른 방에 배치하기 위해, 이미 배치가 된 방 저장
 };
 

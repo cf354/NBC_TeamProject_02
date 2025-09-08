@@ -44,9 +44,7 @@ public:
     void SetStamina(int stamina);
     void SetMaxStamina(int mSP);
 
-    void RecoverStamina(int amount) {
-        Stamina = std::min(Stamina + amount, MAXStamina);
-    }
+    void RecoverStamina(int amount);
 
     bool IsDead();
 };

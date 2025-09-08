@@ -1,13 +1,17 @@
-#include "Map/MapManager.h"
+﻿#include "Map/Managers/MapManager.h"
 #include "Common/RandomManager.h"
 #include <numeric>
 #include <algorithm>
 #include <map>
 #include <unordered_set>
 #include <deque>
-#include "Entity/Player.h"
 #include "GameManager/GameManager.h"
 #include "Common/ConsolePrinter.h"
+#include "Map/Managers/SceneManager.h"
+#include "Map/Actor/APlayer.h"
+#include "Map/Component/TSpriteRenderer.h"
+#include "Map/Component/TAnimRenderer.h"
+#include "Map/Component/Collider.h"
 
 void MapManager::PlaceNode()
 {
@@ -303,7 +307,6 @@ void MapManager::GenerateMapData()
 
 void MapManager::MakeMapActors()
 {
-	vecType = vector<vector<ObjType>>(mapHeight, vector<ObjType>(mapWidth, ObjType::None));
 	vector<int> visited(mapWidth * mapHeight, 0);
 	for (int i = mapHeight - 1; i >= 0; i--)
 	{
@@ -339,6 +342,10 @@ void MapManager::MakeMapActors()
 				colCont++;
 			}
 
+            Actor* actor = new Actor();
+            actor->SetPos({ j, i });
+            TSpriteRenderer* spriteRenderer = actor->AddComponent<TSpriteRenderer>();
+            Collider* collider = actor->AddComponent<Collider>();
 			wstring str = L"";
 			for (int k = rowCont - 1; k >= 0; k--)
 			{
@@ -349,20 +356,11 @@ void MapManager::MakeMapActors()
 					str += mapData[i - k][j + l];
 				}
 			}
-
-			int r = max(1, rowCont - 1);
-			for (int k = 0; k < r; k++)
-			{
-				for (int l = 0; l < colCont; l++)
-				{
-					vecType[i - k][j + l] = ObjType::WorldStatic;
-				}
-			}
-			MapObj* obj = new MapObj();
-			obj->pos = Vector2D(j + (colCont - 1) / 2, i);
-			obj->size = Vector2D(colCont, rowCont);
-			obj->strRender = str;
-			objects.push_back(obj);
+            spriteRenderer->SetSprite({ 0.0f, 1.0f }, { colCont, rowCont }, str);
+            collider->SetSize({ 0.0f, 1.0f }, Vector2D(colCont, max(1, rowCont - 1)));
+            collider->SetMyChannel(CollideChannel::WorldObj);
+            collider->SetChannelResonse(CollideChannel::Player);
+            AddMapActor(actor);
 		}
 	}
 }
@@ -390,11 +388,11 @@ void MapManager::Release()
 	}
 	vecEdge.clear();
 
-	for (int i = 0; i < objects.size(); i++)
+	for (int i = 0; i < mapActors.size(); i++)
 	{
-		delete objects[i];
+		mapActors[i]->SetActive(false);
 	}
-	objects.clear();
+	mapActors.clear();
 
 	vecUsingNode.clear();
 }
@@ -414,11 +412,9 @@ void MapManager::EnterNextStage()
 	if (++currStage < TOTAL_STAGE)
 	{
 		CreateMap(seed);
-		MakePlayerObj();
 		MakeStairs();
 		MakeMerchant();
-		PlaceMapObjRandomRoom(objPlayer, ObjType::None, false);
-        SOUND_MANAGER->PlayBgm(BGMType::NoneBattleField);
+		PlaceActorRandomRoom(SCENE_MANAGER->GetCurrentScene()->GetPlayer(), false);
 		/*int playerRoom = RANDOM_MANAGER->Range(0, vecNode.size());
 		Vector2D roomPos = vecNode[playerRoom]->pos;
 		objPlayer->pos = Vector2D(roomPos.x * sizeMultipleX, roomPos.y * sizeMultipleY);*/
@@ -426,24 +422,23 @@ void MapManager::EnterNextStage()
 	else
 	{
 		CreateBossRoom();
-		MakePlayerObj();
-		objPlayer->pos = Vector2D(DATA_WIDTH / 8 * 3, DATA_HEIGHT / 2);
+        SCENE_MANAGER->GetCurrentScene()->GetPlayer()->SetPos(Vector2D(DATA_WIDTH / 8 * 3, DATA_HEIGHT / 2));
 
-        MapObj* objBoss = new MapObj();
-        objBoss->size = Vector2D(11, 3);
-        objBoss->strRender = L"┌─────────┐│ B O S S │└─────────┘";
-        objects.push_back(objBoss);
-        objBoss->pos = Vector2D(DATA_WIDTH / 8 * 5, DATA_HEIGHT / 2 + (objBoss->size.y - 1) / 2);
-        Vector2D lt = objBoss->pos - Vector2D((objBoss->size.x - 1) / 2, objBoss->size.y - 1);
-        for (int i = 0; i < objBoss->size.y; i++)
-        {
-            for (int j = 0; j < objBoss->size.x; j++)
+        Actor* actorBoss = new Actor();
+        actorBoss->SetPos(Vector2D(DATA_WIDTH / 8 * 5, DATA_HEIGHT / 2));
+        TSpriteRenderer* spriteRenderer = actorBoss->AddComponent<TSpriteRenderer>();
+        Collider* collider = actorBoss->AddComponent<Collider>();
+        spriteRenderer->SetSprite(Vector2F(0.5f, 0.5f), Vector2D(11, 3), L"┌─────────┐│ B O S S │└─────────┘");
+        collider->SetSize(Vector2F(0.5f, 0.5f), Vector2D(11, 3));
+        collider->SetMyChannel(CollideChannel::Actor);
+        collider->SetChannelResonse(CollideChannel::Player);
+        collider->AddOnHit([](const vector<Actor*>& vec)
             {
-                vecType[lt.y + i][lt.x + j] = ObjType::Boss;
-            }
-        }
-        SOUND_MANAGER->PlayBgm(BGMType::BossMapTheme);
+                GAME_MANAGER->Battle(true);
+            });
+        AddMapActor(actorBoss);
 	}
+    PlayStageBGM();
 }
 
 void MapManager::MakeStairs()
@@ -451,32 +446,56 @@ void MapManager::MakeStairs()
 	//   #
 	//  ##
 	// ###
-	MapObj* objStairs = new MapObj();
-	objStairs->size = Vector2D(3, 3);
-	objStairs->strRender = L"  # #####";
-	objects.push_back(objStairs);
-	PlaceMapObjRandomRoom(objStairs, ObjType::Stairs, true);	
+	Actor* actorStairs = new Actor();
+    TSpriteRenderer* renderer = actorStairs->AddComponent<TSpriteRenderer>();
+    Collider* collider = actorStairs->AddComponent<Collider>();
+    renderer->SetSprite(Vector2F(), Vector2D(3, 3), L"  # #####");
+    collider->SetSize(Vector2F(), Vector2D(3, 3));
+    collider->SetMyChannel(CollideChannel::Actor);
+    collider->SetChannelResonse(CollideChannel::Player);
+    collider->AddOnHit(
+        [](const vector<Actor*>& vec)
+        {
+            MAP_MANAGER->EnterNextStage();
+        });
+    AddMapActor(actorStairs);
+	PlaceActorRandomRoom(actorStairs, true);	
 }
 
 void MapManager::MakeMerchant()
 {
-	MapObj* objMerchant = new MapObj();
-	objMerchant->size = Vector2D(11, 4);
-	objMerchant->strRender = L"┌─────────┐│ I T E M ││S T O R E│└─────────┘";
-	objects.push_back(objMerchant);
-	PlaceMapObjRandomRoom(objMerchant, ObjType::Merchant, true);
+    Actor* actorMerchant = new Actor();
+    TAnimRenderer* renderer = actorMerchant->AddComponent<TAnimRenderer>();
+    Collider* collider = actorMerchant->AddComponent<Collider>();
+    vector<wstring> spritesMerchant;
+    spritesMerchant.push_back(L"●○●○●○●○●○●○●○  I T E M  ○● S T O R E ●○●○●○●○●○●○●○");
+    spritesMerchant.push_back(L"○●○●○●○●○●○●○●  I T E M  ●○ S T O R E ○●○●○●○●○●○●○●");
+    Animation* animIdle = new Animation("Idle", Vector2F(0.5f, 1.0f), Vector2D(13, 4));
+    animIdle->SetSprites(spritesMerchant);
+    animIdle->SetSpeed(4);
+    renderer->AddAnimation(animIdle);
+    renderer->SetCurrAnim("Idle");
+    collider->SetSize(Vector2F(0.5f, 1.0f), Vector2D(13, 4));
+    collider->SetMyChannel(CollideChannel::Actor);
+    collider->SetChannelResonse(CollideChannel::Player);
+    collider->AddOnHit(
+        [](const vector<Actor*>& vec)
+        {
+            GAME_MANAGER->SetState(GameManagerState::Merchant);
+        }
+    );
+    AddMapActor(actorMerchant);
+	PlaceActorRandomRoom(actorMerchant, true);
 }
 
-void MapManager::MakePlayerObj()
+void MapManager::AddMapActor(Actor* actor)
 {
-	objPlayer = new MapObj();
-	objPlayer->size = Vector2D(1, 1);
-	objPlayer->strRender = L"@";
-	objects.push_back(objPlayer);
+    mapActors.push_back(actor);
+    SCENE_MANAGER->GetCurrentScene()->AddActor(actor);
 }
 
 // 랜덤 방의 가장자리에서 2씩 안쪽에 있는 영역에 오브젝트 위치
-void MapManager::PlaceMapObjRandomRoom(MapObj* obj, ObjType type, bool randomPos)
+void MapManager::PlaceActorRandomRoom(Actor* actor, bool randomPos)
 {
 	int randomRoomIdx;
 	do
@@ -486,11 +505,14 @@ void MapManager::PlaceMapObjRandomRoom(MapObj* obj, ObjType type, bool randomPos
 	vecUsingNode.push_back(randomRoomIdx);
 	Node* randomRoomNode = vecNode[randomRoomIdx];
 	Vector2D pos;
-	if (randomPos)
+    Collider* collider = actor->GetComponent<Collider>();
+	if (randomPos && collider != nullptr)
 	{
 		// 오브젝트(pivot: 중하단) 시작점 위치 구하기 (lt ~ rb 사이 랜덤)
-		Vector2D lt = Vector2D((randomRoomNode->pos.x - randomRoomNode->size.x / 2) * sizeMultipleX + (obj->size.x - 1) / 2, (randomRoomNode->pos.y - randomRoomNode->size.y / 2) * sizeMultipleY + obj->size.y - 1);
-		Vector2D rb = lt + Vector2D((randomRoomNode->size.x - 1) * sizeMultipleX - (obj->size.x - 1) / 2, (randomRoomNode->size.y - 1) * sizeMultipleY);
+		Vector2D lt = Vector2D(
+            (randomRoomNode->pos.x - randomRoomNode->size.x / 2) * sizeMultipleX + (collider->GetSize().x - 1) * collider->GetPivot().x,
+            (randomRoomNode->pos.y - randomRoomNode->size.y / 2) * sizeMultipleY + (collider->GetSize().y - 1) * collider->GetPivot().y);
+		Vector2D rb = lt + Vector2D((randomRoomNode->size.x - 1) * sizeMultipleX - (collider->GetSize().x - 1), (randomRoomNode->size.y - 1) * sizeMultipleY - (collider->GetSize().y - 1));
 		// lt, rb 에서 2칸씩 더 안쪽에 생성
 		lt += Vector2D(2, 2);
 		rb -= Vector2D(2, 2);
@@ -501,15 +523,7 @@ void MapManager::PlaceMapObjRandomRoom(MapObj* obj, ObjType type, bool randomPos
 		pos = Vector2D(randomRoomNode->pos.x * sizeMultipleX, randomRoomNode->pos.y * sizeMultipleY);
 	}
 
-	int left = pos.x - (obj->size.x - 1) / 2;
-	for (int k = 0; k < obj->size.y; k++)
-	{
-		for (int l = 0; l < obj->size.x; l++)
-		{
-			vecType[pos.y - k][left + l] = type;
-		}
-	}
-	obj->pos = pos;
+	actor->SetPos(pos);
 }
 
 void MapManager::CreateBossRoom()
@@ -537,82 +551,100 @@ void MapManager::CreateBossRoom()
 	MakeMapActors();
 }
 
-void MapManager::UpdatePlayer()
+void MapManager::PlayStageBGM()
 {
-	// 벽에 막혔을 때, 대각 이동 입력 시 벽을 타고 움직이게 하기 위해 x, y 이동 분리
-	Vector2D move[2];
-	move[0] = Vector2D((GetAsyncKeyState(VK_LEFT) & 0x8000 ? -1 : GetAsyncKeyState(VK_RIGHT) & 0x8000 ? 1 : 0), 0);
-	move[1] = Vector2D(0, (GetAsyncKeyState(VK_UP) & 0x8000 ? -1 : GetAsyncKeyState(VK_DOWN) & 0x8000 ? 1 : 0));
-	for (int i = 0; i < 2; i++)
-	{
-        if (move[i] == Vector2D(0, 0))
-            continue;
-
-		Vector2D lastPos = objPlayer->pos;
-		Vector2D newPos = objPlayer->pos + move[i];
-		switch (vecType[newPos.y][newPos.x])
-		{
-			case ObjType::None:
-                {
-                    objPlayer->pos = newPos;
-                    if (currStage < TOTAL_STAGE)
-                    {
-                        encountEnemy += DELTA_ENCOUNT_ENEMY;
-                        if (RANDOM_MANAGER->Range(0.0, 1.0) <= encountEnemy)
-                        {
-                            GAME_MANAGER->Battle(false);
-                            encountEnemy = MIN_ENCOUNT_ENEMY;
-                            return;
-                        }
-                    }
-                    break;
-                }
-			case ObjType::Stairs:
-				EnterNextStage();
-				return;
-			case ObjType::Merchant:
-                GAME_MANAGER->SetState(GameManagerState::Merchant);
-				return;
-			case ObjType::Boss:
-                GAME_MANAGER->Battle(true);
-				return;
-			default:
-				break;
-		}
-	}
-	Sleep(10);	// deltatime 신경 안쓰고, 걍 빠른 움직임 늦추기 위해 Sleep 사용
+    SOUND_MANAGER->PlayBgm(currStage < TOTAL_STAGE ? BGMType::NoneBattleField : BGMType::BossMapTheme);
 }
 
-void MapManager::Draw()
+void MapManager::CheckBattle()
 {
-	sort(objects.begin(), objects.end(), [](const auto& obj1, const auto& obj2)
-		{
-			return obj1->pos.y < obj2->pos.y;
-		});
-
-	Vector2D playerPos = objPlayer->pos;
-	Vector2D lt = Vector2D(max(0, playerPos.x - DATA_WIDTH / 2), max(0, playerPos.y - DATA_HEIGHT / 2));
-	Vector2D rb = lt + Vector2D(DATA_WIDTH - 1, DATA_HEIGHT - 1);
-	int idx, x, y;
-	Vector2D objLT, objSize;
-	for (int i = 0; i < objects.size(); i++)
-	{
-		objSize = objects[i]->size;
-		objLT = Vector2D(objects[i]->pos.x - (objSize.x - 1) / 2, objects[i]->pos.y - (objSize.y - 1));
-		for (int j = 0; j < objSize.y; j++)
-		{
-			for (int k = 0; k < objSize.x; k++)
-			{
-				y = objLT.y + j;
-				x = objLT.x + k;
-				if (y < lt.y || y > rb.y || x < lt.x || x > rb.x)
-					continue;
-				idx = j * objSize.x + k;
-				CONSOLE_PRINTER->SetData(y - lt.y, x - lt.x, objects[i]->strRender[idx]);
-			}
-		}
-	}
+    if (currStage < TOTAL_STAGE)
+    {
+        encountEnemy += DELTA_ENCOUNT_ENEMY;
+        if (RANDOM_MANAGER->Range(0.0, 1.0) <= encountEnemy)
+        {
+            GAME_MANAGER->Battle(false);
+            encountEnemy = MIN_ENCOUNT_ENEMY;
+        }
+    }
 }
+
+//void MapManager::UpdatePlayer()
+//{
+//	// 벽에 막혔을 때, 대각 이동 입력 시 벽을 타고 움직이게 하기 위해 x, y 이동 분리
+//	Vector2D move[2];
+//	move[0] = Vector2D((GetAsyncKeyState(VK_LEFT) & 0x8000 ? -1 : GetAsyncKeyState(VK_RIGHT) & 0x8000 ? 1 : 0), 0);
+//	move[1] = Vector2D(0, (GetAsyncKeyState(VK_UP) & 0x8000 ? -1 : GetAsyncKeyState(VK_DOWN) & 0x8000 ? 1 : 0));
+//	for (int i = 0; i < 2; i++)
+//	{
+//        if (move[i] == Vector2D(0, 0))
+//            continue;
+//
+//		Vector2D lastPos = objPlayer->pos;
+//		Vector2D newPos = objPlayer->pos + move[i];
+//		switch (vecType[newPos.y][newPos.x])
+//		{
+//			case ObjType::None:
+//                {
+//                    objPlayer->pos = newPos;
+//                    if (currStage < TOTAL_STAGE)
+//                    {
+//                        encountEnemy += DELTA_ENCOUNT_ENEMY;
+//                        if (RANDOM_MANAGER->Range(0.0, 1.0) <= encountEnemy)
+//                        {
+//                            GAME_MANAGER->Battle(false);
+//                            encountEnemy = MIN_ENCOUNT_ENEMY;
+//                            return;
+//                        }
+//                    }
+//                    break;
+//                }
+//			case ObjType::Stairs:
+//				EnterNextStage();
+//				return;
+//			case ObjType::Merchant:
+//                GAME_MANAGER->SetState(GameManagerState::Merchant);
+//				return;
+//			case ObjType::Boss:
+//                GAME_MANAGER->Battle(true);
+//				return;
+//			default:
+//				break;
+//		}
+//	}
+//	Sleep(10);	// deltatime 신경 안쓰고, 걍 빠른 움직임 늦추기 위해 Sleep 사용
+//}
+//
+//void MapManager::Draw()
+//{
+//	sort(objects.begin(), objects.end(), [](const auto& obj1, const auto& obj2)
+//		{
+//			return obj1->pos.y < obj2->pos.y;
+//		});
+//
+//	Vector2D playerPos = objPlayer->pos;
+//	Vector2D lt = Vector2D(max(0, playerPos.x - DATA_WIDTH / 2), max(0, playerPos.y - DATA_HEIGHT / 2));
+//	Vector2D rb = lt + Vector2D(DATA_WIDTH - 1, DATA_HEIGHT - 1);
+//	int idx, x, y;
+//	Vector2D objLT, objSize;
+//	for (int i = 0; i < objects.size(); i++)
+//	{
+//		objSize = objects[i]->size;
+//		objLT = Vector2D(objects[i]->pos.x - (objSize.x - 1) / 2, objects[i]->pos.y - (objSize.y - 1));
+//		for (int j = 0; j < objSize.y; j++)
+//		{
+//			for (int k = 0; k < objSize.x; k++)
+//			{
+//				y = objLT.y + j;
+//				x = objLT.x + k;
+//				if (y < lt.y || y > rb.y || x < lt.x || x > rb.x)
+//					continue;
+//				idx = j * objSize.x + k;
+//				CONSOLE_PRINTER->SetData(y - lt.y, x - lt.x, objects[i]->strRender[idx]);
+//			}
+//		}
+//	}
+//}
 
 Triangle* MapManager::CreateTriangle(Node* a, Node* b, Node* c)
 {

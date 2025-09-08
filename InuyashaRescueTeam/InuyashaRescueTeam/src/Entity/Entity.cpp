@@ -61,6 +61,11 @@ void Entity::SetMaxStamina(int mSP)
     this->MAXStamina = mSP;
 }
 
+void Entity::RecoverStamina(int amount)
+{
+    Stamina = std::min(Stamina + amount, MAXStamina);
+}
+
 bool Entity::IsDead()
 {
     if (HP > 0) {

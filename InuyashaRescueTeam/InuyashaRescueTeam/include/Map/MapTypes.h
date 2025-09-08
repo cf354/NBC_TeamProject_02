@@ -1,5 +1,6 @@
 #pragma once
 #include <cmath>
+#include <string>
 
 using namespace std;
 
@@ -99,13 +100,5 @@ namespace Map
 			f = fmin(1.0f, fmax(0.0f, f));
 			return Vector2F(start + (end - start) * f);
 		}
-	};
-
-	struct MapObj
-	{
-		// 좌하단 원점
-		Vector2D pos;
-		Vector2D size;
-		wstring strRender;
 	};
 }

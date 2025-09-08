@@ -8,7 +8,7 @@
 #include "GameManager\GameManager.h"
 #include <windows.h>
 #include "Merchant\Merchant.h"
-#include "Map/MapManager.h"
+#include "Map/Managers/MapManager.h"
 #include "ImagePrinter.h"
 
 

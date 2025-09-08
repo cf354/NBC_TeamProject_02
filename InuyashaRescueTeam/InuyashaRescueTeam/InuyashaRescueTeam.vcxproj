@@ -140,6 +140,8 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Map\Actor\APlayer.cpp" />
+    <ClCompile Include="src\Map\Camera.cpp" />
     <ClCompile Include="src\ImagePrinter.cpp" />
     <ClCompile Include="src\BattleUI\BattleGrid.cpp" />
     <ClCompile Include="src\BattleUI\BattleLog.cpp" />
@@ -151,7 +153,13 @@
     <ClCompile Include="src\Common\ConsolePrinter.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="src\Common\RandomManager.cpp" />
-    <ClCompile Include="src\Map\MapManager.cpp" />
+    <ClCompile Include="src\Map\Actor\Actor.cpp" />
+    <ClCompile Include="src\Map\Component\Collider.cpp" />
+    <ClCompile Include="src\Map\Component\IComponent.cpp" />
+    <ClCompile Include="src\Map\Component\IRenderer.cpp" />
+    <ClCompile Include="src\Map\Component\TAnimRenderer.cpp" />
+    <ClCompile Include="src\Map\Component\TSpriteRenderer.cpp" />
+    <ClCompile Include="src\Map\Managers\MapManager.cpp" />
     <ClCompile Include="src\battelfield\battlefield.cpp" />
     <ClCompile Include="src\BattleManager\BattleManager.cpp" />
     <ClCompile Include="src\Card\Card.cpp" />
@@ -162,11 +170,17 @@
     <ClCompile Include="src\Entity\Entity.cpp" />
     <ClCompile Include="src\Entity\Player.cpp" />
     <ClCompile Include="src\GameManager\GameManager.cpp" />
+    <ClCompile Include="src\Map\Managers\SceneManager.cpp" />
+    <ClCompile Include="src\Map\Scene\GameScene.cpp" />
+    <ClCompile Include="src\Map\Scene\Scene.cpp" />
     <ClCompile Include="src\Merchant\Merchant.cpp" />
     <ClCompile Include="src\SoundManager\SoundManager.cpp" />
     <ClCompile Include="test_main_taewoong.cpp" />
+    <ClCompile Include="src\Common\TimeManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Map\Actor\APlayer.h" />
+    <ClInclude Include="include\Map\Camera.h" />
     <ClInclude Include="include\BattleUI\BattleGrid.h" />
     <ClInclude Include="include\BattleUI\BattleLog.h" />
     <ClInclude Include="include\BattleUI\CardUI.h" />
@@ -190,14 +204,24 @@
     <ClInclude Include="include\Entity\Player.h" />
     <ClInclude Include="include\GameManager\GameManager.h" />
     <ClInclude Include="include\ImagePrinter.h" />
+    <ClInclude Include="include\Map\Actor\Actor.h" />
+    <ClInclude Include="include\Map\Component\Collider.h" />
+    <ClInclude Include="include\Map\Component\IComponent.h" />
+    <ClInclude Include="include\Map\Component\IRenderer.h" />
+    <ClInclude Include="include\Map\Component\TAnimRenderer.h" />
+    <ClInclude Include="include\Map\Component\TSpriteRenderer.h" />
+    <ClInclude Include="include\Map\Managers\SceneManager.h" />
+    <ClInclude Include="include\Map\Scene\GameScene.h" />
+    <ClInclude Include="include\Map\Scene\Scene.h" />
     <ClInclude Include="include\Merchant\Merchant.h" />
     <ClInclude Include="include\InputManager\InputManager.h" />
-    <ClInclude Include="include\Map\MapManager.h" />
+    <ClInclude Include="include\Map\Managers\MapManager.h" />
     <ClInclude Include="include\Map\MapTypes.h" />
     <ClInclude Include="include\Common\RandomManager.h" />
     <ClInclude Include="include\Common\Singleton.h" />
     <ClInclude Include="include\BattleUI\BattleUIGroup.h" />
     <ClInclude Include="include\SoundManager\SoundManager.h" />
+    <ClInclude Include="include\Common\TimeManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
