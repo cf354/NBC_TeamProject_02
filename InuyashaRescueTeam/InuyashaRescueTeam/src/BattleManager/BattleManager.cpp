@@ -118,8 +118,8 @@ void BattleManager::StartBattle()
 
         _Grid.Draw();
         Resolve(pCard, eCard, field);
-        player->RecoverStamina(15);
-        enemy->RecoverStamina(10);
+        player->RecoverStamina(5);
+        enemy->RecoverStamina(5);
 
         _Player_HPBar.SetValue(player.get()->GetHP());
         _Player_ENBar.SetValue(player.get()->GetStamina());
@@ -169,10 +169,11 @@ std::shared_ptr<Card> BattleManager::PlayerTurn()
     std::vector<std::shared_ptr<Card>> card = player->GetDeck();
     std::set < std::shared_ptr<Card>> rdeck;
     int cardnumber = player->GetDeck().size();
-    while(rdeck.size()<4) { 
+    rdeck.insert(GAME_MANAGER->GetAllCardsList()->at(8));
+    while(rdeck.size()<5) { 
         rdeck.insert(card[RANDOM_MANAGER->Range(0, cardnumber)]); //STL set을 이용해서 중복되지 않게 카드를 입력받음
     }
-    rdeck.insert(GAME_MANAGER->GetAllCardsList()->at(8));
+    
     std::vector<std::shared_ptr<Card>> output;
     for (auto a : rdeck) {
         output.push_back(a);
