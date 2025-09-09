@@ -89,12 +89,16 @@ void BattleManager::StartBattle()
                 break;
             }
             _Log.PrintLog("이동할 수 없습니다");
-            pCard = PlayerTurn();
+            _CardUI.Draw();
+            _CardUI.PrintCards(rdeck);
+            pCard = _CardUI.ChoseCard(rdeck);
         }
         while (pCard->C_GetCost() > player->GetStamina())
         {
             _Log.PrintLog("스태미나가 부족합니다!");
-            pCard = PlayerTurn();
+            _CardUI.Draw();
+            _CardUI.PrintCards(rdeck);
+            pCard = _CardUI.ChoseCard(rdeck);
         }//스태미나가 부족하거나 벽을 넘어서는 이동을 하는 카드를 선택을 불가능 하도록 함
 
 
@@ -166,21 +170,21 @@ void BattleManager::ShowUI()//하빈
 
 std::shared_ptr<Card> BattleManager::PlayerTurn()
 {
-    std::vector<std::shared_ptr<Card>> card = player->GetDeck();
-    std::set < std::shared_ptr<Card>> rdeck;
+    rdeck.clear();
+    std::vector<std::shared_ptr<Card>> card = player->GetDeck();  
+    std::set<std::shared_ptr<Card>> output;
     int cardnumber = player->GetDeck().size();
-    rdeck.insert(GAME_MANAGER->GetAllCardsList()->at(8));
-    while(rdeck.size()<5) { 
-        rdeck.insert(card[RANDOM_MANAGER->Range(0, cardnumber)]); //STL set을 이용해서 중복되지 않게 카드를 입력받음
+    output.insert(GAME_MANAGER->GetAllCardsList()->at(8));
+    while(output.size()<5) { 
+        output.insert(card[RANDOM_MANAGER->Range(0, cardnumber)]); //STL set을 이용해서 중복되지 않게 카드를 입력받음
     }
-    
-    std::vector<std::shared_ptr<Card>> output;
-    for (auto a : rdeck) {
-        output.push_back(a);
+    for (auto a : output) {
+        rdeck.push_back(a);
     }//입력받은 카드를 호출하는 함수의 형태에 맞게 변형
+    
     _CardUI.Draw();
-    _CardUI.PrintCards(output);
-    return _CardUI.ChoseCard(output);
+    _CardUI.PrintCards(rdeck);
+    return _CardUI.ChoseCard(rdeck);
 }
 
 void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> eCard, BattleField& field)

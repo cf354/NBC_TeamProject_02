@@ -14,7 +14,7 @@ private:
     std::shared_ptr<Player> player;
     std::shared_ptr<Enemy> enemy;
     sf::Music bgm;
-
+    std::vector<std::shared_ptr<Card>> rdeck;
     //BattleUI
     Progressbar _Player_HPBar;
     Text _HPTEXT;
