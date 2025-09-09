@@ -1,10 +1,10 @@
 ﻿#pragma once
-#include "Map/UI/UI.h"
+#include "Map/UI/UIBox.h"
 
 class UIText;
 class UIBar;
 
-class UIPlayerStatus : public UI
+class UIPlayerStatus : public UIBox
 {
 public:
     UIPlayerStatus();

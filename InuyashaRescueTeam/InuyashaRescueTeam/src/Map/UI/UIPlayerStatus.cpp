@@ -35,11 +35,8 @@ UIPlayerStatus::UIPlayerStatus()
         boxSizeX = max(boxSizeX, allChildren[i]->GetSize().x);
         boxSizeY += allChildren[i]->GetSize().y;
     }
-
-    UIBox* uiBox = new UIBox();
-    uiBox->SetParent(this);
-    uiBox->SetPosition(Anchor::LT, Vector2F(0.0f, 0.0f), Vector2D(0, 0));
-    uiBox->SetSize(boxSizeX + 2, boxSizeY + 2);
+    
+    SetSize(boxSizeX + 2, boxSizeY + 2);
 }
 
 void UIPlayerStatus::Update()
