@@ -18,7 +18,7 @@ void TSpriteRenderer::Render()
 {
     Vector2D size = sprite.GetSize();
     wstring data = sprite.GetData();
-    WORD attribute = sprite.GetAttribute();
+    MColor color = sprite.GetColor();
 
 	Camera* camera = SCENE_MANAGER->GetCurrentScene()->GetCamera();
 	if (camera == nullptr)
@@ -42,7 +42,7 @@ void TSpriteRenderer::Render()
 			if (y < lt.y || y > rb.y || x < lt.x || x > rb.x)
 				continue;
 
-			CONSOLE_PRINTER->SetData(y - lt.y, x - lt.x, data[idx], attribute);
+			CONSOLE_PRINTER->SetData(y - lt.y, x - lt.x, data[idx], color);
 		}
 	}
 }

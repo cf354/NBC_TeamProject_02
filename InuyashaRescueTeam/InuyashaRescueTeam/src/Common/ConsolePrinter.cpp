@@ -110,11 +110,11 @@ void ConsolePrinter::DataClear()
 	}
 }
 
-void ConsolePrinter::SetData(int y, int x, wchar_t c, WORD attribute)
+void ConsolePrinter::SetData(int y, int x, wchar_t c, MColor textColor, MColor BackColor)
 {
 	if (y < 0 || y >= DATA_HEIGHT || x < 0 || x >= DATA_WIDTH)
 		return;
 
 	data[y][x] = c;
-    this->attribute[y][x] = attribute;
+    this->attribute[y][x] = (short)textColor + (short)BackColor * 16;
 }

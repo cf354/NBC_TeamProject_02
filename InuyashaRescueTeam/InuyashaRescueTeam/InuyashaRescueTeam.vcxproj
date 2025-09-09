@@ -140,6 +140,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Map\UI\UIPlayerStatus.cpp" />
     <ClCompile Include="src\Map\Actor\APlayer.cpp" />
     <ClCompile Include="src\Map\Camera.cpp" />
     <ClCompile Include="src\ImagePrinter.cpp" />
@@ -171,14 +172,19 @@
     <ClCompile Include="src\Entity\Player.cpp" />
     <ClCompile Include="src\GameManager\GameManager.cpp" />
     <ClCompile Include="src\Map\Managers\SceneManager.cpp" />
+    <ClCompile Include="src\Map\Managers\UIManager.cpp" />
     <ClCompile Include="src\Map\Scene\GameScene.cpp" />
     <ClCompile Include="src\Map\Scene\Scene.cpp" />
+    <ClCompile Include="src\Map\UI\UI.cpp" />
+    <ClCompile Include="src\Map\UI\Text.cpp" />
     <ClCompile Include="src\Merchant\Merchant.cpp" />
     <ClCompile Include="src\SoundManager\SoundManager.cpp" />
     <ClCompile Include="src\Map\Render\TAnimation.cpp" />
     <ClCompile Include="test_main_taewoong.cpp" />
     <ClCompile Include="src\Common\TimeManager.cpp" />
     <ClCompile Include="src\Map\Render\TSprite.cpp" />
+    <ClCompile Include="src\Map\UI\UIBar.cpp" />
+    <ClCompile Include="src\Map\UI\UIBox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Map\Actor\APlayer.h" />
@@ -213,8 +219,11 @@
     <ClInclude Include="include\Map\Component\TAnimRenderer.h" />
     <ClInclude Include="include\Map\Component\TSpriteRenderer.h" />
     <ClInclude Include="include\Map\Managers\SceneManager.h" />
+    <ClInclude Include="include\Map\Managers\UIManager.h" />
     <ClInclude Include="include\Map\Scene\GameScene.h" />
     <ClInclude Include="include\Map\Scene\Scene.h" />
+    <ClInclude Include="include\Map\UI\UI.h" />
+    <ClInclude Include="include\Map\UI\Text.h" />
     <ClInclude Include="include\Merchant\Merchant.h" />
     <ClInclude Include="include\InputManager\InputManager.h" />
     <ClInclude Include="include\Map\Managers\MapManager.h" />
@@ -226,6 +235,9 @@
     <ClInclude Include="include\Common\TimeManager.h" />
     <ClInclude Include="include\Map\Render\TSprite.h" />
     <ClInclude Include="include\Map\Render\TAnimation.h" />
+    <ClInclude Include="include\Map\UI\UIPlayerStatus.h" />
+    <ClInclude Include="include\Map\UI\UIBar.h" />
+    <ClInclude Include="include\Map\UI\UIBox.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

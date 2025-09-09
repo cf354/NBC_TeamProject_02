@@ -1,7 +1,6 @@
 ﻿#pragma once
 #include <string>
 #include <vector>
-#include <Windows.h>
 #include "Map/MapTypes.h"
 #include "Map/Render/TSprite.h"
 

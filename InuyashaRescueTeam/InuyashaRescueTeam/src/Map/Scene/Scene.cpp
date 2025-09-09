@@ -71,6 +71,7 @@ void Scene::RemoveActor(Actor* actor)
 	auto* renderer = actor->GetComponent<IRenderer>();
 	actors.erase(find(actors.begin(), actors.end(), actor));
 	renderers.erase(find(renderers.begin(), renderers.end(), renderer));
+    delete actor;
 }
 
 APlayer* Scene::GetPlayer()

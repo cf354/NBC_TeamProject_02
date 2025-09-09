@@ -1,12 +1,12 @@
 ﻿#include "Map/Render/TSprite.h"
 
 TSprite::TSprite()
-    : size(), data(L""), attribute(0)
+    : size(), data(L""), color(MColor::WHITE)
 {
 }
 
-TSprite::TSprite(Vector2D size, wstring data, WORD attribute)
-    : size(size), data(data), attribute(attribute)
+TSprite::TSprite(Vector2D size, wstring data, MColor color)
+    : size(size), data(data), color(color)
 {
 }
 
@@ -20,7 +20,7 @@ wstring TSprite::GetData()
     return data;
 }
 
-WORD TSprite::GetAttribute()
+MColor TSprite::GetColor()
 {
-    return attribute;
+    return color;
 }

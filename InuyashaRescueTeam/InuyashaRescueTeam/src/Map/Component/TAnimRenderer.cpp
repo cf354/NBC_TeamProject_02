@@ -33,7 +33,7 @@ void TAnimRenderer::Render()
     TSprite sprite = currAnim->GetSprite();
 	Vector2D size = sprite.GetSize();
     wstring data = sprite.GetData();
-    WORD attribute = sprite.GetAttribute();
+    MColor color = sprite.GetColor();
 	pos.y -= (size.y - 1) * pivot.y;
 	pos.x -= (size.x - 1) * pivot.x;
 	int idx, x, y;
@@ -50,7 +50,7 @@ void TAnimRenderer::Render()
 			if (y < lt.y || y > rb.y || x < lt.x || x > rb.x)
 				continue;
 
-			CONSOLE_PRINTER->SetData(y - lt.y, x - lt.x, data[idx], attribute);
+			CONSOLE_PRINTER->SetData(y - lt.y, x - lt.x, data[idx], color);
 		}
 	}
 }

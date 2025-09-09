@@ -250,16 +250,18 @@ void MapManager::GenerateMapData()
 				mapData[i][j] = c;
 		};
 
-    wstring strFloor(mapWidth * mapHeight, ' ');
+    wstring strFloor(mapWidth * mapHeight, L' ');
 	for (int i = 0; i < gridHeight; i++)
 	{
 		for (int j = 0; j < gridWidth; j++)
 		{
-			if (grid[i][j] == CostAStar::Empty)
-				continue;
+            Vector2D lt = Vector2D(j * sizeMultipleX, i * sizeMultipleY);
+            Vector2D rb = lt + Vector2D(sizeMultipleX - 1, sizeMultipleY - 1);
 
-			Vector2D lt = Vector2D(j * sizeMultipleX, i * sizeMultipleY);
-			Vector2D rb = lt + Vector2D(sizeMultipleX - 1, sizeMultipleY - 1);
+            if (grid[i][j] == CostAStar::Empty)
+            {
+                continue;
+            }
 
             // 바닥 액터
             for (int k = lt.y; k <= rb.y; k++)
@@ -319,7 +321,7 @@ void MapManager::GenerateMapData()
     actor->SetPos({ 0, 0 });
     TSpriteRenderer* spriteRenderer = actor->AddComponent<TSpriteRenderer>();
     spriteRenderer->SetSortOrder(-1);
-    spriteRenderer->SetSprite({ 0.0f, 0.0f }, TSprite(Vector2D(mapWidth, mapHeight), strFloor, FOREGROUND_BLUE));
+    spriteRenderer->SetSprite({ 0.0f, 0.0f }, TSprite(Vector2D(mapWidth, mapHeight), strFloor, MColor::DARKGRAY));
     AddMapActor(actor);
 }
 
@@ -447,10 +449,10 @@ void MapManager::EnterNextStage()
         TAnimRenderer* renderer = actorBoss->AddComponent<TAnimRenderer>();
         Collider* collider = actorBoss->AddComponent<Collider>();
         vector<TSprite> spritesIdle;
-        spritesIdle.push_back(TSprite(Vector2D(9, 9), L"   ___     /___\\    (o o)   /(===)\\  /|###|\\   |###|    |---|   /|   |\\   ^   ^  ", FOREGROUND_RED));
-        spritesIdle.push_back(TSprite(Vector2D(9, 9), L"   ___     /___\\    (o o)   /(===)\\   |###|   /|###|\\   |---|   /|   |\\   ^   ^  ", FOREGROUND_RED));
-        spritesIdle.push_back(TSprite(Vector2D(9, 9), L"   ___     /___\\    (o o)   /(===)\\   |###|    |---|   /|###|\\   |   |    ^   ^  ", FOREGROUND_RED));
-        spritesIdle.push_back(TSprite(Vector2D(9, 9), L"   ___     /___\\    (o o)   /(===)\\   |###|   /|###|\\   |---|   /|   |\\   ^   ^  ", FOREGROUND_RED));
+        spritesIdle.push_back(TSprite(Vector2D(9, 9), L"   ___     /___\\    (o o)   /(===)\\  /|###|\\   |###|    |---|   /|   |\\   ^   ^  ", MColor::RED));
+        spritesIdle.push_back(TSprite(Vector2D(9, 9), L"   ___     /___\\    (o o)   /(===)\\   |###|   /|###|\\   |---|   /|   |\\   ^   ^  ", MColor::RED));
+        spritesIdle.push_back(TSprite(Vector2D(9, 9), L"   ___     /___\\    (o o)   /(===)\\   |###|    |---|   /|###|\\   |   |    ^   ^  ", MColor::RED));
+        spritesIdle.push_back(TSprite(Vector2D(9, 9), L"   ___     /___\\    (o o)   /(===)\\   |###|   /|###|\\   |---|   /|   |\\   ^   ^  ", MColor::RED));
         TAnimation* animIdle = new TAnimation("Idle", Vector2F(0.5f, 1.0f));
         animIdle->SetSprites(spritesIdle);
         animIdle->SetSpeed(4);
@@ -574,6 +576,22 @@ void MapManager::CreateBossRoom()
 		mapData[i][lt.x] = '|';
 		mapData[i][rb.x] = '|';
 	}
+
+    Actor* actor = new Actor();
+    actor->SetPos({ 0, 0 });
+    TSpriteRenderer* spriteRenderer = actor->AddComponent<TSpriteRenderer>();
+    spriteRenderer->SetSortOrder(-1);
+    wstring strFloor(mapWidth * mapHeight, L' ');
+    // 바닥 액터
+    for (int k = lt.y; k <= rb.y; k++)
+    {
+        for (int l = lt.x; l <= rb.x; l++)
+        {
+            strFloor[k * mapWidth + l] = L'⬝';
+        }
+    }
+    spriteRenderer->SetSprite({ 0.0f, 0.0f }, TSprite(Vector2D(mapWidth, mapHeight), strFloor, MColor::DARKGRAY));
+    AddMapActor(actor);
 
 	MakeMapActors();
 }

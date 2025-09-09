@@ -1,11 +1,14 @@
 #pragma once
 #include <Windows.h>
 #include "Singleton.h"
+#include "Map/MapTypes.h"
 
 #define WINDOW_WIDTH 1920
 #define WINDOW_HEIGHT 1080
 #define DATA_WIDTH 208
 #define DATA_HEIGHT 52
+
+using namespace Map;
 
 class ConsolePrinter : public Singleton<ConsolePrinter>
 {
@@ -24,7 +27,7 @@ public:
     void SetActiveBuffer(int hIdx);
 
 	void DataClear();
-	void SetData(int y, int x, wchar_t c, WORD attribute);
+	void SetData(int y, int x, wchar_t c, MColor textColor = MColor::WHITE, MColor BackColor = MColor::BLACK);
 
 private:
 	HANDLE hConsole[2];									// 깜빡임 없애기 위해 버퍼 2개 사용

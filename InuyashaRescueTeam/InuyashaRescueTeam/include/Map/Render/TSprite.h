@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include <string>
-#include <Windows.h>
 #include "Map/MapTypes.h"
 
 using namespace std;
@@ -10,15 +9,15 @@ class TSprite
 {
 public:
     TSprite();
-    TSprite(Vector2D size, wstring data, WORD attribute = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+    TSprite(Vector2D size, wstring data, MColor color = MColor::WHITE);
     
     Vector2D GetSize();
     wstring GetData();
-    WORD GetAttribute();
+    MColor GetColor();
 
 private:
     Vector2D size;
     wstring data;
-    WORD attribute;
+    MColor color;
 };
 

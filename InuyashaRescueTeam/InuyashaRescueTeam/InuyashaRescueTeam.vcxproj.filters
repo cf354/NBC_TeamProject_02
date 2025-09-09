@@ -38,6 +38,14 @@
     <ClCompile Include="src\Map\Scene\GameScene.cpp" />
     <ClCompile Include="src\Map\Actor\APlayer.cpp" />
     <ClCompile Include="src\Map\Managers\SceneManager.cpp" />
+    <ClCompile Include="src\Map\UI\UIPlayerStatus.cpp" />
+    <ClCompile Include="src\Map\Managers\UIManager.cpp" />
+    <ClCompile Include="src\Map\UI\UI.cpp" />
+    <ClCompile Include="src\Map\UI\Text.cpp" />
+    <ClCompile Include="src\Map\Render\TAnimation.cpp" />
+    <ClCompile Include="src\Map\Render\TSprite.cpp" />
+    <ClCompile Include="src\Map\UI\UIBar.cpp" />
+    <ClCompile Include="src\Map\UI\UIBox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\BattleUI\BattleGrid.h" />
@@ -83,5 +91,13 @@
     <ClInclude Include="include\Map\Scene\GameScene.h" />
     <ClInclude Include="include\Map\Actor\APlayer.h" />
     <ClInclude Include="include\Map\Managers\SceneManager.h" />
+    <ClInclude Include="include\Map\Managers\UIManager.h" />
+    <ClInclude Include="include\Map\UI\UI.h" />
+    <ClInclude Include="include\Map\UI\Text.h" />
+    <ClInclude Include="include\Map\Render\TSprite.h" />
+    <ClInclude Include="include\Map\Render\TAnimation.h" />
+    <ClInclude Include="include\Map\UI\UIPlayerStatus.h" />
+    <ClInclude Include="include\Map\UI\UIBar.h" />
+    <ClInclude Include="include\Map\UI\UIBox.h" />
   </ItemGroup>
 </Project>

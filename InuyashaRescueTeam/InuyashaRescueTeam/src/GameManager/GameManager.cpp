@@ -11,6 +11,7 @@
 #include "ImagePrinter.h"
 #include "Entity/Enemy.h"
 #include "Entity/Boss.h"
+#include "Map/Managers/UIManager.h"
 
 void GameManager::Init()
 {
@@ -18,6 +19,7 @@ void GameManager::Init()
     TIME->Init();
     CONSOLE_PRINTER->Init();
     SCENE_MANAGER->Init();
+    UI_MANAGER->Init();
 
     //사운드
     SOUND_MANAGER->Init();
@@ -255,7 +257,10 @@ void GameManager::UpdateMap()
 {
     CONSOLE_PRINTER->Update();
     SCENE_MANAGER->Update();
+    UI_MANAGER->Update();
+
     SCENE_MANAGER->Render();
+    UI_MANAGER->Render();
     CONSOLE_PRINTER->Render();
 }
 
