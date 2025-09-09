@@ -1,6 +1,7 @@
-#pragma once // 헤더 파일 중복 포함 방지
+#pragma once
 #include <iostream>
 #include <string>
+#include <algorithm>
 
 class Entity {
 protected:
@@ -11,9 +12,14 @@ protected:
     int ATK;
     int DEF;
 
+    int MAXHP;
+    int MAXStamina;
+
+    const char* SpriteFileFath;
+
 public:
     // 생성자 및 소멸자
-    Entity(const std::string& name, int level, int hp, int stamina, int atk, int def);
+    Entity(const std::string& name, int level, int hp, int stamina, int atk, int def, const char* spritefilefath);
     virtual ~Entity();
 
     // 피격 시 데미지 계산
@@ -27,9 +33,18 @@ public:
     int GetDEF() const;
     std::string GetName() const;
 
-    // 정보 설정 (Setter) 
+    int GetMAXHP() const;
+    int GetMAXStamina() const;
+
+    const char* GetSpriteFileFath() const;
+
+    // 정보 설정 (Setter)
     void SetHP(int hp);
+    void SetMaxHP(int mHP);
     void SetStamina(int stamina);
-    
+    void SetMaxStamina(int mSP);
+
+    void RecoverStamina(int amount);
+
     bool IsDead();
 };

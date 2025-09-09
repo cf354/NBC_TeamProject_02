@@ -14,6 +14,11 @@ enum class KeyAction
     MOVE_DOWN_LEFT,
     MOVE_DOWN_RIGHT,
     ENTER_MERCHANT,     // 상점 입장    - 테스트용으로 임의로 넣은 것 입니다. 뺴도 되요
+    PREV_ITEM,          // 상점 아이템 인덱스 감소
+    NEXT_ITEM,          // 상점 아이템 인덱스 증가
+    SHOP_MERCHANT,      // 상점 구매탭
+    SHOP_PLAYER,        // 상점 판매탭
+    SELECT,             // 물건 선택
     QUIT_MERCHANT,      // 상점 퇴장    - 테스트용으로 임의로 넣은 것 입니다. 뺴도 되요
     ENTER_BATTLE,       // 전투 입장    - 테스트용으로 임의로 넣은 것 입니다. 뺴도 되요
     QUIT_BATTLE,        // 전투 퇴장    - 테스트용으로 임의로 넣은 것 입니다. 뺴도 되요
@@ -48,4 +53,5 @@ public:
 
     // 키 입력 (KeyAction) 변환 - State 인자를 받아 입력 구분
     KeyAction GetKeyAction(GameState currentState);
+    void FlushInputBuffer(); // 버퍼 비우기 
 };

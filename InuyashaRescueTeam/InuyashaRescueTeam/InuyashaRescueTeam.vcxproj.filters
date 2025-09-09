@@ -1,171 +1,87 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Source Files\Card">
-      <UniqueIdentifier>{0500a6a8-0d57-4d44-86d1-03fd9f93fcf3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Entity">
-      <UniqueIdentifier>{f53a4bf4-ce27-43b2-b3e5-6f4732fc3500}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Battlefield">
-      <UniqueIdentifier>{ebca868d-82ab-4a11-bbd4-7ecb858eaa0d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\BattleManager">
-      <UniqueIdentifier>{9988dc53-faca-438b-b32c-6285b700455b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\GameManager">
-      <UniqueIdentifier>{e49be326-3e98-4fb8-aad3-2283d02d663e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Card">
-      <UniqueIdentifier>{f07d0b74-53d9-4500-80c2-464cd7d21dba}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Entity">
-      <UniqueIdentifier>{90e126eb-33a5-4c17-9f27-4056ebf38ece}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Battlefield">
-      <UniqueIdentifier>{2196c2d8-b6ec-4bad-a0fe-f166838c9cdb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\BattleManager">
-      <UniqueIdentifier>{6a6049a6-ab9a-4ece-bfc4-9cafae21f770}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\GameManager">
-      <UniqueIdentifier>{76d13df4-819b-413c-82f0-8d124737fb6f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Merchant">
-      <UniqueIdentifier>{784ee55d-28b0-4ada-b946-d1733f2ff309}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Merchant">
-      <UniqueIdentifier>{080ae3b5-c85a-44c6-864d-1804535c5cea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\InputManager">
-      <UniqueIdentifier>{c556eee8-011b-4c2d-b41c-55c94b142f25}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\InputManager">
-      <UniqueIdentifier>{90880816-4b0a-469a-8f67-fb689e2538d0}</UniqueIdentifier>
-    </Filter>
+    <ClCompile Include="src\ImagePrinter.cpp" />
+    <ClCompile Include="src\BattleUI\BattleGrid.cpp" />
+    <ClCompile Include="src\BattleUI\BattleLog.cpp" />
+    <ClCompile Include="src\BattleUI\CardUI.cpp" />
+    <ClCompile Include="src\BattleUI\Progressbar.cpp" />
+    <ClCompile Include="src\BattleUI\UIWidget.cpp" />
+    <ClCompile Include="src\Entity\Boss.cpp" />
+    <ClCompile Include="src\InputManager\InputManager.cpp" />
+    <ClCompile Include="src\Common\ConsolePrinter.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="src\Common\RandomManager.cpp" />
+    <ClCompile Include="src\Map\Managers\MapManager.cpp" />
+    <ClCompile Include="src\battelfield\battlefield.cpp" />
+    <ClCompile Include="src\BattleManager\BattleManager.cpp" />
+    <ClCompile Include="src\Card\Card.cpp" />
+    <ClCompile Include="src\Card\C_Attack.cpp" />
+    <ClCompile Include="src\Card\C_Guard.cpp" />
+    <ClCompile Include="src\Card\C_Move.cpp" />
+    <ClCompile Include="src\Entity\Enemy.cpp" />
+    <ClCompile Include="src\Entity\Entity.cpp" />
+    <ClCompile Include="src\Entity\Player.cpp" />
+    <ClCompile Include="src\GameManager\GameManager.cpp" />
+    <ClCompile Include="src\Merchant\Merchant.cpp" />
+    <ClCompile Include="src\SoundManager\SoundManager.cpp" />
+    <ClCompile Include="test_main_taewoong.cpp" />
+    <ClCompile Include="src\Map\Component\Collider.cpp" />
+    <ClCompile Include="src\Map\Component\IComponent.cpp" />
+    <ClCompile Include="src\Map\Component\IRenderer.cpp" />
+    <ClCompile Include="src\Map\Component\TAnimRenderer.cpp" />
+    <ClCompile Include="src\Map\Component\TSpriteRenderer.cpp" />
+    <ClCompile Include="src\Map\Actor\Actor.cpp" />
+    <ClCompile Include="src\Map\Camera.cpp" />
+    <ClCompile Include="src\Common\TimeManager.cpp" />
+    <ClCompile Include="src\Map\Scene\Scene.cpp" />
+    <ClCompile Include="src\Map\Scene\GameScene.cpp" />
+    <ClCompile Include="src\Map\Actor\APlayer.cpp" />
+    <ClCompile Include="src\Map\Managers\SceneManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Card\Card.cpp">
-      <Filter>Source Files\Card</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Card\C_Move.cpp">
-      <Filter>Source Files\Card</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Card\C_Guard.cpp">
-      <Filter>Source Files\Card</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Card\C_Attack.cpp">
-      <Filter>Source Files\Card</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Entity\Entity.cpp">
-      <Filter>Source Files\Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Entity\Player.cpp">
-      <Filter>Source Files\Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Entity\Enemy.cpp">
-      <Filter>Source Files\Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="src\battelfield\battlefield.cpp">
-      <Filter>Source Files\Battlefield</Filter>
-    </ClCompile>
-    <ClCompile Include="src\BattleManager\BattleManager.cpp">
-      <Filter>Source Files\BattleManager</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GameManager\GameManager.cpp">
-      <Filter>Source Files\GameManager</Filter>
-    </ClCompile>
-    <ClCompile Include="Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="test_main_taewoong.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Merchant\Merchant.cpp">
-      <Filter>Source Files\Merchant</Filter>
-    </ClCompile>
-    <ClCompile Include="src\InputManager\InputManager.cpp">
-      <Filter>Source Files\InputManager</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Map\MapManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Common\RandomManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Common\ConsolePrinter.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="include\Card\C_Attack.h">
-      <Filter>Header Files\Card</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Card\C_Guard.h">
-      <Filter>Header Files\Card</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Card\C_Move.h">
-      <Filter>Header Files\Card</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Card\Card.h">
-      <Filter>Header Files\Card</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Entity\Enemy.h">
-      <Filter>Header Files\Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Entity\Entity.h">
-      <Filter>Header Files\Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Entity\Player.h">
-      <Filter>Header Files\Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="include\battlefield\battlefield.h">
-      <Filter>Header Files\Battlefield</Filter>
-    </ClInclude>
-    <ClInclude Include="include\BattleManager\BattleManager.h">
-      <Filter>Header Files\BattleManager</Filter>
-    </ClInclude>
-    <ClInclude Include="include\GameManager\GameManager.h">
-      <Filter>Header Files\GameManager</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Cards.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Entities.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Merchant\Merchant.h">
-      <Filter>Header Files\Merchant</Filter>
-    </ClInclude>
-    <ClInclude Include="include\InputManager\InputManager.h">
-      <Filter>Header Files\InputManager</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Map\MapManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Map\MapTypes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Common\RandomManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Common\Singleton.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Common\ConsolePrinter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClInclude Include="include\BattleUI\BattleGrid.h" />
+    <ClInclude Include="include\BattleUI\BattleLog.h" />
+    <ClInclude Include="include\BattleUI\CardUI.h" />
+    <ClInclude Include="include\BattleUI\Progressbar.h" />
+    <ClInclude Include="include\BattleUI\Text.h" />
+    <ClInclude Include="include\BattleUI\UIWidget.h" />
+    <ClInclude Include="include\Common\ConsolePrinter.h" />
+    <ClInclude Include="include\battlefield\battlefield.h" />
+    <ClInclude Include="include\BattleManager\BattleManager.h" />
+    <ClInclude Include="include\Cards.h" />
+    <ClInclude Include="include\Card\Card.h" />
+    <ClInclude Include="include\Card\C_Attack.h" />
+    <ClInclude Include="include\Card\C_Guard.h" />
+    <ClInclude Include="include\Card\C_Move.h" />
+    <ClInclude Include="include\Entities.h" />
+    <ClInclude Include="include\Entity\Boss.h" />
+    <ClInclude Include="include\Entity\Enemy.h" />
+    <ClInclude Include="include\Entity\Entity.h" />
+    <ClInclude Include="include\Entity\Player.h" />
+    <ClInclude Include="include\GameManager\GameManager.h" />
+    <ClInclude Include="include\ImagePrinter.h" />
+    <ClInclude Include="include\Merchant\Merchant.h" />
+    <ClInclude Include="include\InputManager\InputManager.h" />
+    <ClInclude Include="include\Map\Managers\MapManager.h" />
+    <ClInclude Include="include\Map\MapTypes.h" />
+    <ClInclude Include="include\Common\RandomManager.h" />
+    <ClInclude Include="include\Common\Singleton.h" />
+    <ClInclude Include="include\BattleUI\BattleUIGroup.h" />
+    <ClInclude Include="include\SoundManager\SoundManager.h" />
+    <ClInclude Include="include\Card\C_HealHP.h" />
+    <ClInclude Include="include\Card\C_HealStamina.h" />
+    <ClInclude Include="include\Map\Component\Collider.h" />
+    <ClInclude Include="include\Map\Component\IComponent.h" />
+    <ClInclude Include="include\Map\Component\IRenderer.h" />
+    <ClInclude Include="include\Map\Component\TAnimRenderer.h" />
+    <ClInclude Include="include\Map\Component\TSpriteRenderer.h" />
+    <ClInclude Include="include\Map\Actor\Actor.h" />
+    <ClInclude Include="include\Map\Camera.h" />
+    <ClInclude Include="include\Common\TimeManager.h" />
+    <ClInclude Include="include\Map\Scene\Scene.h" />
+    <ClInclude Include="include\Map\Scene\GameScene.h" />
+    <ClInclude Include="include\Map\Actor\APlayer.h" />
+    <ClInclude Include="include\Map\Managers\SceneManager.h" />
   </ItemGroup>
 </Project>
