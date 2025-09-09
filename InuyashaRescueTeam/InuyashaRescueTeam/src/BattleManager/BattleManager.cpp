@@ -40,7 +40,7 @@ void BattleManager::StartBattle()
     cursorInfo.bVisible = false; // 커서를 보이지 않게 설정
     SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursorInfo);
 
-    std::cout << "전투 시작!\n";
+    _Log.AddLog("전투 시작!\n");
 
     _HPTEXT.Draw();
     _ENTEXT.Draw();
@@ -68,8 +68,6 @@ void BattleManager::StartBattle()
     _Enemy_ENBar.Draw();
 
     //_HP
-
-    //ShowUI();
 
     if (auto a = dynamic_cast<Boss*>(enemy.get())) {
         SOUND_MANAGER->PlayBgm(BGMType::BossTheme);
@@ -126,8 +124,8 @@ void BattleManager::StartBattle()
             break;
         }
         Resolve(pCard, eCard, field);
-        player->RecoverStamina(5);
-        enemy->RecoverStamina(5);
+        player->RecoverStamina(10);
+        enemy->RecoverStamina(10);
 
         _Player_HPBar.SetValue(player.get()->GetHP());
         _Player_ENBar.SetValue(player.get()->GetStamina());
@@ -139,7 +137,6 @@ void BattleManager::StartBattle()
         _Player_ENBar.Draw();
 
         _Enemy_HPBar.Draw();
-        //ShowUI(); // 가중치 배율 들어가면 Enemy HP 오른쪽에 ★배치 / 한번 표시되면 이후로 안사라지는 버그 있음.
         _Enemy_ENBar.Draw();
 
         _Grid.Draw();
@@ -148,29 +145,6 @@ void BattleManager::StartBattle()
     }
     EndBattle();
 }
-
-
-void BattleManager::ShowUI()//하빈
-{
-    // 플레이어와 적 사이의 거리를 계산
-    int distanceX = std::abs(field.PlayerPositionX - field.EnemyPositionX);
-    int distanceY = std::abs(field.PlayerPositionY - field.EnemyPositionY);
-
-    // 3x3 범위 안에 있는지 확인
-    bool isInAttackRange = (distanceX <= 1 && distanceY <= 1);
-
-    //-------------임시 테스트용---------------
-    //std::cout << "==== 전투 UI ====\n";
-    //std::cout << player->GetName() << " HP: " << player->GetHP() << " Stamina: " << player->GetStamina()
-    //	<< " | " << enemy->GetName() << " HP: " << enemy->GetHP() << " Stamina: " << enemy->GetStamina();
-
-    if (isInAttackRange) {
-        std::cout << " ★"; // 공격 가중치 범위 안에 있을 때 ★ 표시
-    }
-    std::cout << "\n";
-}
-
-
 
 std::shared_ptr<Card> BattleManager::PlayerTurn()
 {
@@ -307,7 +281,7 @@ bool BattleManager::HitCheck(int Entity, C_Attack* card)
         return card->A_GetRange()[1 + RposY][1 + RposX];
     }
     else {
-        std::cout << "Wrong input HitCheck" << std::endl;
+        _Log.PrintLog("Wrong input HitCheck");
         return false;
     }
 }
