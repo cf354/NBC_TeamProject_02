@@ -28,6 +28,8 @@ void SoundManager::Init()
     SOUND_MANAGER->LoadSE(SEType::Backlash_Wave, "sound\\Backlash_Wave.wav");
     SOUND_MANAGER->LoadSE(SEType::CardMoveSelect, "sound\\CardMoveSelect.wav");
     SOUND_MANAGER->LoadSE(SEType::CardSelect, "sound\\CardSelect.wav");
+    SOUND_MANAGER->LoadSE(SEType::Naraku_Voice, "sound\\Naraku_Voice.wav");
+    SOUND_MANAGER->LoadSE(SEType::MapChangeSE, "sound\\MapChangeSE.wav");
 
 
 	SOUND_MANAGER->SetBgmVolume(10.f);//소리설정
@@ -89,7 +91,7 @@ void SoundManager::SetSEVolume(float volume)
 	for (auto& a : sound) {
 		a.second.setVolume(volume);
 	}
-    
+    sound[SEType::Naraku_Voice].setVolume(100.f);
 }
 
 

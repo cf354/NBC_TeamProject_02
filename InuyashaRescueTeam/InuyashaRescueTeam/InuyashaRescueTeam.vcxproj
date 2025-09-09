@@ -141,6 +141,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Map\UI\UIPlayerStatus.cpp" />
+    <ClCompile Include="src\Card\C_MasterCard.cpp" />
     <ClCompile Include="src\Map\Actor\APlayer.cpp" />
     <ClCompile Include="src\Map\Camera.cpp" />
     <ClCompile Include="src\ImagePrinter.cpp" />
@@ -187,6 +188,7 @@
     <ClCompile Include="src\Map\UI\UIBox.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Card\C_MasterCard.h" />
     <ClInclude Include="include\Map\Actor\APlayer.h" />
     <ClInclude Include="include\Map\Camera.h" />
     <ClInclude Include="include\BattleUI\BattleGrid.h" />

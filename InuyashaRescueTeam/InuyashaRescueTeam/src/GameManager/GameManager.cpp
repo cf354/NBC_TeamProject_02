@@ -23,7 +23,6 @@ void GameManager::Init()
 
     //사운드
     SOUND_MANAGER->Init();
-
 #pragma region ExampleBattleInit
     player = std::make_shared<Player>("이누야샤", 1, 100, 100, 10, 5, INU_BATTLE);
 
@@ -55,7 +54,7 @@ void GameManager::Init()
 
     AllCardsList.emplace_back(std::make_shared<C_Guard>("Guard", 0, 10, 15)); //8  //C_Guard(std::string n, int C, int G, int D) :DEF(D) {Name = n; Cost = C; Gold = G;}
 
-
+    
 
     AllCardsList.emplace_back(std::make_shared<C_Move>("DoubleMoveRight", 0, 5, 2, 1, 0)); // 9
     AllCardsList.emplace_back(std::make_shared<C_Move>("DoubleMoveLeft", 0, 10, 2, -1, 0)); // 10
@@ -75,9 +74,9 @@ void GameManager::Init()
     };
     AllCardsList.emplace_back(std::make_shared<C_Attack>("Backlash_Wave", 50, 70, 40, Backlash_Wave));//14
 
-    AllCardsList.emplace_back(std::make_shared<C_HealHP>("Heal", 0, 0, 30)); //15  C_HealHP(std::string n, int C, int G,int h) :Card(n, C, G),Hamount(h)
+    AllCardsList.emplace_back(std::make_shared<C_HealHP>("Heal", 20, 0, 30)); //15  C_HealHP(std::string n, int C, int G,int h) :Card(n, C, G),Hamount(h)
     AllCardsList.emplace_back(std::make_shared<C_HealStamina>("Energy UP", 0, 0, 10)); //16  C_HealStamina(std::string n, int C, int G, int h) :Card(n, C, G), Samount(h)
-
+    AllCardsList.emplace_back(std::make_shared<MasterCard>(" ", 0, 0));
 
     // 기본 카드 몇 장 추가
     player->AddCard(AllCardsList[0]); // MoveRight
@@ -90,9 +89,8 @@ void GameManager::Init()
     player->AddCard(AllCardsList[5]); // BladesOfBlood
     player->AddCard(AllCardsList[6]); // IronReaver
     player->AddCard(AllCardsList[7]); // WindScar
-
-    player->AddCard(AllCardsList[8]); // Guard
-    player->AddCard(AllCardsList[9]); // DoubleMoveRight
+    player->AddCard(AllCardsList[8]);
+    player->AddCard(AllCardsList[17]);
 
 #pragma endregion
 
@@ -122,7 +120,7 @@ void GameManager::Battle(bool isBoss)
     if (isBoss)
     {
         // 나락 (Boss)
-        enemy = std::make_shared<Boss>("나락", 2, 100, 60, 16, 6, 20, 40, NARAK, EnemyType::Naraku);
+        enemy = std::make_shared<Boss>("나락", 2, 200, 60, 16, 6, 40, 40, NARAK, EnemyType::Naraku);
     }
     else
     {
@@ -131,15 +129,15 @@ void GameManager::Battle(bool isBoss)
         switch ((EnemyType)enemyType)
         {
             case EnemyType::Sesshomaru:
-                enemy = std::make_shared<Enemy>("셋쇼마루", 1, 50, 30, 8, 3, 10, 20, SESSHO, EnemyType::Sesshomaru);
+                enemy = std::make_shared<Enemy>("셋쇼마루", 1, 80, 30, 8, 3, 15, 25, SESSHO, EnemyType::Sesshomaru);
                 break;
             case EnemyType::Bankotsu:
                 // 반코츠
-                enemy = std::make_shared<Enemy>("반코츠", 1, 60, 40, 10, 5, 12, 25, BANKOTSU, EnemyType::Bankotsu);
+                enemy = std::make_shared<Enemy>("반코츠", 1, 100, 40, 10, 5, 20, 30, BANKOTSU, EnemyType::Bankotsu);
                 break;
             default:
                 // 기본 적으로 설정
-                enemy = std::make_shared<Enemy>("역발의 유라", 1, 30, 20, 5, 2, 5, 10, YURA, EnemyType::Normal);
+                enemy = std::make_shared<Enemy>("역발의 유라", 1, 60, 20, 5, 2, 10, 15, YURA, EnemyType::Normal);
                 break;
         }
     }
@@ -266,6 +264,9 @@ void GameManager::UpdateMap()
 
 void GameManager::ExitMap()
 {
+    UpdateMap();
+    SOUND_MANAGER->PlaySE(SEType::MapChangeSE);
+    CONSOLE_PRINTER->ScreenTransition_Swipe();
     CONSOLE_PRINTER->SetActiveBuffer(0);
     CONSOLE_PRINTER->ScreenClear();
 }

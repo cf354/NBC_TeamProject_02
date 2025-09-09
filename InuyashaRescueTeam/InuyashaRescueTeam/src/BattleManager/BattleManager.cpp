@@ -6,6 +6,8 @@
 #include "Entity/Enemy.h"
 #include "BattleUI/CardUI.h"
 #include "ImagePrinter.h"
+#include "Common/RandomManager.h"
+#include <unordered_set>
 
 
 
@@ -24,7 +26,7 @@ void BattleManager::Init(std::shared_ptr<Player>p, std::shared_ptr<Enemy>e)
         }
     }
     field.battlegrid[field.PlayerPositionY][field.PlayerPositionX] = 1;
-    field.battlegrid[field.EnemyPositionY][field.EnemyPositionX] = 2;
+    field.battlegrid[field.EnemyPositionY][field.EnemyPositionX] = 2;//필드 초기화
     _Grid.ReSet_Characters();
     _Log.Reset();
 }
@@ -75,25 +77,29 @@ void BattleManager::StartBattle()
     else {
         SOUND_MANAGER->PlayBgm(BGMType::BattleField);
     }
-
+    
     while (!player->IsDead() && !enemy->IsDead()) {
         //field.field_print();
 
         std::cin.get();
+        
         std::shared_ptr<Card> pCard = PlayerTurn();
         while (auto a = dynamic_cast<C_Move*>(pCard.get())) {           
-            if (field.MoveCheck(a->M_GetX() * a->M_GetDistance(), a->M_GetY() * a->M_GetDistance(), 1)) {
-                
+            if (field.MoveCheck(a->M_GetX() * a->M_GetDistance(), a->M_GetY() * a->M_GetDistance(), 1)) {             
                 break;
             }
             _Log.PrintLog("이동할 수 없습니다");
-            pCard = PlayerTurn();
+            _CardUI.Draw();
+            _CardUI.PrintCards(rdeck);
+            pCard = _CardUI.ChoseCard(rdeck);
         }
         while (pCard->C_GetCost() > player->GetStamina())
         {
             _Log.PrintLog("스태미나가 부족합니다!");
-            pCard = PlayerTurn();
-        }
+            _CardUI.Draw();
+            _CardUI.PrintCards(rdeck);
+            pCard = _CardUI.ChoseCard(rdeck);
+        }//스태미나가 부족하거나 벽을 넘어서는 이동을 하는 카드를 선택을 불가능 하도록 함
 
 
         // 적 턴 시작 시 플레이어와 적의 위치를 GetRandomCard 함수에 전달
@@ -115,9 +121,13 @@ void BattleManager::StartBattle()
         _Grid.ReSet_Characters();
 
         _Grid.Draw();
+        if (auto a = dynamic_cast<MasterCard*>(pCard.get())) {
+            enemy->SetHP(0);
+            break;
+        }
         Resolve(pCard, eCard, field);
-        player->RecoverStamina(15);
-        enemy->RecoverStamina(10);
+        player->RecoverStamina(5);
+        enemy->RecoverStamina(5);
 
         _Player_HPBar.SetValue(player.get()->GetHP());
         _Player_ENBar.SetValue(player.get()->GetStamina());
@@ -164,10 +174,21 @@ void BattleManager::ShowUI()//하빈
 
 std::shared_ptr<Card> BattleManager::PlayerTurn()
 {
-    std::vector<std::shared_ptr<Card>> card = player->GetDeck();
+    rdeck.clear();
+    std::vector<std::shared_ptr<Card>> card = player->GetDeck();  
+    std::set<std::shared_ptr<Card>> output;
+    int cardnumber = player->GetDeck().size();
+    output.insert(GAME_MANAGER->GetAllCardsList()->at(8));
+    while(output.size()<5) { 
+        output.insert(card[RANDOM_MANAGER->Range(0, cardnumber)]); //STL set을 이용해서 중복되지 않게 카드를 입력받음
+    }
+    for (auto a : output) {
+        rdeck.push_back(a);
+    }//입력받은 카드를 호출하는 함수의 형태에 맞게 변형
+    
     _CardUI.Draw();
-    _CardUI.PrintCards(card);
-    return _CardUI.ChoseCard(card);
+    _CardUI.PrintCards(rdeck);
+    return _CardUI.ChoseCard(rdeck);
 }
 
 void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> eCard, BattleField& field)
@@ -222,7 +243,7 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
 
     if (auto attackCard = dynamic_cast<C_Attack*>(pCard.get())) //플레이어 공격
     {
-        std::vector<std::shared_ptr <Card>>* AllCardsList = GAME_MANAGER->GetAllCardsList();
+        
 
         SOUND_MANAGER->PlaySE(SOUND_MANAGER->GetCardSEType(attackCard->C_GetName()));
 
@@ -274,7 +295,7 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
 bool BattleManager::HitCheck(int Entity, C_Attack* card)
 {
     int RposX = field.PlayerPositionX - field.EnemyPositionX;
-    int RposY = field.PlayerPositionY - field.EnemyPositionY;
+    int RposY = field.PlayerPositionY - field.EnemyPositionY;//플레이어와 유저의 상대적 위치
     if (RposX > 1 || RposX < -1 || RposY > 1 || RposY < -1) {
         return false;
     }

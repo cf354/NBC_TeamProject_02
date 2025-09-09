@@ -46,6 +46,7 @@
     <ClCompile Include="src\Map\Render\TSprite.cpp" />
     <ClCompile Include="src\Map\UI\UIBar.cpp" />
     <ClCompile Include="src\Map\UI\UIBox.cpp" />
+    <ClCompile Include="src\Card\C_MasterCard.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\BattleUI\BattleGrid.h" />
@@ -99,5 +100,6 @@
     <ClInclude Include="include\Map\UI\UIPlayerStatus.h" />
     <ClInclude Include="include\Map\UI\UIBar.h" />
     <ClInclude Include="include\Map\UI\UIBox.h" />
+    <ClInclude Include="include\Card\C_MasterCard.h" />
   </ItemGroup>
 </Project>

@@ -14,6 +14,7 @@ enum class BGMType {
     BossMapTheme,
     EndBgm,
     ShopBgm
+    
 };
 enum class SEType {
     WindScar,
@@ -26,6 +27,8 @@ enum class SEType {
     Backlash_Wave,
     CardMoveSelect,
     CardSelect,
+    Naraku_Voice,
+    MapChangeSE,
     None
 };
 
