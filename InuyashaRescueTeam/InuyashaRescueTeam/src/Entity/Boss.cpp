@@ -1,3 +1,4 @@
+// Boss.cpp
 #include "Entity/Boss.h"
 #include "Card/C_Move.h"
 #include "Card/C_Attack.h"
@@ -32,6 +33,12 @@ std::shared_ptr<Card> Boss::GetRandomCard(int playerX, int playerY, int enemyX, 
     // 체력이 50% 이하일 때 페이즈 전환
     if (GetHP() < GetMAXHP() / 2 && phase == 1) {
         phase = 2;
+
+        // 2페이즈 진입 사운드 재생
+        if (!phase2VoicePlayed) { // 플래그가 false일 때만 실행
+            SOUND_MANAGER->PlaySE(SEType::Naraku_Voice);
+            phase2VoicePlayed = true; // 사운드 재생 후 플래그를 true로 변경
+        }
 
         // 새로운 강력한 카드 추가
         bool RageAttack[3][3] = { {true,true,true}, {true,true,true}, {true,true,true} };
