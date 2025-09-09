@@ -155,7 +155,7 @@ void MapManager::MST()
 		AdditionalConnectRandomly(edgesNotConnected);
 	}
 
-	SetDoorDirection();
+	//SetDoorDirection();
 }
 
 void MapManager::FindPaths()
@@ -186,17 +186,6 @@ void MapManager::FindPaths()
 		{
 			for (int k = startX; k <= endX; k++)
 			{
-				// 중심부에서 한 칸 이상 떨어지고 문 방향은 가중치 1로 계산, 중심부도 추가
-				// E->S->W->N
-				if ((j == vecNode[i]->pos.y && k == vecNode[i]->pos.x) ||
-					((vecNode[i]->doorDirection & 1) != 0 && j == vecNode[i]->pos.y && k > vecNode[i]->pos.x) ||
-					((vecNode[i]->doorDirection & 2) != 0 && k == vecNode[i]->pos.x && j > vecNode[i]->pos.y) ||
-					((vecNode[i]->doorDirection & 4) != 0 && j == vecNode[i]->pos.y && k < vecNode[i]->pos.x) ||
-					((vecNode[i]->doorDirection & 8) != 0 && k == vecNode[i]->pos.x && j < vecNode[i]->pos.y))
-				{
-					grid[j][k] = CostAStar::RoomToDoor;
-					continue;
-				}
 				grid[j][k] = CostAStar::Room;
 			}
 		}
@@ -861,8 +850,8 @@ void MapManager::AStarPathFind(Edge* edge, int gridSizeX, int gridSizeY)
 {
 	Vector2D startPos = edge->node1->pos;
 	Vector2D endPos = edge->node2->pos;
-	int rangeX[2] = { min(startPos.x, endPos.x), max(startPos.x, endPos.x) };
-	int rangeY[2] = { min(startPos.y, endPos.y), max(startPos.y, endPos.y) };
+    int rangeX[2] = { 0, gridSizeX - 1 };
+    int rangeY[2] = { 0, gridSizeY - 1 };
 
 	vector<vector<AStarNode*>> astarGrid(gridSizeY, vector<AStarNode*>(gridSizeX));
 	for (int i = rangeY[0]; i <= rangeY[1]; i++)
@@ -924,11 +913,11 @@ void MapManager::AStarPathFind(Edge* edge, int gridSizeX, int gridSizeY)
 		{
 			int newX = node->x + dx[i];
 			int newY = node->y + dy[i];
-			AStarNode* newNode = astarGrid[newY][newX];
 			// 범위 안에 없으면
 			if (newX < rangeX[0] || newX > rangeX[1] || newY < rangeY[0] || newY > rangeY[1])
 				continue;
 
+            AStarNode* newNode = astarGrid[newY][newX];
 			// 닫힌 노드라면
 			if (newNode->closed)
 				continue;

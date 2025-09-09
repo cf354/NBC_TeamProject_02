@@ -153,9 +153,8 @@ struct Triangle
 enum class CostAStar
 {
 	Hallway = 1,
-	RoomToDoor = 5,
 	Empty = 10,
-	Room = -1,
+	Room = 3,
 };
 
 struct AStarNode
