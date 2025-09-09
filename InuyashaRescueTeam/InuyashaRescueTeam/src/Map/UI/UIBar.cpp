@@ -16,10 +16,10 @@ void UIBar::Render()
     for (int i = 0; i < size.y; i++)
     {
         CONSOLE_PRINTER->SetData(worldPos.y + i, worldPos.x, L' ');
-        for (int j = 1; j <= textSize; j++)
+        for (int j = 0; j < textSize; j++)
         {
             bool textArea = (i == size.y / 2 && j < str.length());
-            CONSOLE_PRINTER->SetData(worldPos.y + i, worldPos.x + j, textArea ? str[j] : L' ', MColor::WHITE);
+            CONSOLE_PRINTER->SetData(worldPos.y + i, worldPos.x + 1 + j, textArea ? str[j] : L' ', MColor::WHITE);
         }
         for (int j = 1; j <= hpBarSizeX; j++)
         {

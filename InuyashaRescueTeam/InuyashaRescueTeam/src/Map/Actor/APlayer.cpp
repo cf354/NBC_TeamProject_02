@@ -72,12 +72,13 @@ void APlayer::Move()
 	if ((!isMovableX || movePos.x == 0) && (!isMovableY || movePos.y == 0))
 		return;
 
-	if (isMovableX)
+    // x축 이동과 y축 이동 중 하나만 가능하게 변경
+	if (isMovableX && movePos.x != 0)
 	{
 		pos.x = max(pos.x + movePos.x, 0);
 		isMovableX = false;
 	}
-	if (isMovableY)
+	else
 	{
 		pos.y = max(pos.y + movePos.y, 0);
 		isMovableY = false;
