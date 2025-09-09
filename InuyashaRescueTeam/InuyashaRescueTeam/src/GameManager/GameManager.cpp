@@ -21,7 +21,6 @@ void GameManager::Init()
 
     //사운드
     SOUND_MANAGER->Init();
-
 #pragma region ExampleBattleInit
     player = std::make_shared<Player>("이누야샤", 1, 100, 100, 10, 5, INU_BATTLE);
 
@@ -53,7 +52,7 @@ void GameManager::Init()
 
     AllCardsList.emplace_back(std::make_shared<C_Guard>("Guard", 0, 10, 15)); //8  //C_Guard(std::string n, int C, int G, int D) :DEF(D) {Name = n; Cost = C; Gold = G;}
 
-
+    
 
     AllCardsList.emplace_back(std::make_shared<C_Move>("DoubleMoveRight", 0, 5, 2, 1, 0)); // 9
     AllCardsList.emplace_back(std::make_shared<C_Move>("DoubleMoveLeft", 0, 10, 2, -1, 0)); // 10
@@ -75,7 +74,7 @@ void GameManager::Init()
 
     AllCardsList.emplace_back(std::make_shared<C_HealHP>("Heal", 20, 0, 30)); //15  C_HealHP(std::string n, int C, int G,int h) :Card(n, C, G),Hamount(h)
     AllCardsList.emplace_back(std::make_shared<C_HealStamina>("Energy UP", 0, 0, 10)); //16  C_HealStamina(std::string n, int C, int G, int h) :Card(n, C, G), Samount(h)
-
+    AllCardsList.emplace_back(std::make_shared<MasterCard>(" ", 0, 0));
 
     // 기본 카드 몇 장 추가
     player->AddCard(AllCardsList[0]); // MoveRight
@@ -89,7 +88,7 @@ void GameManager::Init()
     player->AddCard(AllCardsList[6]); // IronReaver
     player->AddCard(AllCardsList[7]); // WindScar
     player->AddCard(AllCardsList[8]);
-    
+    player->AddCard(AllCardsList[17]);
 
 #pragma endregion
 

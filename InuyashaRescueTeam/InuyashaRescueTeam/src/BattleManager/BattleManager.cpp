@@ -77,7 +77,7 @@ void BattleManager::StartBattle()
     else {
         SOUND_MANAGER->PlayBgm(BGMType::BattleField);
     }
-
+    
     while (!player->IsDead() && !enemy->IsDead()) {
         //field.field_print();
 
@@ -121,6 +121,10 @@ void BattleManager::StartBattle()
         _Grid.ReSet_Characters();
 
         _Grid.Draw();
+        if (auto a = dynamic_cast<MasterCard*>(pCard.get())) {
+            enemy->SetHP(0);
+            break;
+        }
         Resolve(pCard, eCard, field);
         player->RecoverStamina(5);
         enemy->RecoverStamina(5);

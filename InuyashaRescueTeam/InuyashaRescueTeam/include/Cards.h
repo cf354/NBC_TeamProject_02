@@ -5,3 +5,4 @@
 #include"Card\C_Move.h"
 #include"Card\C_HealHP.h"
 #include"Card\C_HealStamina.h"
+#include"Card\C_MasterCard.h"

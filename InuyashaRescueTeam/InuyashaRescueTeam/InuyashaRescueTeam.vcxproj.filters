@@ -38,6 +38,7 @@
     <ClCompile Include="src\Map\Scene\GameScene.cpp" />
     <ClCompile Include="src\Map\Actor\APlayer.cpp" />
     <ClCompile Include="src\Map\Managers\SceneManager.cpp" />
+    <ClCompile Include="src\Card\C_MasterCard.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\BattleUI\BattleGrid.h" />
@@ -83,5 +84,6 @@
     <ClInclude Include="include\Map\Scene\GameScene.h" />
     <ClInclude Include="include\Map\Actor\APlayer.h" />
     <ClInclude Include="include\Map\Managers\SceneManager.h" />
+    <ClInclude Include="include\Card\C_MasterCard.h" />
   </ItemGroup>
 </Project>

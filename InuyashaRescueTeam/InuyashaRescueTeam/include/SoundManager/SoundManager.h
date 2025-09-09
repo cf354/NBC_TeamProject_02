@@ -26,6 +26,7 @@ enum class SEType {
     Backlash_Wave,
     CardMoveSelect,
     CardSelect,
+    Naraku_Voice,
     None
 };
 
