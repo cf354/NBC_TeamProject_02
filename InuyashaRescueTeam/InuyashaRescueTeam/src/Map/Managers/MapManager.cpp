@@ -356,7 +356,7 @@ void MapManager::MakeMapActors()
 					str += mapData[i - k][j + l];
 				}
 			}
-            spriteRenderer->SetSprite({ 0.0f, 1.0f }, { colCont, rowCont }, str);
+            spriteRenderer->SetSprite({ 0.0f, 1.0f }, TSprite({ colCont, rowCont }, str));
             collider->SetSize({ 0.0f, 1.0f }, Vector2D(colCont, max(1, rowCont - 1)));
             collider->SetMyChannel(CollideChannel::WorldObj);
             collider->SetChannelResonse(CollideChannel::Player);
@@ -426,10 +426,19 @@ void MapManager::EnterNextStage()
 
         Actor* actorBoss = new Actor();
         actorBoss->SetPos(Vector2D(DATA_WIDTH / 8 * 5, DATA_HEIGHT / 2));
-        TSpriteRenderer* spriteRenderer = actorBoss->AddComponent<TSpriteRenderer>();
+        TAnimRenderer* renderer = actorBoss->AddComponent<TAnimRenderer>();
         Collider* collider = actorBoss->AddComponent<Collider>();
-        spriteRenderer->SetSprite(Vector2F(0.5f, 0.5f), Vector2D(11, 3), L"┌─────────┐│ B O S S │└─────────┘");
-        collider->SetSize(Vector2F(0.5f, 0.5f), Vector2D(11, 3));
+        vector<TSprite> spritesIdle;
+        spritesIdle.push_back(TSprite(Vector2D(9, 9), L"   ___     /___\\    (o o)   /(===)\\  /|###|\\   |###|    |---|   /|   |\\   ^   ^  ", FOREGROUND_RED));
+        spritesIdle.push_back(TSprite(Vector2D(9, 9), L"   ___     /___\\    (o o)   /(===)\\   |###|   /|###|\\   |---|   /|   |\\   ^   ^  ", FOREGROUND_RED));
+        spritesIdle.push_back(TSprite(Vector2D(9, 9), L"   ___     /___\\    (o o)   /(===)\\   |###|    |---|   /|###|\\   |   |    ^   ^  ", FOREGROUND_RED));
+        spritesIdle.push_back(TSprite(Vector2D(9, 9), L"   ___     /___\\    (o o)   /(===)\\   |###|   /|###|\\   |---|   /|   |\\   ^   ^  ", FOREGROUND_RED));
+        TAnimation* animIdle = new TAnimation("Idle", Vector2F(0.5f, 1.0f));
+        animIdle->SetSprites(spritesIdle);
+        animIdle->SetSpeed(4);
+        renderer->AddAnimation(animIdle);
+        renderer->SetCurrAnim("Idle");
+        collider->SetSize(Vector2F(0.5f, 1.0f), Vector2D(9, 9));
         collider->SetMyChannel(CollideChannel::Actor);
         collider->SetChannelResonse(CollideChannel::Player);
         collider->AddOnHit([](const vector<Actor*>& vec)
@@ -449,8 +458,8 @@ void MapManager::MakeStairs()
 	Actor* actorStairs = new Actor();
     TSpriteRenderer* renderer = actorStairs->AddComponent<TSpriteRenderer>();
     Collider* collider = actorStairs->AddComponent<Collider>();
-    renderer->SetSprite(Vector2F(), Vector2D(3, 3), L"  # #####");
-    collider->SetSize(Vector2F(), Vector2D(3, 3));
+    renderer->SetSprite(Vector2F(0.5f, 1.0f), TSprite(Vector2D(3, 3), L"  # #####"));
+    collider->SetSize(Vector2F(0.5f, 1.0f), Vector2D(3, 3));
     collider->SetMyChannel(CollideChannel::Actor);
     collider->SetChannelResonse(CollideChannel::Player);
     collider->AddOnHit(
@@ -467,10 +476,10 @@ void MapManager::MakeMerchant()
     Actor* actorMerchant = new Actor();
     TAnimRenderer* renderer = actorMerchant->AddComponent<TAnimRenderer>();
     Collider* collider = actorMerchant->AddComponent<Collider>();
-    vector<wstring> spritesMerchant;
-    spritesMerchant.push_back(L"●○●○●○●○●○●○●○  I T E M  ○● S T O R E ●○●○●○●○●○●○●○");
-    spritesMerchant.push_back(L"○●○●○●○●○●○●○●  I T E M  ●○ S T O R E ○●○●○●○●○●○●○●");
-    Animation* animIdle = new Animation("Idle", Vector2F(0.5f, 1.0f), Vector2D(13, 4));
+    vector<TSprite> spritesMerchant;
+    spritesMerchant.push_back(TSprite(Vector2D(13, 4), L"●○●○●○●○●○●○●○  I T E M  ○● S T O R E ●○●○●○●○●○●○●○"));
+    spritesMerchant.push_back(TSprite(Vector2D(13, 4), L"○●○●○●○●○●○●○●  I T E M  ●○ S T O R E ○●○●○●○●○●○●○●"));
+    TAnimation* animIdle = new TAnimation("Idle", Vector2F(0.5f, 1.0f));
     animIdle->SetSprites(spritesMerchant);
     animIdle->SetSpeed(4);
     renderer->AddAnimation(animIdle);

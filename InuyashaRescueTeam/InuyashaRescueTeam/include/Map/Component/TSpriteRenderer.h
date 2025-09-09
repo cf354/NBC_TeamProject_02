@@ -1,9 +1,7 @@
 ﻿#pragma once
 #include "IRenderer.h"
-#include "Map/MapTypes.h"
-#include <string>
+#include "Map/Render/TSprite.h"
 
-using namespace std;
 using namespace Map;
 
 class TSpriteRenderer : public IRenderer
@@ -14,11 +12,10 @@ public:
 	void Update() override;
 	void Render() override;
 
-	void SetSprite(Vector2F pivot, Vector2D size, wstring sprite);
+	void SetSprite(Vector2F pivot, TSprite sprite);
 
 private:
 	Vector2F pivot;
-	Vector2D size;
-	wstring sprite;
+    TSprite sprite;
 };
 

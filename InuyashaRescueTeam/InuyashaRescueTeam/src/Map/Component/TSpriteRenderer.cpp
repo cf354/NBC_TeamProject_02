@@ -3,9 +3,10 @@
 #include "Map/Actor/Actor.h"
 #include "Map/Managers/SceneManager.h"
 #include "Map/Camera.h"
+#include "Map/Render/TSprite.h"
 
 TSpriteRenderer::TSpriteRenderer()
-	: size(), sprite(L"")
+	: sprite()
 {
 }
 
@@ -15,6 +16,10 @@ void TSpriteRenderer::Update()
 
 void TSpriteRenderer::Render()
 {
+    Vector2D size = sprite.GetSize();
+    wstring data = sprite.GetData();
+    WORD attribute = sprite.GetAttribute();
+
 	Camera* camera = SCENE_MANAGER->GetCurrentScene()->GetCamera();
 	if (camera == nullptr)
 		return;
@@ -29,7 +34,7 @@ void TSpriteRenderer::Render()
 		for (int j = 0; j < size.x; j++)
 		{
 			idx = i * size.x + j;
-			if (sprite[idx] == RENDER_ALPHA)
+			if (data[idx] == RENDER_ALPHA)
 				continue;
 
 			y = pos.y + i;
@@ -37,14 +42,13 @@ void TSpriteRenderer::Render()
 			if (y < lt.y || y > rb.y || x < lt.x || x > rb.x)
 				continue;
 
-			CONSOLE_PRINTER->SetData(y - lt.y, x - lt.x, sprite[idx]);
+			CONSOLE_PRINTER->SetData(y - lt.y, x - lt.x, data[idx], attribute);
 		}
 	}
 }
 
-void TSpriteRenderer::SetSprite(Vector2F pivot, Vector2D size, wstring sprite)
+void TSpriteRenderer::SetSprite(Vector2F pivot, TSprite sprite)
 {
-	this->pivot = pivot;
-	this->size = size;
-	this->sprite = sprite;
+    this->pivot = pivot;
+    this->sprite = sprite;
 }

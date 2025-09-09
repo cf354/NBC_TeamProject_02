@@ -12,36 +12,36 @@ void GameScene::Enter()
 	player = new APlayer();
 	TAnimRenderer* playerAnimRenderer = player->AddComponent<TAnimRenderer>();
 
-	vector<wstring> spriteIdle;
-	spriteIdle.push_back(L"??O???/|\\??/ \\?");
+	vector<TSprite> spriteIdle;
+	spriteIdle.push_back(TSprite(Vector2D(5, 3), L"??O???/|\\??/ \\?"));
 
-	vector<wstring> spritesUpDown;
-	spritesUpDown.push_back(L"??O???.|`??`?.?");
-	spritesUpDown.push_back(L"??O???(|`??`?)?");
-	spritesUpDown.push_back(L"??O???(|`??`?)?");
-	spritesUpDown.push_back(L"??O???.|`??`?.?");
-	spritesUpDown.push_back(L"??O???`|.??.?`?");
-	spritesUpDown.push_back(L"??O???`|)??(?`?");
-	spritesUpDown.push_back(L"??O???`|)??(?`?");
-	spritesUpDown.push_back(L"??O???`|.??.?`?");
+	vector<TSprite> spritesUpDown;
+	spritesUpDown.push_back(TSprite(Vector2D(5, 3), L"??O???.|`??`?.?"));
+	spritesUpDown.push_back(TSprite(Vector2D(5, 3), L"??O???(|`??`?)?"));
+	spritesUpDown.push_back(TSprite(Vector2D(5, 3), L"??O???(|`??`?)?"));
+	spritesUpDown.push_back(TSprite(Vector2D(5, 3), L"??O???.|`??`?.?"));
+	spritesUpDown.push_back(TSprite(Vector2D(5, 3), L"??O???`|.??.?`?"));
+	spritesUpDown.push_back(TSprite(Vector2D(5, 3), L"??O???`|)??(?`?"));
+	spritesUpDown.push_back(TSprite(Vector2D(5, 3), L"??O???`|)??(?`?"));
+	spritesUpDown.push_back(TSprite(Vector2D(5, 3), L"??O???`|.??.?`?"));
 
-	vector<wstring> spritesSide;
-	spritesSide.push_back(L"??O???.|\\??/ .?");
-	spritesSide.push_back(L"??O???.|\\??/ .?");
-	spritesSide.push_back(L"??O????|????|??");
-	spritesSide.push_back(L"??O???/|.??. \\?");
-	spritesSide.push_back(L"??O???/|.??. \\?");
-	spritesSide.push_back(L"??O????|????|??");
+	vector<TSprite> spritesSide;
+	spritesSide.push_back(TSprite(Vector2D(5, 3), L"??O???.|\\??/ .?"));
+	spritesSide.push_back(TSprite(Vector2D(5, 3), L"??O???.|\\??/ .?"));
+	spritesSide.push_back(TSprite(Vector2D(5, 3), L"??O????|????|??"));
+	spritesSide.push_back(TSprite(Vector2D(5, 3), L"??O???/|.??. \\?"));
+	spritesSide.push_back(TSprite(Vector2D(5, 3), L"??O???/|.??. \\?"));
+	spritesSide.push_back(TSprite(Vector2D(5, 3), L"??O????|????|??"));
 
-	Animation* animIdle = new Animation("Idle", Vector2F(0.5f, 1.0f), Vector2D(5, 3));
+	TAnimation* animIdle = new TAnimation("Idle", Vector2F(0.5f, 1.0f));
 	animIdle->SetSprites(spriteIdle);
 	playerAnimRenderer->AddAnimation(animIdle);
 
-	Animation* animWalkUpDown = new Animation("WalkUpDown", Vector2F(0.5f, 1.0f), Vector2D(5, 3));
+    TAnimation* animWalkUpDown = new TAnimation("WalkUpDown", Vector2F(0.5f, 1.0f));
 	animWalkUpDown->SetSprites(spritesUpDown);
 	playerAnimRenderer->AddAnimation(animWalkUpDown);
 
-	Animation* animWalkSide = new Animation("WalkSide", Vector2F(0.5f, 1.0f), Vector2D(5, 3));
+    TAnimation* animWalkSide = new TAnimation("WalkSide", Vector2F(0.5f, 1.0f));
 	animWalkSide->SetSprites(spritesSide);
 	playerAnimRenderer->AddAnimation(animWalkSide);
 

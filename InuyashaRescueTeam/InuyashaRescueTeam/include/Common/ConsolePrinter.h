@@ -24,13 +24,14 @@ public:
     void SetActiveBuffer(int hIdx);
 
 	void DataClear();
-	void SetData(int y, int x, wchar_t c);
+	void SetData(int y, int x, wchar_t c, WORD attribute);
 
 private:
 	HANDLE hConsole[2];									// 깜빡임 없애기 위해 버퍼 2개 사용
 	int hIdx = 0;       // 다음에 출력할 버퍼 인덱스
 
 	wchar_t data[DATA_HEIGHT][DATA_WIDTH];			// 전체 데이터
+    WORD attribute[DATA_HEIGHT][DATA_WIDTH];            // 글자 색
 };
 
 #define CONSOLE_PRINTER (ConsolePrinter::GetInstance())

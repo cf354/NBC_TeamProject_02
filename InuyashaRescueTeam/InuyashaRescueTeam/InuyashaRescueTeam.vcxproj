@@ -175,8 +175,10 @@
     <ClCompile Include="src\Map\Scene\Scene.cpp" />
     <ClCompile Include="src\Merchant\Merchant.cpp" />
     <ClCompile Include="src\SoundManager\SoundManager.cpp" />
+    <ClCompile Include="src\Map\Render\TAnimation.cpp" />
     <ClCompile Include="test_main_taewoong.cpp" />
     <ClCompile Include="src\Common\TimeManager.cpp" />
+    <ClCompile Include="src\Map\Render\TSprite.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Map\Actor\APlayer.h" />
@@ -222,6 +224,8 @@
     <ClInclude Include="include\BattleUI\BattleUIGroup.h" />
     <ClInclude Include="include\SoundManager\SoundManager.h" />
     <ClInclude Include="include\Common\TimeManager.h" />
+    <ClInclude Include="include\Map\Render\TSprite.h" />
+    <ClInclude Include="include\Map\Render\TAnimation.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
