@@ -62,6 +62,21 @@ Vector2D UI::GetSize()
 	return size;
 }
 
+vector<UI*> UI::GetAllChildren()
+{
+    vector<UI*> result;
+    for (int i = 0; i < children.size(); i++)
+    {
+        vector<UI*> elements = children[i]->GetAllChildren();
+        for (int j = 0; j < elements.size(); j++)
+        {
+            result.push_back(elements[j]);
+        }
+        result.push_back(children[i]);
+    }
+    return result;
+}
+
 void UI::SetParent(UI* parent)
 {
 	this->parent = parent;

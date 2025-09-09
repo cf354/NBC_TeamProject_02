@@ -177,7 +177,7 @@
     <ClCompile Include="src\Map\Scene\GameScene.cpp" />
     <ClCompile Include="src\Map\Scene\Scene.cpp" />
     <ClCompile Include="src\Map\UI\UI.cpp" />
-    <ClCompile Include="src\Map\UI\Text.cpp" />
+    <ClCompile Include="src\Map\UI\UIText.cpp" />
     <ClCompile Include="src\Merchant\Merchant.cpp" />
     <ClCompile Include="src\SoundManager\SoundManager.cpp" />
     <ClCompile Include="src\Map\Render\TAnimation.cpp" />
@@ -225,7 +225,7 @@
     <ClInclude Include="include\Map\Scene\GameScene.h" />
     <ClInclude Include="include\Map\Scene\Scene.h" />
     <ClInclude Include="include\Map\UI\UI.h" />
-    <ClInclude Include="include\Map\UI\Text.h" />
+    <ClInclude Include="include\Map\UI\UIText.h" />
     <ClInclude Include="include\Merchant\Merchant.h" />
     <ClInclude Include="include\InputManager\InputManager.h" />
     <ClInclude Include="include\Map\Managers\MapManager.h" />

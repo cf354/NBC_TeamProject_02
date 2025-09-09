@@ -38,6 +38,8 @@ public:
 	Vector2D GetPosition(bool isWorldPosition = false);
 	Vector2D GetSize();
 
+    vector<UI*> GetAllChildren();
+
 protected:
 	string name;
 	Anchor anchor;
