@@ -73,7 +73,7 @@ void GameManager::Init()
     };
     AllCardsList.emplace_back(std::make_shared<C_Attack>("Backlash_Wave", 50, 70, 40, Backlash_Wave));//14
 
-    AllCardsList.emplace_back(std::make_shared<C_HealHP>("Heal", 0, 0, 30)); //15  C_HealHP(std::string n, int C, int G,int h) :Card(n, C, G),Hamount(h)
+    AllCardsList.emplace_back(std::make_shared<C_HealHP>("Heal", 20, 0, 30)); //15  C_HealHP(std::string n, int C, int G,int h) :Card(n, C, G),Hamount(h)
     AllCardsList.emplace_back(std::make_shared<C_HealStamina>("Energy UP", 0, 0, 10)); //16  C_HealStamina(std::string n, int C, int G, int h) :Card(n, C, G), Samount(h)
 
 
@@ -88,9 +88,8 @@ void GameManager::Init()
     player->AddCard(AllCardsList[5]); // BladesOfBlood
     player->AddCard(AllCardsList[6]); // IronReaver
     player->AddCard(AllCardsList[7]); // WindScar
-
-    player->AddCard(AllCardsList[8]); // Guard
-    player->AddCard(AllCardsList[9]); // DoubleMoveRight
+    player->AddCard(AllCardsList[8]);
+    
 
 #pragma endregion
 
