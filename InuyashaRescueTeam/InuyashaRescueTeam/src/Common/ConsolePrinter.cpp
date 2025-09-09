@@ -81,6 +81,58 @@ void ConsolePrinter::Render()
 	ScreenFlip();
 }
 
+bool ConsolePrinter::ScreenTransition_Swipe()
+{
+    int maxFrame = 20;
+    int delay = 25;
+    for (int frame = 1; frame <= maxFrame; ++frame)
+    {
+        MakePattern_Swipe(frame, maxFrame, data);
+        ScreenPrint();
+        ScreenFlip();
+        Sleep(delay);
+    }
+    return true;
+}
+
+void ConsolePrinter::MakePattern_Swipe(int frame, int maxFrame, wchar_t(&outPattern)[DATA_HEIGHT][DATA_WIDTH])
+{
+    /*wchar_t fillChar = L'.';
+    double progress = double(frame) / maxFrame;*/
+
+    //for (int y = 0; y < DATA_HEIGHT; ++y)
+    //{
+    //    for (int x = 0; x < DATA_WIDTH * progress; ++x)
+    //    {
+    //        outPattern[y][x] = fillChar;
+    //    }
+    //}
+
+    //wchar_t fillChar = L'.';
+    //for (int y = 0; y < DATA_HEIGHT; ++y)
+    //{
+    //    if ((y % maxFrame) + 1 == frame)
+    //    {
+    //        for (int x = 0; x < DATA_WIDTH; ++x)
+    //        {
+    //            outPattern[y][x] = fillChar;
+    //        }
+    //    }
+    //}
+
+    wchar_t fillChar = L'.';
+    for (int y = 0; y < DATA_HEIGHT; ++y)
+    {
+        for (int x = 0; x < DATA_WIDTH; ++x)
+        {
+            if ((x % maxFrame) + 1 == frame)
+            {
+                outPattern[y][x] = fillChar;
+            }
+        }
+    }
+}
+
 void ConsolePrinter::SetActiveBuffer(int hIdx)
 {
     this->hIdx = hIdx;

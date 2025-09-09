@@ -259,6 +259,9 @@ void GameManager::UpdateMap()
 
 void GameManager::ExitMap()
 {
+    UpdateMap();
+    SOUND_MANAGER->PlaySE(SEType::MapChangeSE);
+    CONSOLE_PRINTER->ScreenTransition_Swipe();
     CONSOLE_PRINTER->SetActiveBuffer(0);
     CONSOLE_PRINTER->ScreenClear();
 }
