@@ -56,7 +56,7 @@ Player::Player(const std::string& name, int level, int hp, int stamina, int atk,
     // 플레이어 정보 초기화
     this->EXP = 0;
     this->maxEXP = 20 * this->Level;
-    this->Money = 0;
+    this->Money = 50;
     this->posX = 0;
     this->posY = 0;
 }
