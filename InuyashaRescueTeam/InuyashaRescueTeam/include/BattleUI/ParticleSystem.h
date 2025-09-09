@@ -7,10 +7,10 @@ class ParticleSystem
 {
 public:
     ParticleSystem(int canvaswidth, int canvasheight, int canvasx, int canvasy, int activeX, int activeY, int endTick) {
-        _CanvasWidth = canvaswidth;
-        _CanvasHeight = canvasheight;
-        _CanvasX = canvasx;
-        _CanvasY = canvasy;
+        _CanvasWidth = 200;
+        _CanvasHeight = 42;
+        _CanvasX = 0;
+        _CanvasY = 2;
         _EndTick = endTick;
         _ActiveX = activeX;
         _ActiveY = activeY;
