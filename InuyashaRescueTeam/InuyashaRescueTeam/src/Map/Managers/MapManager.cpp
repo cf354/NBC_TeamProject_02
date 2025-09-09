@@ -249,6 +249,8 @@ void MapManager::GenerateMapData()
 			if (mapData[i][j] != '|')
 				mapData[i][j] = c;
 		};
+
+    wstring strFloor(mapWidth * mapHeight, ' ');
 	for (int i = 0; i < gridHeight; i++)
 	{
 		for (int j = 0; j < gridWidth; j++)
@@ -258,6 +260,15 @@ void MapManager::GenerateMapData()
 
 			Vector2D lt = Vector2D(j * sizeMultipleX, i * sizeMultipleY);
 			Vector2D rb = lt + Vector2D(sizeMultipleX - 1, sizeMultipleY - 1);
+
+            // 바닥 액터
+            for (int k = lt.y; k <= rb.y; k++)
+            {
+                for (int l = lt.x; l <= rb.x; l++)
+                {
+                    strFloor[k * mapWidth + l] = L'⬝';
+                }
+            }
 
 			// 네 귀퉁이
 			for (int k = -1; k <= 1; k += 2)
@@ -303,6 +314,13 @@ void MapManager::GenerateMapData()
 			}
 		}
 	}
+
+    Actor* actor = new Actor();
+    actor->SetPos({ 0, 0 });
+    TSpriteRenderer* spriteRenderer = actor->AddComponent<TSpriteRenderer>();
+    spriteRenderer->SetSortOrder(-1);
+    spriteRenderer->SetSprite({ 0.0f, 0.0f }, TSprite(Vector2D(mapWidth, mapHeight), strFloor, FOREGROUND_BLUE));
+    AddMapActor(actor);
 }
 
 void MapManager::MakeMapActors()
@@ -458,8 +476,8 @@ void MapManager::MakeStairs()
 	Actor* actorStairs = new Actor();
     TSpriteRenderer* renderer = actorStairs->AddComponent<TSpriteRenderer>();
     Collider* collider = actorStairs->AddComponent<Collider>();
-    renderer->SetSprite(Vector2F(0.5f, 1.0f), TSprite(Vector2D(3, 3), L"  # #####"));
-    collider->SetSize(Vector2F(0.5f, 1.0f), Vector2D(3, 3));
+    renderer->SetSprite(Vector2F(0.5f, 1.0f), TSprite(Vector2D(4, 3), L"  ■■ ■■ ■■  "));
+    collider->SetSize(Vector2F(0.5f, 1.0f), Vector2D(4, 3));
     collider->SetMyChannel(CollideChannel::Actor);
     collider->SetChannelResonse(CollideChannel::Player);
     collider->AddOnHit(
