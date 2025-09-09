@@ -27,7 +27,7 @@ void Particle::Spawn()
     isDead = false;
 }
 
-void Particle::TickActive(vector<vector<ConsoleCellData>> data)
+void Particle::TickActive(std::vector<std::vector<ConsoleCellData>> data)
 {
     currentTick++;
 
@@ -37,7 +37,7 @@ void Particle::TickActive(vector<vector<ConsoleCellData>> data)
     }
 }
 
-void Particle::Draw(vector<vector<ConsoleCellData>> _Data)
+void Particle::Draw(std::vector<std::vector<ConsoleCellData>> _Data)
 {
     if (isDead) return;
     if (currentTick > deadTick + 4) {
@@ -75,16 +75,16 @@ void Particle::Draw(vector<vector<ConsoleCellData>> _Data)
 
 }
 
-void Particle::DrawCellData(vector<vector<ConsoleCellData>> data, int x, int y)
+void Particle::DrawCellData(std::vector<std::vector<ConsoleCellData>> data, int x, int y)
 {
     int X = spawnX + x;
     int Y = spawnY + y;
     GoToXY(X, Y);
     tbColor(data[Y][X].foregroundColor, data[Y][X].backgroundColor);
-    wcout << data[Y][X].character;
+    std::wcout << data[Y][X].character;
 }
 
-void Particle::RemoveParticle(vector<vector<ConsoleCellData>> data)
+void Particle::RemoveParticle(std::vector<std::vector<ConsoleCellData>> data)
 {
     int currentDisplayX = spawnX;
 
