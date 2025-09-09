@@ -47,6 +47,8 @@
     <ClCompile Include="src\Map\UI\UIBar.cpp" />
     <ClCompile Include="src\Map\UI\UIBox.cpp" />
     <ClCompile Include="src\Card\C_MasterCard.cpp" />
+    <ClCompile Include="src\BattleUI\Particle.cpp" />
+    <ClCompile Include="src\BattleUI\ParticleSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\BattleUI\BattleGrid.h" />
@@ -101,5 +103,7 @@
     <ClInclude Include="include\Map\UI\UIBar.h" />
     <ClInclude Include="include\Map\UI\UIBox.h" />
     <ClInclude Include="include\Card\C_MasterCard.h" />
+    <ClInclude Include="include\BattleUI\Particle.h" />
+    <ClInclude Include="include\BattleUI\ParticleSystem.h" />
   </ItemGroup>
 </Project>

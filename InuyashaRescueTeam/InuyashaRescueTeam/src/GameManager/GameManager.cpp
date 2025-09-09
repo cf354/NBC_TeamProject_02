@@ -129,15 +129,15 @@ void GameManager::Battle(bool isBoss)
         switch ((EnemyType)enemyType)
         {
             case EnemyType::Sesshomaru:
-                enemy = std::make_shared<Enemy>("셋쇼마루", 1, 100, 80, 8, 3, 15, 25, SESSHO, EnemyType::Sesshomaru);
+                enemy = std::make_shared<Enemy>("셋쇼마루", 1, 100, 80, 8, 3, 80, 25, SESSHO, EnemyType::Sesshomaru);
                 break;
             case EnemyType::Bankotsu:
                 // 반코츠
-                enemy = std::make_shared<Enemy>("반코츠", 1, 80, 60, 10, 5, 20, 30, BANKOTSU, EnemyType::Bankotsu);
+                enemy = std::make_shared<Enemy>("반코츠", 1, 80, 60, 10, 5, 60, 30, BANKOTSU, EnemyType::Bankotsu);
                 break;
             default:
                 // 기본 적으로 설정
-                enemy = std::make_shared<Enemy>("역발의 유라", 1, 60, 40, 5, 2, 10, 15, YURA, EnemyType::Normal);
+                enemy = std::make_shared<Enemy>("역발의 유라", 1, 60, 40, 5, 2, 40, 15, YURA, EnemyType::Normal);
                 break;
         }
     }

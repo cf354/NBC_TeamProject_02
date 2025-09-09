@@ -140,6 +140,8 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\BattleUI\ParticleSystem.cpp" />
+    <ClCompile Include="src\BattleUI\Particle.cpp" />
     <ClCompile Include="src\Map\UI\UIPlayerStatus.cpp" />
     <ClCompile Include="src\Card\C_MasterCard.cpp" />
     <ClCompile Include="src\Map\Actor\APlayer.cpp" />
@@ -188,6 +190,8 @@
     <ClCompile Include="src\Map\UI\UIBox.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\BattleUI\Particle.h" />
+    <ClInclude Include="include\BattleUI\ParticleSystem.h" />
     <ClInclude Include="include\Card\C_MasterCard.h" />
     <ClInclude Include="include\Map\Actor\APlayer.h" />
     <ClInclude Include="include\Map\Camera.h" />
