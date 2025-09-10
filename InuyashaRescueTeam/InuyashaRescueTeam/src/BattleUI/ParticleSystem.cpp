@@ -29,7 +29,8 @@ void ParticleSystem::Run()
                 index--;
             }
             else {
-                _Particles[index].TickActive(_Data);
+                //_Particles[index].TickActive(_Data);
+                _Particles[index].TickActive();
             }
         }
 
@@ -56,8 +57,8 @@ void ParticleSystem::Run()
 
 void ParticleSystem::Active(int activeX, int activeY)
 {
-    _ActiveX = activeX;
-    _ActiveY = activeY;
+    _ActiveX = activeX + _CanvasX;
+    _ActiveY = activeY + _CanvasY;
 
     Run();
 }
@@ -89,12 +90,37 @@ void ParticleSystem::SpawnParticle(int x, int y, int deadTick, ParticleColor col
 {
     int p_spawnx = _ActiveX + x;
     int p_spawny = _ActiveY + y;
-    if (p_spawnx - 3 < 0 || p_spawnx + 3 > _CanvasX + _CanvasWidth) return;
-    if (p_spawny - 3 < 0 || p_spawny + 3 > _CanvasY + _CanvasHeight) return;
+    if (p_spawnx - 3 < _CanvasX || p_spawnx + 3 > _CanvasX + _CanvasWidth) return;
+    if (p_spawny - 3 < _CanvasY || p_spawny + 3 > _CanvasY + _CanvasHeight) return;
 
-    Particle newParticle(p_spawnx, p_spawny, deadTick, color);
+    ConsoleCellData backGroundData[5][5];
+
+    for (size_t Y = 0; Y < 5; Y++)
+    {
+        for (size_t X = 0; X < 5; X++)
+        {
+            int _Y = p_spawny - _CanvasY + Y;
+            int _X = p_spawnx + _CanvasX + X;
+
+            COORD pos = { _X - _CanvasX, _Y + _CanvasY }; //x, y 좌표 설정
+            SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+
+            //GoToXY(p_spawny + x, p_spawny + y);
+            //tbColor(data[Y - 2][X].foregroundColor, data[Y - 2][X].backgroundColor);
+            int color = 15 + 1 * 16;
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
+            std::cout << " ";
+
+            backGroundData[y][x] = _Data[_Y][_X];
+        }
+    }
+
+    Particle newParticle(p_spawnx, p_spawny, deadTick, color, backGroundData);
     newParticle.Spawn();
     _Particles.push_back(newParticle);
+    //Particle newParticle(p_spawnx, p_spawny, deadTick, color);
+    //newParticle.Spawn();
+    //_Particles.push_back(newParticle);
 }
 
 void ParticleSystem::preciseDelay(double microseconds)

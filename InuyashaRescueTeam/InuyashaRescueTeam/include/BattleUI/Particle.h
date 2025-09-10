@@ -46,6 +46,19 @@ public:
         spawnY = spawny > 3 ? spawny : 3;
     }
 
+    Particle(int spawnx, int spawny, int deadTick, ParticleColor color, ConsoleCellData (&backGroundData)[3][3]) : _Color(color), deadTick(deadTick) {
+        spawnX = spawnx > 3 ? spawnx : 3;
+        spawnY = spawny > 3 ? spawny : 3;
+        for (size_t y = 0; y < 3; y++)
+        {
+            for (size_t x = 0; x < 3; x++)
+            {
+                _BackGroundData[y][x] = backGroundData[y][x];
+            }
+        }
+    }
+
+
     bool isDead = true;
 
 private:
@@ -58,6 +71,8 @@ private:
     void SetTick(int tick) {
         currentTick = tick;
     }
+
+    ConsoleCellData _BackGroundData[5][5];
 
     ParticleColor _Color;
 
@@ -73,11 +88,19 @@ private:
 public:
     void Spawn();
 
+    void TickActive();
+
     void TickActive(std::vector<std::vector<ConsoleCellData>> _Data);
+
+    void Draw();
 
     void Draw(std::vector<std::vector<ConsoleCellData>> _Data);
 
+    void DrawCellData(int x, int y);
+
     void DrawCellData(std::vector<std::vector<ConsoleCellData>> data, int x, int y);
+
+    void RemoveParticle();
 
     void RemoveParticle(std::vector<std::vector<ConsoleCellData>> data);
 

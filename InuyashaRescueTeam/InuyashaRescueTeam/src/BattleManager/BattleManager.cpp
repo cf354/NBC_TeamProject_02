@@ -233,22 +233,22 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
         _Grid.PaintBlocks(field.PlayerPositionX, field.PlayerPositionY, attackCard->A_GetRange(), Color::RED);
         std::string name = attackCard->C_GetName();
 
+        BladeStrike bladestrike(60);
         if (name == "BladeStrike")
         {
-            BladeStrike bladestrike(60);
             bladestrike.Active(100, 20);
         }
         else if (name =="BladesOfBlood")
         {
-
+            bladestrike.Active(100, 20);
         }
         else if (name == "IronReaver")
         {
-
+            bladestrike.Active(100, 20);
         }
         else if (name == "WindScar")
         {
-
+            bladestrike.Active(100, 20);
         }
 
         if (HitCheck(1, attackCard)) {
