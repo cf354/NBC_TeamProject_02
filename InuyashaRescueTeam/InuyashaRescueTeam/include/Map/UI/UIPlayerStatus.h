@@ -8,6 +8,7 @@ class UIPlayerStatus : public UIBox
 {
 public:
     UIPlayerStatus();
+    virtual ~UIPlayerStatus();
 
     void Update() override;
 

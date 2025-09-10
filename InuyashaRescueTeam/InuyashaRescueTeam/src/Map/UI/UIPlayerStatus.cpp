@@ -39,6 +39,21 @@ UIPlayerStatus::UIPlayerStatus()
     SetSize(boxSizeX + 2, boxSizeY + 2);
 }
 
+UIPlayerStatus::~UIPlayerStatus()
+{
+    delete textLevel;
+    textLevel = nullptr;
+
+    delete hpBar;
+    hpBar = nullptr;
+
+    delete staminaBar;
+    staminaBar = nullptr;;
+
+    delete expBar;
+    expBar = nullptr;
+}
+
 void UIPlayerStatus::Update()
 {
     auto player = GAME_MANAGER->GetPlayer().lock();

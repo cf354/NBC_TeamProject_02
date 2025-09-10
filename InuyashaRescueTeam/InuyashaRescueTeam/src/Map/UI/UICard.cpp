@@ -16,6 +16,12 @@ UICard::UICard()
     textName->SetPosition(Anchor::LT, Vector2F(0.0f, 0.0f), Vector2D(1, 1));
 }
 
+UICard::~UICard()
+{
+    delete textName;
+    textName = nullptr;
+}
+
 void UICard::Update()
 {
     UIBox::Update();
