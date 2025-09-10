@@ -93,8 +93,8 @@ void ParticleSystem::SpawnParticle(int x, int y, int deadTick, ParticleColor col
 {
     int p_spawnx = _ActiveX + x;
     int p_spawny = _ActiveY + y;
-    if (p_spawnx - 3 < _CanvasX || p_spawnx + 3 > _CanvasX + _CanvasWidth - 1) return;
-    if (p_spawny - 3 < _CanvasY || p_spawny + 3 > _CanvasY + _CanvasHeight - 1) return;
+    if (p_spawnx - 5 < _CanvasX || p_spawnx + 5 > _CanvasX + _CanvasWidth) return;
+    if (p_spawny - 3 < _CanvasY || p_spawny + 3 > _CanvasY + _CanvasHeight) return;
 
     ConsoleCellData backGroundData[3][5];
 
