@@ -129,6 +129,7 @@ void GameManager::Battle(bool isBoss)
         switch ((EnemyType)enemyType)
         {
             case EnemyType::Sesshomaru:
+                // 셋쇼마루
                 enemy = std::make_shared<Enemy>("셋쇼마루", 1, 100, 80, 8, 3, 80, 25, SESSHO, EnemyType::Sesshomaru);
                 break;
             case EnemyType::Bankotsu:
