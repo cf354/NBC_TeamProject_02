@@ -36,10 +36,10 @@ void Enemy::InitDeck() {
     }
 
     // 공통 카드 가중치 설정
-    AddCardWeight("E_MoveRight", 1);
-    AddCardWeight("E_MoveLeft", 1);
-    AddCardWeight("E_MoveUp", 1);
-    AddCardWeight("E_MoveDown", 1);
+    AddCardWeight("E_MoveRight", 3);
+    AddCardWeight("E_MoveLeft", 3);
+    AddCardWeight("E_MoveUp", 3);
+    AddCardWeight("E_MoveDown", 3);
     AddCardWeight("E_WideStrike", 2);
     AddCardWeight("E_LineAttack", 2);
 }
@@ -51,6 +51,7 @@ std::shared_ptr<Card> Enemy::GetRandomCard(int playerX, int playerY, int enemyX,
     int distanceY = std::abs(playerY - enemyY);
 
     if (distanceX <= 1 && distanceY <= 1) {
+        isWeightBoosted = true; // 추가: 가중치 강화 상태로 설정
         if (type == EnemyType::Sesshomaru) {
             cardWeights["DragonStrike"] = 5;
         }
@@ -63,6 +64,7 @@ std::shared_ptr<Card> Enemy::GetRandomCard(int playerX, int playerY, int enemyX,
         }
     }
     else {
+        isWeightBoosted = false; // 추가: 기본 상태로 복구
         if (type == EnemyType::Sesshomaru) {
             cardWeights["DragonStrike"] = 3;
         }
