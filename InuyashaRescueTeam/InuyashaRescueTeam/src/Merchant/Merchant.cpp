@@ -13,13 +13,13 @@
 Merchant::Merchant()
 {
 	player = GAME_MANAGER->GetPlayer().lock();
+    bShopType = false;
 	MakeList();
 	index = 0;
 	width = 24;
 	gap = 1;
 	height = ShopList.size() > InvenList.size() ? ShopList.size() : InvenList.size();
-	bShopType = false;
-	// player->SetMoney(player->GetMoney() + 1000); // 테스트용 골드 부여
+	player->SetMoney(player->GetMoney() + 1000); // 테스트용 골드 부여
 	OffsetX = 80;
 	OffsetY = 10;
 }
@@ -114,6 +114,10 @@ void Merchant::MakeList()
             ShopList.emplace_back((*CardList)[i], false);
         }
 	}
+    if (ShopList.empty())
+    {
+        bShopType = true;
+    }
 }
 
 void Merchant::DrawBackground()
