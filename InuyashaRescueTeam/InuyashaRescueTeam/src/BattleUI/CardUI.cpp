@@ -299,7 +299,7 @@ std::shared_ptr<Card> CardUI::ChoseCard(std::vector<std::shared_ptr<Card>> Cards
 				}
 				}
 				GoToXY(_spawnX + before_x * 14 + 1, _spawnY + before_y * 7 + 7);
-				std::cout << "              ";
+				std::cout << "             ";
 				GoToXY(_spawnX + x * 14 + 1, _spawnY + y * 7 + 7);
 				std::cout << "▲ 선택 : 엔터";
 			}

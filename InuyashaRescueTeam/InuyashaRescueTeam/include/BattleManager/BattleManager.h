@@ -35,7 +35,7 @@ public:
         , _ENTEXT(_Player_ENBar.GetRight() + 1, _Player_ENBar.GetBottom() - 1, 4, "▥ST▥", YELLOW, BLACK)
         , _Enemy_ENBar(97, _ENTEXT.GetRight(), _ENTEXT.GetBottom() - 1, 0, Color::YELLOW, Color::BROWN, false)
         , _Grid(200, 42, _Player_ENBar.GetLeft(), _Player_ENBar.GetBottom())
-        , _CardUI(200, 16, _Player_ENBar.GetLeft(), _Player_ENBar.GetBottom() + 5)
+        , _CardUI(71, 9, 100 - (35), _Player_ENBar.GetBottom() + 5)
         , _Log(200, 6, _Grid.GetLeft(), _Grid.GetBottom())
     {
         
