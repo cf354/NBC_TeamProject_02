@@ -4,24 +4,23 @@
 #include <string>
 #include <vector>
 
-
-enum Color {
-    BLACK = 0,
-    BLUE = 1,
-    GREEN = 2,
-    CYAN = 3,
-    RED = 4,
-    MAGENTA = 5,
-    BROWN = 6,
-    LIGHTGRAY = 7,
-    DARKGRAY = 8,
-    LIGHTBLUE = 9,
-    LIGHTGREEN = 10,
-    IGHTCYAN = 11,
-    LIGHTRED = 12,
-    LIGHTMAGENTA = 13,
-    YELLOW = 14,
-    WHITE = 15
+enum ParticleColor {
+    P_BLACK = 0,
+    P_BLUE = 1,
+    P_GREEN = 2,
+    P_CYAN = 3,
+    P_RED = 4,
+    P_MAGENTA = 5,
+    P_BROWN = 6,
+    P_LIGHTGRAY = 7,
+    P_DARKGRAY = 8,
+    P_LIGHTBLUE = 9,
+    P_LIGHTGREEN = 10,
+    P_IGHTCYAN = 11,
+    P_LIGHTRED = 12,
+    P_LIGHTMAGENTA = 13,
+    P_YELLOW = 14,
+    P_WHITE = 15
 };
 
 struct ConsoleCellData {
@@ -42,10 +41,23 @@ struct ConsoleCellData {
 class Particle
 {
 public:
-    Particle(int spawnx, int spawny, int deadTick, Color color) : _Color(color), deadTick(deadTick) {
+    Particle(int spawnx, int spawny, int deadTick, ParticleColor color) : _Color(color), deadTick(deadTick) {
         spawnX = spawnx > 3 ? spawnx : 3;
         spawnY = spawny > 3 ? spawny : 3;
     }
+
+    Particle(int spawnx, int spawny, int deadTick, ParticleColor color, ConsoleCellData (&backGroundData)[3][5]) : _Color(color), deadTick(deadTick) {
+        spawnX = spawnx > 3 ? spawnx : 3;
+        spawnY = spawny > 3 ? spawny : 3;
+        for (size_t y = 0; y < 3; y++)
+        {
+            for (size_t x = 0; x < 5; x++)
+            {
+                _BackGroundData[y][x] = backGroundData[y][x];
+            }
+        }
+    }
+
 
     bool isDead = true;
 
@@ -60,7 +72,9 @@ private:
         currentTick = tick;
     }
 
-    Color _Color;
+    ConsoleCellData _BackGroundData[5][5];
+
+    ParticleColor _Color;
 
     bool data[5][5][5]
         = {
@@ -74,11 +88,19 @@ private:
 public:
     void Spawn();
 
+    void TickActive();
+
     void TickActive(std::vector<std::vector<ConsoleCellData>> _Data);
+
+    void Draw();
 
     void Draw(std::vector<std::vector<ConsoleCellData>> _Data);
 
+    void DrawCellData(int x, int y);
+
     void DrawCellData(std::vector<std::vector<ConsoleCellData>> data, int x, int y);
+
+    void RemoveParticle();
 
     void RemoveParticle(std::vector<std::vector<ConsoleCellData>> data);
 
@@ -94,12 +116,12 @@ private:
     }
 
     void printHalfBlock(int x, int y, unsigned short Color) {
-        tbColor(BLACK, Color);
+        tbColor(P_BLACK, Color);
         std::cout << "▀";
     }
 
     void printBlock(int x, int y, unsigned short Color) {
-        tbColor(Color, BLACK);
+        tbColor(Color, P_BLACK);
         std::cout << "▀";
     }
 

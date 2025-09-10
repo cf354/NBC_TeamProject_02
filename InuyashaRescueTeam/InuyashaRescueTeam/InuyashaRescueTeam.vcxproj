@@ -192,6 +192,8 @@
     <ClCompile Include="src\Map\UI\UIInventory.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\SkillEffect\BladesOfBlood.h" />
+    <ClInclude Include="include\SkillEffect\BladeStrike.h" />
     <ClInclude Include="include\BattleUI\Particle.h" />
     <ClInclude Include="include\BattleUI\ParticleSystem.h" />
     <ClInclude Include="include\Card\C_MasterCard.h" />
@@ -239,6 +241,8 @@
     <ClInclude Include="include\Common\RandomManager.h" />
     <ClInclude Include="include\Common\Singleton.h" />
     <ClInclude Include="include\BattleUI\BattleUIGroup.h" />
+    <ClInclude Include="include\SkillEffect\IronReaver.h" />
+    <ClInclude Include="include\SkillEffect\WindScar.h" />
     <ClInclude Include="include\SoundManager\SoundManager.h" />
     <ClInclude Include="include\Common\TimeManager.h" />
     <ClInclude Include="include\Map\Render\TSprite.h" />
