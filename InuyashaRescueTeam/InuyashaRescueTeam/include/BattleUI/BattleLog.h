@@ -25,7 +25,7 @@ public:
     void AddLog(std::string s);
     void PrintLog(std::string s);
     void Reset() {
-        for (int i = 0; i < _log.size(); i++)
+        while (_log.size() != 0)
         {
             _log.pop();
         }
