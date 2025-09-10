@@ -21,7 +21,10 @@ void UI::Render()
 {
     for (int i = 0; i < children.size(); i++)
     {
-        children[i]->Render();
+        if (children[i]->isActive)
+        {
+            children[i]->Render();
+        }
     }
 }
 
@@ -52,6 +55,11 @@ void UI::SetSize(int x, int y)
 	SetSize({ x, y });
 }
 
+bool UI::GetActive()
+{
+    return isActive;
+}
+
 Vector2D UI::GetPosition(bool isWorldPosition)
 {
 	return isWorldPosition ? worldPos : relativePos;
@@ -75,6 +83,11 @@ vector<UI*> UI::GetAllChildren()
         result.push_back(children[i]);
     }
     return result;
+}
+
+void UI::SetActive(bool active)
+{
+    this->isActive = active;
 }
 
 void UI::SetParent(UI* parent)

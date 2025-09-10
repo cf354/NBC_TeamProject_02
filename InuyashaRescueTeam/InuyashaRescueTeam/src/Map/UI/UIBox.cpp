@@ -3,6 +3,9 @@
 
 void UIBox::Render()
 {
+    if (!isActive)
+        return;
+
     int maxX = size.x - 1;
     int maxY = size.y - 1;
     // 네 꼭짓점

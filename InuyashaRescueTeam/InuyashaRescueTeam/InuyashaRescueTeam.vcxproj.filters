@@ -41,7 +41,6 @@
     <ClCompile Include="src\Map\UI\UIPlayerStatus.cpp" />
     <ClCompile Include="src\Map\Managers\UIManager.cpp" />
     <ClCompile Include="src\Map\UI\UI.cpp" />
-    <ClCompile Include="src\Map\UI\Text.cpp" />
     <ClCompile Include="src\Map\Render\TAnimation.cpp" />
     <ClCompile Include="src\Map\Render\TSprite.cpp" />
     <ClCompile Include="src\Map\UI\UIBar.cpp" />
@@ -49,6 +48,9 @@
     <ClCompile Include="src\Card\C_MasterCard.cpp" />
     <ClCompile Include="src\BattleUI\Particle.cpp" />
     <ClCompile Include="src\BattleUI\ParticleSystem.cpp" />
+    <ClCompile Include="src\Map\UI\UIText.cpp" />
+    <ClCompile Include="src\Map\UI\UICard.cpp" />
+    <ClCompile Include="src\Map\UI\UIInventory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\BattleUI\BattleGrid.h" />
@@ -96,7 +98,6 @@
     <ClInclude Include="include\Map\Managers\SceneManager.h" />
     <ClInclude Include="include\Map\Managers\UIManager.h" />
     <ClInclude Include="include\Map\UI\UI.h" />
-    <ClInclude Include="include\Map\UI\Text.h" />
     <ClInclude Include="include\Map\Render\TSprite.h" />
     <ClInclude Include="include\Map\Render\TAnimation.h" />
     <ClInclude Include="include\Map\UI\UIPlayerStatus.h" />
@@ -105,5 +106,8 @@
     <ClInclude Include="include\Card\C_MasterCard.h" />
     <ClInclude Include="include\BattleUI\Particle.h" />
     <ClInclude Include="include\BattleUI\ParticleSystem.h" />
+    <ClInclude Include="include\Map\UI\UIText.h" />
+    <ClInclude Include="include\Map\UI\UICard.h" />
+    <ClInclude Include="include\Map\UI\UIInventory.h" />
   </ItemGroup>
 </Project>

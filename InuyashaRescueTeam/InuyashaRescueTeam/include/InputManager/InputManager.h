@@ -8,6 +8,7 @@ enum class KeyAction
     MOVE_DOWN,
     MOVE_LEFT,
     MOVE_RIGHT,
+    INVENTORY,
     // 대각선 이동 액션 추가
     MOVE_UP_LEFT,
     MOVE_UP_RIGHT,

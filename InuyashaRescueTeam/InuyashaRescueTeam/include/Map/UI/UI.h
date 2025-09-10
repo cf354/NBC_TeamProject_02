@@ -29,12 +29,14 @@ public:
 	virtual void Update();
     virtual void Render();
 
+    void SetActive(bool active);
 	void SetParent(UI* parent);
 	void SetPosition(Anchor anchor, Vector2F pivot, Vector2D pos);							// anchor, pivot 고려한 상대 좌표
 	void SetPosition(Anchor anchor, Vector2F pivot, int x, int y);							// anchor, pivot 고려한 상대 좌표
 	virtual void SetSize(Vector2D size);
 	virtual void SetSize(int x, int y);
 
+    bool GetActive();
 	Vector2D GetPosition(bool isWorldPosition = false);
 	Vector2D GetSize();
 
@@ -42,6 +44,7 @@ public:
 
 protected:
 	string name;
+    bool isActive = true;       // isActive로 Render막는 거 각 UI에서 만들어줘야 하는데, Render 전용 UI 컴포넌트를 다시 만들어서 넣는 게 나을 듯함
 	Anchor anchor;
 	Vector2F pivot;				// 0 ~ 1
 	Vector2D size;

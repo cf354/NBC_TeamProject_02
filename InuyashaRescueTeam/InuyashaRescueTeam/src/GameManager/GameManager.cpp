@@ -264,6 +264,7 @@ void GameManager::UpdateMap()
 
 void GameManager::ExitMap()
 {
+    UI_MANAGER->ShowInventory(false);
     UpdateMap();
     SOUND_MANAGER->PlaySE(SEType::MapChangeSE);
     CONSOLE_PRINTER->ScreenTransition_Swipe();

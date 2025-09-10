@@ -66,5 +66,5 @@ void UIPlayerStatus::Update()
         }
     }
 
-    UI::Update();
+    UIBox::Update();
 }
