@@ -7,6 +7,7 @@
 #include "BattleUI/CardUI.h"
 #include "ImagePrinter.h"
 #include "Common/RandomManager.h"
+#include "SkillEffect/BladeStrike.h"
 #include <unordered_set>
 
 
@@ -228,7 +229,27 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
             _Grid.SetCharacter(field.EnemyPositionX, field.EnemyPositionY, enemy->GetSpriteFileFath());
             isEnemyCharacterSetted = true;
         }
+
         _Grid.PaintBlocks(field.PlayerPositionX, field.PlayerPositionY, attackCard->A_GetRange(), Color::RED);
+        std::string name = attackCard->C_GetName();
+
+        if (name == "BladeStrike")
+        {
+            BladeStrike bladestrike(60);
+            bladestrike.Active(100, 20);
+        }
+        else if (name =="BladesOfBlood")
+        {
+
+        }
+        else if (name == "IronReaver")
+        {
+
+        }
+        else if (name == "WindScar")
+        {
+
+        }
 
         if (HitCheck(1, attackCard)) {
             int hitdamage = attackCard->A_GetATK() + player->GetATK() - enemy->GetDEF() - eCardDEF;

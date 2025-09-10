@@ -109,5 +109,6 @@
     <ClInclude Include="include\Map\UI\UIText.h" />
     <ClInclude Include="include\Map\UI\UICard.h" />
     <ClInclude Include="include\Map\UI\UIInventory.h" />
+    <ClInclude Include="include\SkillEffect\BladeStrike.h" />
   </ItemGroup>
 </Project>

@@ -192,6 +192,7 @@
     <ClCompile Include="src\Map\UI\UIInventory.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\SkillEffect\BladeStrike.h" />
     <ClInclude Include="include\BattleUI\Particle.h" />
     <ClInclude Include="include\BattleUI\ParticleSystem.h" />
     <ClInclude Include="include\Card\C_MasterCard.h" />

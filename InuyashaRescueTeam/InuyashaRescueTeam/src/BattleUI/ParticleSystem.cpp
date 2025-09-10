@@ -54,6 +54,14 @@ void ParticleSystem::Run()
     }
 }
 
+void ParticleSystem::Active(int activeX, int activeY)
+{
+    _ActiveX = activeX;
+    _ActiveY = activeY;
+
+    Run();
+}
+
 void ParticleSystem::Tick()
 {
     /*
@@ -77,7 +85,7 @@ void ParticleSystem::Tick()
     */
 }
 
-void ParticleSystem::SpawnParticle(int x, int y, int deadTick, Color color)
+void ParticleSystem::SpawnParticle(int x, int y, int deadTick, ParticleColor color)
 {
     int p_spawnx = _ActiveX + x;
     int p_spawny = _ActiveY + y;
