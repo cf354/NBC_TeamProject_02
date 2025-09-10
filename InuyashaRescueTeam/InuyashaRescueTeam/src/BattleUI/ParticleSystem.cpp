@@ -102,8 +102,8 @@ void ParticleSystem::SpawnParticle(int x, int y, int deadTick, ParticleColor col
     {
         for (size_t X = 0; X < 5; X++)
         {
-            int _Y = p_spawny - _CanvasY + Y;
-            int _X = p_spawnx + _CanvasX + X;
+            int _Y = p_spawny - _CanvasY + Y - 1;
+            int _X = p_spawnx + _CanvasX + X - 1;
 
             backGroundData[Y][X].backgroundColor = _Data[_Y][_X].backgroundColor;
             backGroundData[Y][X].character = _Data[_Y][_X].character;
