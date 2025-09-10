@@ -76,7 +76,7 @@ void GameManager::Init()
 
     AllCardsList.emplace_back(std::make_shared<C_HealHP>("Heal", 20, 0, 30)); //15  C_HealHP(std::string n, int C, int G,int h) :Card(n, C, G),Hamount(h)
     AllCardsList.emplace_back(std::make_shared<C_HealStamina>("Energy UP", 0, 0, 10)); //16  C_HealStamina(std::string n, int C, int G, int h) :Card(n, C, G), Samount(h)
-    AllCardsList.emplace_back(std::make_shared<MasterCard>(" ", 0, 0));
+    AllCardsList.emplace_back(std::make_shared<MasterCard>(" ", 0, 99999));
 
     // 기본 카드 몇 장 추가
     player->AddCard(AllCardsList[0]); // MoveRight

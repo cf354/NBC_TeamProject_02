@@ -78,6 +78,11 @@ void CardUI::PrintCards(std::vector<std::shared_ptr<Card>> Cards)
         else if (auto HealCard = dynamic_cast<C_HealHP*>(card.get()))
         {
             DrawHealCard(*HealCard, spawnX + drawX, spawnY + drawY);
+        
+        }
+        else if (auto masterCard = dynamic_cast<MasterCard*>(card.get()))
+        {
+            DrawMasterCard(*masterCard, spawnX + drawX, spawnY + drawY);
         }
 
 		CardCount_Showed++;
@@ -232,6 +237,20 @@ void CardUI::DrawStaminaHealCard(C_HealStamina& Card, int x, int y)
     tbColor();
 }
 
+void CardUI::DrawMasterCard(MasterCard& Card, int x, int y)
+{
+    std::string name = "무적의 카드";
+    PrintCardName(name, x, y);
+
+    GoToXY(x, y + 3);
+    std::cout << "무조건이김";
+    GoToXY(x, y + 4);
+    std::cout << "아무도 못막음";
+    GoToXY(x, y + 5);
+    std::cout << "크크";
+    tbColor();
+}
+
 #define UP 72
 #define DOWN 80
 #define LEFT 75
@@ -342,7 +361,7 @@ void CardUI::PrintCardName(const std::string &name, int x, int y)
     {
         GoToXY(x + drawX, y + drawY);
         drawX += GetConsoleCharWidth(wsname[i]);
-        if (drawX == 12) {
+        if (drawX >= 12) {
             drawY++;
             drawX = 0;
         }

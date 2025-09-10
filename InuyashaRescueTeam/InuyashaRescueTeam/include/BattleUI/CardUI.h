@@ -43,4 +43,5 @@ private:
     void DrawGuardCard(C_Guard& Card, int x, int y);
     void DrawHealCard(C_HealHP& Card, int x, int y);
     void DrawStaminaHealCard(C_HealStamina& Card, int x, int y);
+    void DrawMasterCard(MasterCard& Card, int x, int y);
 };
