@@ -438,10 +438,10 @@ void MapManager::EnterNextStage()
         TAnimRenderer* renderer = actorBoss->AddComponent<TAnimRenderer>();
         Collider* collider = actorBoss->AddComponent<Collider>();
         vector<TSprite> spritesIdle;
-        spritesIdle.push_back(TSprite(Vector2D(9, 9), L"   ___     /___\\    (o o)   /(===)\\  /|###|\\   |###|    |---|   /|   |\\   ^   ^  ", MColor::RED));
-        spritesIdle.push_back(TSprite(Vector2D(9, 9), L"   ___     /___\\    (o o)   /(===)\\   |###|   /|###|\\   |---|   /|   |\\   ^   ^  ", MColor::RED));
-        spritesIdle.push_back(TSprite(Vector2D(9, 9), L"   ___     /___\\    (o o)   /(===)\\   |###|    |---|   /|###|\\   |   |    ^   ^  ", MColor::RED));
-        spritesIdle.push_back(TSprite(Vector2D(9, 9), L"   ___     /___\\    (o o)   /(===)\\   |###|   /|###|\\   |---|   /|   |\\   ^   ^  ", MColor::RED));
+        spritesIdle.push_back(TSprite(Vector2D(9, 9), L"???___?????/___\\????(o o)???/(/=\\)\\??/|###|\\???|###|????|---|???/|???|\\???^???^??", MColor::RED));
+        spritesIdle.push_back(TSprite(Vector2D(9, 9), L"???___?????/___\\????(o o)???/(/=\\)\\???|###|???/|###|\\???|---|???/|???|\\???^???^??", MColor::RED));
+        spritesIdle.push_back(TSprite(Vector2D(9, 9), L"???___?????/___\\????(o o)???/(/=\\)\\???|###|????|---|???/|###|\\???|???|????^???^??", MColor::RED));
+        spritesIdle.push_back(TSprite(Vector2D(9, 9), L"???___?????/___\\????(o o)???/(/=\\)\\???|###|???/|###|\\???|---|???/|???|\\???^???^??", MColor::RED));
         TAnimation* animIdle = new TAnimation("Idle", Vector2F(0.5f, 1.0f));
         animIdle->SetSprites(spritesIdle);
         animIdle->SetSpeed(4);
