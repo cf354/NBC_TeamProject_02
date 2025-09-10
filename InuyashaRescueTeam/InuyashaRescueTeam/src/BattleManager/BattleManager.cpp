@@ -8,6 +8,9 @@
 #include "ImagePrinter.h"
 #include "Common/RandomManager.h"
 #include "SkillEffect/BladeStrike.h"
+#include "SkillEffect/BladesOfBlood.h"
+#include "SkillEffect/IronReaver.h"
+#include "SkillEffect/WindScar.h"
 #include <unordered_set>
 
 
@@ -231,27 +234,32 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
         }
 
         _Grid.PaintBlocks(field.PlayerPositionX, field.PlayerPositionY, attackCard->A_GetRange(), Color::RED);
-        std::string name = attackCard->C_GetName();
 
         int activex = (field.PlayerPositionX + 1) * 50 - 25;
         int activey = (field.PlayerPositionY + 1) * 14 - 7;
+        std::string name = attackCard->C_GetName();
 
-        BladeStrike bladestrike(60);
         if (name == "BladeStrike")
         {
+            BladeStrike bladestrike(30);
             bladestrike.Active(activex, activey);
         }
-        else if (name =="BladesOfBlood")
+        else if (name == "BladesOfBlood")
         {
-            bladestrike.Active(activex, activey);
+            BladesOfBlood bladesofblood(30);
+            bladesofblood.Active(activex, activey);
         }
         else if (name == "IronReaver")
         {
-            bladestrike.Active(activex, activey);
+            IronReaver ironreaver(30);
+            ironreaver.Active(activex, activey);
+            //bladestrike.Active(activex, activey);
         }
         else if (name == "WindScar")
         {
-            bladestrike.Active(activex, activey);
+            WindScar windscar(30);
+            windscar.Active(activex, activey);
+            //bladestrike.Active(activex, activey);
         }
 
         if (HitCheck(1, attackCard)) {
