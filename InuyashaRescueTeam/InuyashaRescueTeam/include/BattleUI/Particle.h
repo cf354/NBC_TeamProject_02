@@ -46,12 +46,12 @@ public:
         spawnY = spawny > 3 ? spawny : 3;
     }
 
-    Particle(int spawnx, int spawny, int deadTick, ParticleColor color, ConsoleCellData (&backGroundData)[3][3]) : _Color(color), deadTick(deadTick) {
+    Particle(int spawnx, int spawny, int deadTick, ParticleColor color, ConsoleCellData (&backGroundData)[3][5]) : _Color(color), deadTick(deadTick) {
         spawnX = spawnx > 3 ? spawnx : 3;
         spawnY = spawny > 3 ? spawny : 3;
         for (size_t y = 0; y < 3; y++)
         {
-            for (size_t x = 0; x < 3; x++)
+            for (size_t x = 0; x < 5; x++)
             {
                 _BackGroundData[y][x] = backGroundData[y][x];
             }

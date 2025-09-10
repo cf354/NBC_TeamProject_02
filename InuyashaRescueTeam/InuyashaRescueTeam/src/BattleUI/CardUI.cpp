@@ -239,7 +239,7 @@ void CardUI::DrawStaminaHealCard(C_HealStamina& Card, int x, int y)
 
 void CardUI::DrawMasterCard(MasterCard& Card, int x, int y)
 {
-    std::wstring name = L"Master 무적의 카드";
+    std::wstring name = L"Master";
     PrintCardName(name, x, y);
 
     GoToXY(x, y + 3);

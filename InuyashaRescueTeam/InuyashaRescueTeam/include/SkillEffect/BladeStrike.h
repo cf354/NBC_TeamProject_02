@@ -10,41 +10,18 @@ protected:
     virtual void Tick() override {
         if (_CurrentTick == 0)
         {
-            //SpawnParticle(0, 0, 30, ParticleColor::P_WHITE);
+            SpawnParticle(0, 0, 5, ParticleColor::P_WHITE);
 
-            //SpawnParticle(0, 21, 30, ParticleColor::P_WHITE);
-            //SpawnParticle(0, 20, 30, ParticleColor::P_RED);
-            SpawnParticle(0, 19, 30, ParticleColor::P_YELLOW);
-            //SpawnParticle(0, 18, 30, ParticleColor::P_GREEN);
-            //SpawnParticle(0, 17, 30, ParticleColor::P_BLUE);
 
-            //for (size_t i = 0; i < 42; i++)
-            //{
-            //    //SpawnParticle(0, 21 - i, 30, ParticleColor::P_WHITE);
-            //}
-
-            /*for (size_t i = 0; i < 42; i++)
+            for (size_t i = 1; i < 21; i++)
             {
-                SpawnParticle(0, 21 - i, 30, ParticleColor::P_WHITE);
-            }*/
-
-            /*for (size_t i = 0; i < 20; i++)
-            *
-
-            {
-                SpawnParticle(-10 + i, 10 - i, 30, RED);
+                SpawnParticle(0, i, 5, ParticleColor::P_WHITE);
             }
 
-            for (size_t i = 0; i < 20; i++)
+            for (size_t i = 1; i < 21; i++)
             {
-                SpawnParticle(-10 + i, 10 - i + 5, 50, RED);
+                SpawnParticle(0, 0 - i, 5, ParticleColor::P_WHITE);
             }
-
-            for (size_t i = 0; i < 20; i++)
-            {
-                SpawnParticle(-10 + i, 10 - i + 10, 70, RED);
-            }
-            */
         }
     }
 };

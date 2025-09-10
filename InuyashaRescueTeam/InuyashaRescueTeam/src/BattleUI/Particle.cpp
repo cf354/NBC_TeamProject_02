@@ -128,8 +128,8 @@ void Particle::DrawCellData(int x, int y)
     int X = spawnX + x;
     int Y = spawnY + y;
     GoToXY(X, Y);
-    //tbColor(_BackGroundData[y][x].foregroundColor, _BackGroundData[y][x].backgroundColor);    
-    tbColor(_BackGroundData[y][x].foregroundColor, ParticleColor::P_GREEN);
+    tbColor(_BackGroundData[y][x].foregroundColor, _BackGroundData[y][x].backgroundColor);    
+    //tbColor(_BackGroundData[y][x].foregroundColor, ParticleColor::P_GREEN);
     std::wcout << _BackGroundData[y][x].character;
 }
 
@@ -147,14 +147,13 @@ void Particle::RemoveParticle()
 {
     int currentDisplayX = spawnX;
 
-    for (size_t y = 0; y < 2; y++)
+    for (size_t y = 0; y < 3; y++)
     {
         currentDisplayX = spawnX;
         for (size_t x = 0; x < 5; x+=0)
         {
             GoToXY(currentDisplayX, spawnY + y);
-            //tbColor(_BackGroundData[y][x].foregroundColor, _BackGroundData[y][x].backgroundColor);
-            tbColor(_BackGroundData[y][x].foregroundColor, ParticleColor::P_RED);
+            tbColor(_BackGroundData[y][x].foregroundColor, _BackGroundData[y][x].backgroundColor);
             std::wcout << _BackGroundData[y][x].character;
             currentDisplayX += getConsoleCharWidth(_BackGroundData[y][x].character);
             x += getConsoleCharWidth(_BackGroundData[y][x].character);

@@ -53,6 +53,9 @@ void ParticleSystem::Run()
         p.isDead = true;
         p.RemoveParticle(_Data);
     }
+
+    int color = 7 + 0 * 16;
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
 }
 
 void ParticleSystem::Active(int activeX, int activeY)
@@ -93,34 +96,24 @@ void ParticleSystem::SpawnParticle(int x, int y, int deadTick, ParticleColor col
     if (p_spawnx - 3 < _CanvasX || p_spawnx + 3 > _CanvasX + _CanvasWidth) return;
     if (p_spawny - 3 < _CanvasY || p_spawny + 3 > _CanvasY + _CanvasHeight) return;
 
-    ConsoleCellData backGroundData[5][5];
+    ConsoleCellData backGroundData[3][5];
 
-    for (size_t Y = 0; Y < 5; Y++)
+    for (size_t Y = 0; Y < 3; Y++)
     {
         for (size_t X = 0; X < 5; X++)
         {
             int _Y = p_spawny - _CanvasY + Y;
             int _X = p_spawnx + _CanvasX + X;
 
-            COORD pos = { _X - _CanvasX, _Y + _CanvasY }; //x, y 좌표 설정
-            SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
-
-            //GoToXY(p_spawny + x, p_spawny + y);
-            //tbColor(data[Y - 2][X].foregroundColor, data[Y - 2][X].backgroundColor);
-            int color = 15 + 1 * 16;
-            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
-            std::cout << " ";
-
-            backGroundData[y][x] = _Data[_Y][_X];
+            backGroundData[Y][X].backgroundColor = _Data[_Y][_X].backgroundColor;
+            backGroundData[Y][X].character = _Data[_Y][_X].character;
+            backGroundData[Y][X].foregroundColor = _Data[_Y][_X].foregroundColor;
         }
     }
 
     Particle newParticle(p_spawnx, p_spawny, deadTick, color, backGroundData);
     newParticle.Spawn();
     _Particles.push_back(newParticle);
-    //Particle newParticle(p_spawnx, p_spawny, deadTick, color);
-    //newParticle.Spawn();
-    //_Particles.push_back(newParticle);
 }
 
 void ParticleSystem::preciseDelay(double microseconds)
