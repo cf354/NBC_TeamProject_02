@@ -6,6 +6,12 @@
 
 UIPlayerStatus::UIPlayerStatus()
 {
+    UIText* textName = new UIText();
+    textName->SetParent(this);
+    textName->SetText(L" PLAYER STATUS ");
+    textName->SetSize(textName->GetText().size(), 1);
+    textName->SetPosition(Anchor::LT, Vector2F(0.0f, 0.0f), Vector2D(2, 0));
+
     textLevel = new UIText();
     textLevel->SetParent(this);
     textLevel->SetSize(Vector2D(60, 1));
@@ -36,7 +42,22 @@ UIPlayerStatus::UIPlayerStatus()
         boxSizeY += allChildren[i]->GetSize().y;
     }
     
-    SetSize(boxSizeX + 2, boxSizeY + 2);
+    SetSize(boxSizeX + 2, boxSizeY + 1);
+}
+
+UIPlayerStatus::~UIPlayerStatus()
+{
+    delete textLevel;
+    textLevel = nullptr;
+
+    delete hpBar;
+    hpBar = nullptr;
+
+    delete staminaBar;
+    staminaBar = nullptr;;
+
+    delete expBar;
+    expBar = nullptr;
 }
 
 void UIPlayerStatus::Update()

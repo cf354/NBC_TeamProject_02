@@ -28,6 +28,21 @@ UIInventory::UIInventory()
     SetData();
 }
 
+UIInventory::~UIInventory()
+{
+    for (UICard* card : usingList)
+    {
+        delete card;
+    }
+    usingList.clear();
+    
+    for (UICard * card : unusingList)
+    {
+        delete card;
+    }
+    unusingList.clear();
+}
+
 void UIInventory::Render()
 {
     if (!isActive)
@@ -42,6 +57,7 @@ void UIInventory::SetData()
     auto player = GAME_MANAGER->GetPlayer().lock();
     if (player != nullptr)
     {
+        // 카드 너무 많아서 우측으로 튀어나오는 경우는 처리 안함
         const auto& deck = player->GetDeck();
         for (int i = 0; i < deck.size(); i++)
         {
@@ -80,6 +96,11 @@ void UIInventory::Reset()
     for (int i = 0; i < uiCards.size(); i++)
     {
         uiCards[i].clear();
+    }
+
+    while (!usingList.empty())
+    {
+        ReturnCard(usingList.front());
     }
 }
 

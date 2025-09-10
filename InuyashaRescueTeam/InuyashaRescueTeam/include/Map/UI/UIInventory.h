@@ -8,6 +8,7 @@ class UIInventory : public UIBox
 {
 public:
     UIInventory();
+    virtual ~UIInventory();
 
     void Render() override;
 

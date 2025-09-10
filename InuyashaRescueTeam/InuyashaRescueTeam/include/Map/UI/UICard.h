@@ -8,6 +8,7 @@ class UICard : public UIBox
 {
 public:
     UICard();
+    virtual ~UICard();
 
     void Update() override;
     void Render() override;
