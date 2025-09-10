@@ -110,5 +110,10 @@
     <ClInclude Include="include\Map\UI\UICard.h" />
     <ClInclude Include="include\Map\UI\UIInventory.h" />
     <ClInclude Include="include\SkillEffect\BladeStrike.h" />
+    <ClInclude Include="include\SkillEffect\BladesOfBlood.h" />
+    <ClInclude Include="include\SkillEffect\IronReaver.h" />
+    <ClInclude Include="include\SkillEffect\WindScar.h" />
+    <ClInclude Include="include\SkillEffect\Adamant_Barrage.h" />
+    <ClInclude Include="include\SkillEffect\Backlash_Wave.h" />
   </ItemGroup>
 </Project>

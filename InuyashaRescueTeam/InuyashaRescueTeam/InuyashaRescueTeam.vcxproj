@@ -192,6 +192,8 @@
     <ClCompile Include="src\Map\UI\UIInventory.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\SkillEffect\Adamant_Barrage.h" />
+    <ClInclude Include="include\SkillEffect\Backlash_Wave.h" />
     <ClInclude Include="include\SkillEffect\BladesOfBlood.h" />
     <ClInclude Include="include\SkillEffect\BladeStrike.h" />
     <ClInclude Include="include\BattleUI\Particle.h" />

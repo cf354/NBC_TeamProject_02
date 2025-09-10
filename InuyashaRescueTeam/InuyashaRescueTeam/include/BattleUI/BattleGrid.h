@@ -33,7 +33,6 @@ private:
 	int _GridColumntCount = 4;
 
 	bool _IsSetedCharcter = false;
-	std::vector<std::string> _Character_Position[3][4] = {};
     std::vector<const char*> _Character_BMP_Position[3][4] = {};
 	int _Character_Postion_Color[3][4] = {};
 
@@ -45,7 +44,6 @@ private:
 public:
 	virtual void Draw() override;	
 	void PaintBlocks(int x,int y, bool (*range)[3], Color background);
-	void SetCharacter(int x, int y, std::string string, Color font, Color background);
     void SetCharacter(int x, int y, const char* filename);
 
     void ReSet_Characters() {
@@ -59,17 +57,6 @@ public:
 
         _IsSetedCharcter = false;
     }
-
-	void Reset_Character_Position() {
-		for (size_t i = 0; i < 3; i++)
-		{
-			for (size_t k = 0; k < 4; k++)
-			{
-				_Character_Position[i][k].clear();
-			}
-		}
-		_IsSetedCharcter = false;
-	}
 
 private:  
 	void SetGrid();

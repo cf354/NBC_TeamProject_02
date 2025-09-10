@@ -11,7 +11,8 @@ protected:
     virtual void Tick() override {
         for (size_t i = 0; i < 3; i++)
         {
-            SpawnParticle(-25 + rand() % 125, -7 + rand() % 36, 3, ParticleColor::P_YELLOW);
+            SpawnParticle(-100 + rand() % 200, -21 + rand() % 42, rand() % 5, ParticleColor::P_YELLOW);
+            SpawnParticle(-100 + rand() % 200, -21 + rand() % 42, rand() % 5, ParticleColor::P_BROWN);
         }
     }
 };

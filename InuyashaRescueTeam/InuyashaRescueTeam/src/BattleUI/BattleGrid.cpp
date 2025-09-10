@@ -100,17 +100,6 @@ void BattleGrid::PaintBlocks(int x, int y, bool (*range)[3], Color background)
     std::cin.ignore(1000, '\n');
 }
 
-void BattleGrid::SetCharacter(int x, int y, std::string string, Color font, Color background)
-{
-	if (!checkInputX(x)) return;// checkInputX is false
-	if (!checkInputY(y)) return;//checkInputY is false
-
-	_IsSetedCharcter = true;
-
-	_Character_Postion_Color[y][x] = font + background * 16;
-	_Character_Position[y][x].push_back(string);
-}
-
 void BattleGrid::SetCharacter(int x, int y, const char* filename)
 {
     if (!checkInputX(x)) return;// checkInputX is false

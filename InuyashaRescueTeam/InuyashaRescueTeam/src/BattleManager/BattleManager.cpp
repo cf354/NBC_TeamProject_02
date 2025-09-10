@@ -11,6 +11,8 @@
 #include "SkillEffect/BladesOfBlood.h"
 #include "SkillEffect/IronReaver.h"
 #include "SkillEffect/WindScar.h"
+#include "SkillEffect/Adamant_Barrage.h"
+#include "SkillEffect/Backlash_Wave.h"
 #include <unordered_set>
 
 
@@ -267,14 +269,23 @@ void BattleManager::Resolve(std::shared_ptr<Card> pCard, std::shared_ptr<Card> e
         {
             IronReaver ironreaver(30);
             ironreaver.Active(activex, activey);
-            //bladestrike.Active(activex, activey);
         }
         else if (name == "WindScar")
         {
             WindScar windscar(30);
             windscar.Active(activex, activey);
-            //bladestrike.Active(activex, activey);
         }
+        else if (name == "Adamant_Barrage")
+        {
+            Adamant_Barrage adamant_barrage(60);
+            adamant_barrage.Active(activex, activey);
+        }
+        else if (name == "Backlash_Wave")
+        {
+            Backlash_Wave backlash_wave(30);
+            backlash_wave.Active(activex, activey);
+        }
+
 
         if (HitCheck(1, attackCard)) {
             int hitdamage = attackCard->A_GetATK() + player->GetATK() - enemy->GetDEF() - eCardDEF;
