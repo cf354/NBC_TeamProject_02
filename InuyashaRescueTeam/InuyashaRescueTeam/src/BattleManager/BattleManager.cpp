@@ -82,22 +82,36 @@ void BattleManager::StartBattle()
         std::cin.get();
         
         std::shared_ptr<Card> pCard = PlayerTurn();
-        while (auto a = dynamic_cast<C_Move*>(pCard.get())) {           
-            if (field.MoveCheck(a->M_GetX() * a->M_GetDistance(), a->M_GetY() * a->M_GetDistance(), 1)) {             
-                break;
-            }
-            _Log.PrintLog("이동할 수 없습니다");
-            _CardUI.Draw();
-            _CardUI.PrintCards(rdeck);
-            pCard = _CardUI.ChoseCard(rdeck);
-        }
-        while (pCard->C_GetCost() > player->GetStamina())
+        while (true)
         {
-            _Log.PrintLog("스태미나가 부족합니다!");
-            _CardUI.Draw();
-            _CardUI.PrintCards(rdeck);
-            pCard = _CardUI.ChoseCard(rdeck);
-        }//스태미나가 부족하거나 벽을 넘어서는 이동을 하는 카드를 선택을 불가능 하도록 함
+            // 이동 카드라면 이동 가능 여부 확인
+            if (auto a = dynamic_cast<C_Move*>(pCard.get()))
+            {
+                if (!field.MoveCheck(a->M_GetX() * a->M_GetDistance(),
+                    a->M_GetY() * a->M_GetDistance(), 1))
+                {
+                    _Log.PrintLog("이동할 수 없습니다");
+                    _CardUI.Draw();
+                    _CardUI.PrintCards(rdeck);
+                    pCard = _CardUI.ChoseCard(rdeck);
+                    continue; // 다시 조건 검사
+                }
+            }
+
+            // 스태미나 체크
+            if (pCard->C_GetCost() > player->GetStamina())
+            {
+                _Log.PrintLog("스태미나가 부족합니다!");
+                _CardUI.Draw();
+                _CardUI.PrintCards(rdeck);
+                pCard = _CardUI.ChoseCard(rdeck);
+                continue; // 다시 조건 검사
+            }
+
+            // 모든 조건 통과 시 탈출
+            break;
+        }
+        //스태미나가 부족하거나 벽을 넘어서는 이동을 하는 카드를 선택을 불가능 하도록 함
 
 
         // 적 턴 시작 시 플레이어와 적의 위치를 GetRandomCard 함수에 전달
