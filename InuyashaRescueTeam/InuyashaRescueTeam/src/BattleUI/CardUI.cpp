@@ -239,7 +239,7 @@ void CardUI::DrawStaminaHealCard(C_HealStamina& Card, int x, int y)
 
 void CardUI::DrawMasterCard(MasterCard& Card, int x, int y)
 {
-    std::string name = "무적의 카드";
+    std::wstring name = L"Master 무적의 카드";
     PrintCardName(name, x, y);
 
     GoToXY(x, y + 3);
@@ -345,7 +345,7 @@ int CardUI::GetConsoleCharWidth(wchar_t wc) {
     return 1; // 영어, 숫자, 반각 문자 등은 1칸
 }
 
-void CardUI::PrintCardName(const std::string &name, int x, int y)
+void CardUI::PrintCardName(const std::string& name, int x, int y) 
 {
     static std::locale loc("");
 
@@ -366,5 +366,24 @@ void CardUI::PrintCardName(const std::string &name, int x, int y)
             drawX = 0;
         }
         std::wcout << wsname[i];
+    }
+}
+
+void CardUI::PrintCardName(const std::wstring &name, int x, int y)
+{
+    static std::locale loc("");
+    std::wcout.imbue(std::locale(""));
+
+    int drawX = 0;
+    int drawY = 0;
+    for (size_t i = 0; i < name.size(); i++)
+    {
+        GoToXY(x + drawX, y + drawY);
+        drawX += GetConsoleCharWidth(name[i]);
+        if (drawX >= 12) {
+            drawY++;
+            drawX = 0;
+        }
+        std::wcout << name[i];
     }
 }
