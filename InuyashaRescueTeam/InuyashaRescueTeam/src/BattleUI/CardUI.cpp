@@ -239,7 +239,7 @@ void CardUI::DrawStaminaHealCard(C_HealStamina& Card, int x, int y)
 
 void CardUI::DrawMasterCard(MasterCard& Card, int x, int y)
 {
-    std::wstring name = L"무적의 카드";
+    std::wstring name = L"Master 무적의 카드";
     PrintCardName(name, x, y);
 
     GoToXY(x, y + 3);
@@ -373,10 +373,6 @@ void CardUI::PrintCardName(const std::wstring &name, int x, int y)
 {
     static std::locale loc("");
     std::wcout.imbue(std::locale(""));
-
-    //std::wstring wsname;
-    //auto& facet = std::use_facet<std::codecvt<wchar_t, char, std::mbstate_t>>(loc);
-    //wsname = std::wstring_convert<std::remove_reference<decltype(facet)>::type, wchar_t>(&facet).from_bytes(name);
 
     int drawX = 0;
     int drawY = 0;
