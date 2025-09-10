@@ -93,8 +93,8 @@ void ParticleSystem::SpawnParticle(int x, int y, int deadTick, ParticleColor col
 {
     int p_spawnx = _ActiveX + x;
     int p_spawny = _ActiveY + y;
-    if (p_spawnx - 3 < _CanvasX || p_spawnx + 3 > _CanvasX + _CanvasWidth) return;
-    if (p_spawny - 3 < _CanvasY || p_spawny + 3 > _CanvasY + _CanvasHeight) return;
+    if (p_spawnx - 3 < _CanvasX || p_spawnx + 3 > _CanvasX + _CanvasWidth - 1) return;
+    if (p_spawny - 3 < _CanvasY || p_spawny + 3 > _CanvasY + _CanvasHeight - 1) return;
 
     ConsoleCellData backGroundData[3][5];
 
@@ -102,8 +102,8 @@ void ParticleSystem::SpawnParticle(int x, int y, int deadTick, ParticleColor col
     {
         for (size_t X = 0; X < 5; X++)
         {
-            int _Y = p_spawny - _CanvasY + Y - 1;
-            int _X = p_spawnx + _CanvasX + X - 1;
+            int _Y = p_spawny - _CanvasY + Y;
+            int _X = p_spawnx + _CanvasX + X;
 
             backGroundData[Y][X].backgroundColor = _Data[_Y][_X].backgroundColor;
             backGroundData[Y][X].character = _Data[_Y][_X].character;
