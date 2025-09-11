@@ -24,6 +24,8 @@ public:
 	void ScreenRelease();
 	void Render();
 
+    void SetConsoleFont(int idx);
+
     bool ScreenTransition_Swipe();
     void MakePattern_Swipe(int frame, int maxFrame, wchar_t(&outPattern)[DATA_HEIGHT][DATA_WIDTH]);
 

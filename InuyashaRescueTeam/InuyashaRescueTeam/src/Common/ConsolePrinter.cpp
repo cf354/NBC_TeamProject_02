@@ -39,7 +39,25 @@ void ConsolePrinter::SetConsole()
 	if (owner == nullptr)
 	{
 		// Windows10
-		SetWindowPos(hwnd, nullptr, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, SWP_NOMOVE | SWP_NOZORDER);
+        // 버퍼, 윈도우 사이즈 조정
+        SMALL_RECT rectTemp = { 0, 0, 1, 1 };
+        SetConsoleWindowInfo(hConsole[0], TRUE, &rectTemp);
+        SetConsoleWindowInfo(hConsole[1], TRUE, &rectTemp);
+
+        COORD bufferSize = { DATA_WIDTH, DATA_HEIGHT };
+        SetConsoleScreenBufferSize(hConsole[0], bufferSize);
+        SetConsoleScreenBufferSize(hConsole[1], bufferSize);
+
+        SMALL_RECT rectWindow = { 0, 0, DATA_WIDTH - 1, DATA_HEIGHT - 1};
+        SetConsoleWindowInfo(hConsole[0], TRUE, &rectWindow);
+        SetConsoleWindowInfo(hConsole[1], TRUE, &rectWindow);
+
+        // 폰트 조정 (자연스러운 폰트)
+        SetConsoleFont(0);
+        SetConsoleFont(1);
+
+        // 이거 아래 코드 Windows 10, 더블 버퍼링 환경에서 제대로 동작 안 함
+		//SetWindowPos(hwnd, nullptr, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, SWP_NOMOVE | SWP_NOZORDER);
 	}
 	else
 	{
@@ -87,6 +105,19 @@ void ConsolePrinter::Render()
 	ScreenClear();
 	ScreenPrint();
 	ScreenFlip();
+}
+
+void ConsolePrinter::SetConsoleFont(int idx)
+{
+    CONSOLE_FONT_INFOEX cfi = { 0 };
+    cfi.cbSize = sizeof(CONSOLE_FONT_INFOEX);
+    GetCurrentConsoleFontEx(hConsole[idx], FALSE, &cfi);
+    cfi.dwFontSize.X = 8;
+    cfi.dwFontSize.Y = 16;
+    wcscpy_s(cfi.FaceName, L"Cascadia Mono");
+    cfi.FontFamily = FF_DONTCARE;
+    cfi.FontWeight = FW_NORMAL;
+    SetCurrentConsoleFontEx(hConsole[idx], FALSE, &cfi);
 }
 
 bool ConsolePrinter::ScreenTransition_Swipe()
